@@ -101,8 +101,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Commands\" />
-    <Folder Include="ModelView\" />
     <Folder Include="Model\" />
+    <Folder Include="ViewModel\Base\" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\MainWindowStyle.xaml">
