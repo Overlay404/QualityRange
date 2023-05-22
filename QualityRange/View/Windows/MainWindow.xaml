@@ -78,10 +78,10 @@
                                 <StackPanel Orientation="Horizontal" 
                                             VerticalAlignment="Center"
                                             HorizontalAlignment="Left"
-                                            Margin="10 0 0 0">
+                                            Margin="30 0 0 0">
                                     <fa:ImageAwesome Icon="LightbulbOutline" 
                                                      Width="15"
-                                                     Foreground="#99FFFFFF"/>
+                                                     Foreground="#FFE6E680"/>
                                     <TextBlock Text="QuantityRange"
                                                TextAlignment="Center"
                                                VerticalAlignment="Center"
@@ -177,13 +177,13 @@
                                         <RadioButton x:Name="GridBtn"
                                                      Style="{StaticResource RadioButtonLeft}"
                                                      IsChecked="True"/>
-                                        <RadioButton Style="{StaticResource RadioButtonRight}"/>
+                                        <RadioButton x:Name="BarsBtn"
+                                                     Style="{StaticResource RadioButtonRight}"/>
                                     </StackPanel>
                                 </DockPanel>
                                 <Frame x:Name="ProductListFrame"
                                        NavigationUIVisibility="Hidden"/>
                             </StackPanel>
-
                         </Grid>
                     </Grid>
                 </Border>

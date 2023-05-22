@@ -35,7 +35,9 @@ namespace QualityRange.View.Windows
 
             DragMoveBar.MouseDown += DragMoveWindow;
 
-            
+            GridBtn.Checked += (sender, e) => ProductListFrame.Navigate(new GridViewProductPanel());
+
+            BarsBtn.Checked += (sender, e) => ProductListFrame.Navigate(new LineViewProductPanel());
 
             // SignInBtn ShopBasketBtn SearchBtn
         }

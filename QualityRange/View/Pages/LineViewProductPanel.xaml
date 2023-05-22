@@ -5,10 +5,34 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:QualityRange.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="350" d:DesignWidth="800"
       Title="LineViewProductPanel">
 
     <Grid>
-        <TextBlock Text="Grid"/>
+        <ListView ItemsSource="{Binding Products}"
+                  d:ItemsSource="{d:SampleData ItemCount=10}"
+                  BorderBrush="Transparent"
+                  Background="Transparent">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border>
+                        <StackPanel>
+                            <TextBlock Text="{Binding Name}"/>
+                            <Image Source="{Binding ImageSource}"
+                                   Height="80" Width="80">
+                                <Image.Clip>
+                                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,80,80"/>
+                                </Image.Clip>
+                            </Image>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Cost}"/>
+                                <TextBlock Text="{Binding CostWithDiscount}"
+                                           FontSize="8"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </Page>

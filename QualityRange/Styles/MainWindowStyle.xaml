@@ -83,7 +83,7 @@
                             CornerRadius="10 0 0 10"
                             Padding="5"
                             Background="#02000000"
-                            BorderBrush="#272837"
+                            BorderBrush="#313044"
                             BorderThickness="2">
                         <StackPanel Orientation="Horizontal">
                         <fa:ImageAwesome Icon="Table"
@@ -100,8 +100,17 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="TextBlock" Property="Foreground" Value="#99FFFFFF"/>
-                            <Setter TargetName="Border" Property="Background" Value="#272837"/>
+                            <Setter TargetName="Border" Property="Background" Value="#313044"/>
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="#272837"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -116,7 +125,7 @@
                             CornerRadius="0 10 10 0"
                             Padding="5"
                             Background="#02000000"
-                            BorderBrush="#272837"
+                            BorderBrush="#313044"
                             BorderThickness="2">
                         <StackPanel Orientation="Horizontal">
                             <fa:ImageAwesome Icon="Bars"
@@ -133,8 +142,17 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="TextBlock" Property="Foreground" Value="#99FFFFFF"/>
-                            <Setter TargetName="Border" Property="Background" Value="#272837"/>
+                            <Setter TargetName="Border" Property="Background" Value="#313044"/>
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsChecked" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="Border" Property="Background" Value="#272837"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
