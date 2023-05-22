@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace QualityRange.View.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для LineViewProductPanel.xaml
+    /// Логика взаимодействия для BarsViewProductPage.xaml
     /// </summary>
-    public partial class LineViewProductPanel : Page
+    public partial class BarsViewProductPage : Page
     {
-        public LineViewProductPanel()
+        public BarsViewProductPage()
         {
             InitializeComponent();
         }

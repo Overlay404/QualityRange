@@ -4,11 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:fa="http://schemas.fontawesome.io/icons/"
+        xmlns:vm="clr-namespace:QualityRange.ViewModel"
         mc:Ignorable="d"  MinHeight="750" MinWidth="1000"
         Height="750" Width="1200" WindowStartupLocation="CenterScreen"
         AllowsTransparency="True" Background="Transparent"
         WindowStyle="None">
 
+    <Window.DataContext>
+        <vm:MainWindowVM/>
+    </Window.DataContext>
+    
     <Window.Resources>
         <Style x:Key="RectBorderStyle" TargetType="Rectangle">
             <Setter Property="Focusable" Value="False"/>
@@ -35,6 +40,9 @@
                             Height="28"
                             x:Name="DragMoveBar"
                             CornerRadius="5 5 0 0">
+                        <Border.InputBindings>
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding DragMoveWindow}"/>
+                        </Border.InputBindings>
                     </Border>
                     <StackPanel HorizontalAlignment="Right" 
                                 VerticalAlignment="Center"
@@ -43,14 +51,31 @@
                         <fa:ImageAwesome Icon="WindowMinimize" Width="20"
                                          Style="{StaticResource MinimizeAndMaximizeBtnStyle}"
                                          x:Name="MinimizeBtn"
-                                         Margin="0 0 10 0"/>
+                                         Margin="0 0 10 0">
+                            <fa:ImageAwesome.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding MinimazeWindow}"/>
+                            </fa:ImageAwesome.InputBindings>
+                        </fa:ImageAwesome>
+
                         <fa:ImageAwesome Icon="WindowMaximize" Width="20"
                                          Style="{StaticResource MinimizeAndMaximizeBtnStyle}"
                                          x:Name="MaximizeBtn"
-                                         Margin="0 0 10 0"/>
+                                         Margin="0 0 10 0">
+                            <fa:ImageAwesome.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding MaximizeWindow}"/>
+                            </fa:ImageAwesome.InputBindings>
+                        </fa:ImageAwesome>
+
                         <fa:ImageAwesome Icon="WindowClose" Width="20"
                                          Style="{StaticResource ShutdownBtnStyle}"
-                                         x:Name="ShutdownBtn"/>
+                                         x:Name="ShutdownBtn">
+                            <fa:ImageAwesome.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding ShutdownApplication}"/>
+                            </fa:ImageAwesome.InputBindings>
+                        </fa:ImageAwesome>
                     </StackPanel>
                 </Grid>
                 <Border Background="#20242E"
@@ -166,24 +191,32 @@
                         </Border>
 
                         <Grid Grid.Row="1">
-                            <StackPanel>
-                                <DockPanel Margin="10 40" VerticalAlignment="Top">
-                                    <TextBlock Text="{Binding CountProduct, StringFormat='{}{0} Товаров'}"
-                                           FontSize="16"
+                            <DockPanel>
+                                <DockPanel Margin="10 40 10 0" VerticalAlignment="Top" DockPanel.Dock="Top">
+                                    <TextBlock Text="{Binding CountProduct, StringFormat='Количество товаров на странице {0}'}"
+                                           FontSize="20"
+                                               Foreground="#99FFFFFF"
                                            DockPanel.Dock="Left"/>
                                     <StackPanel DockPanel.Dock="Right"
                                             HorizontalAlignment="Right"
                                             Orientation="Horizontal">
                                         <RadioButton x:Name="GridBtn"
                                                      Style="{StaticResource RadioButtonLeft}"
-                                                     IsChecked="True"/>
+                                                     IsChecked="True"
+                                                     Command="{Binding GoPage}"
+                                                     CommandParameter="{Binding GridViewPage}"/>
+
                                         <RadioButton x:Name="BarsBtn"
-                                                     Style="{StaticResource RadioButtonRight}"/>
+                                                     Style="{StaticResource RadioButtonRight}"
+                                                     Command="{Binding GoPage}"
+                                                     CommandParameter="{Binding BarsViewPage}"/>
                                     </StackPanel>
                                 </DockPanel>
                                 <Frame x:Name="ProductListFrame"
-                                       NavigationUIVisibility="Hidden"/>
-                            </StackPanel>
+                                       NavigationUIVisibility="Hidden"
+                                       DockPanel.Dock="Bottom"
+                                       HorizontalAlignment="Center"/>
+                            </DockPanel>
                         </Grid>
                     </Grid>
                 </Border>

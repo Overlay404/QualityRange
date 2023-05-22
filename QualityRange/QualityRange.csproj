@@ -35,11 +35,20 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466, processorArchitecture=MSIL">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -62,11 +71,69 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Commands\Base\Command.cs" />
+    <Compile Include="Commands\Base\LambdaCommand.cs" />
+    <Compile Include="Model\Address.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Basket.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Category.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Client.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MarketplaceDatabase.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketplaceDatabase.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MarketplaceDatabase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MarketplaceDatabase.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarketplaceDatabase.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Order.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Partial\Product.Extension.cs" />
+    <Compile Include="Model\PhotoProduct.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Product.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductList.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Salesman.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Status.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\User.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SupportiveClasses\ImageConverter.cs" />
+    <Compile Include="ViewModel\Base\ViewModel.cs" />
+    <Compile Include="ViewModel\PagesVM\GridAndBarsViewProductPanelVM.cs" />
+    <Compile Include="ViewModel\WindowsVM\MainWindowVM.cs" />
+    <Compile Include="View\Pages\BarsViewProductPage.xaml.cs">
+      <DependentUpon>BarsViewProductPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\GridViewProductPanel.xaml.cs">
       <DependentUpon>GridViewProductPanel.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Pages\LineViewProductPanel.xaml.cs">
-      <DependentUpon>LineViewProductPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -90,6 +157,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\MarketplaceDatabase.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MarketplaceDatabase.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\MarketplaceDatabase.edmx.diagram">
+      <DependentUpon>MarketplaceDatabase.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -100,12 +174,23 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Commands\" />
-    <Folder Include="Model\" />
-    <Folder Include="ViewModel\Base\" />
+    <Content Include="Model\MarketplaceDatabase.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarketplaceDatabase.edmx</DependentUpon>
+      <LastGenOutput>MarketplaceDatabase.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Model\MarketplaceDatabase.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarketplaceDatabase.edmx</DependentUpon>
+      <LastGenOutput>MarketplaceDatabase.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\MainWindowStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\BarsViewProductPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -113,14 +198,13 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Pages\LineViewProductPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="View\Windows\MainWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -1,7 +1,9 @@
 ﻿using QualityRange.View.Pages;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -20,58 +22,30 @@ namespace QualityRange.View.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-
         public static MainWindow Instance;
-        private double positionCursorX;
         public MainWindow()
         {
             InitializeComponent();
+            Instance = this;
 
-            ShutdownBtn.MouseUp += (sender, e) => ShutdownApplication();
-
-            MinimizeBtn.MouseUp += (sender, e) => MinimizedWindow();
-
-            MaximizeBtn.MouseUp += (sender, e) => MaximizedWindow();
-
-            DragMoveBar.MouseDown += DragMoveWindow;
-
-            GridBtn.Checked += (sender, e) => ProductListFrame.Navigate(new GridViewProductPanel());
-
-            BarsBtn.Checked += (sender, e) => ProductListFrame.Navigate(new LineViewProductPanel());
-
-            // SignInBtn ShopBasketBtn SearchBtn
-        }
-        private static void ShutdownApplication()
-        {
-            Application.Current.Shutdown();
+            ProductListFrame.Navigate(new GridViewProductPanel());
         }
 
-        private void MinimizedWindow()
-        {
-            WindowState =  WindowState.Minimized;
-        }
 
-        private void MaximizedWindow()
+        public byte[] GetImage(string uriImage)
         {
-            if(WindowState == WindowState.Maximized)
+            try
             {
-                WindowState = WindowState.Normal;
-                return;
+                MemoryStream ms = new MemoryStream();
+                WebRequest.Create(uriImage).GetResponse().GetResponseStream().CopyTo(ms);
+                return ms.ToArray();
             }
-
-            WindowState = WindowState.Maximized;
-        }
-
-        private void DragMoveWindow(object sender, MouseButtonEventArgs e)
-        {
-            if (WindowState == WindowState.Maximized)
+            catch (Exception ex)
             {
-                positionCursorX = PointToScreen(new Point(e.GetPosition(null).X, e.GetPosition(null).Y)).X;
-                WindowState = WindowState.Normal;
-                Top = 0;
-                Left = positionCursorX - Width / 2;
+                // В случае ошибки вывод сообщения о ней
+                MessageBox.Show($"Ошибка :{ex.Message} ");
+                return null;
             }
-            DragMove();
         }
 
         #region ResizeWindows
