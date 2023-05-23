@@ -167,25 +167,29 @@
                                     </Border>
                                 </Grid>
                                 <Grid Grid.Row="1" Grid.ColumnSpan="3">
-                                    <ItemsControl ItemsSource="{Binding Category}"
-                                                  d:ItemsSource="{d:SampleData ItemCount=14}"
-                                                  HorizontalAlignment="Center"
-                                                  Margin="30 0">
-                                        <ItemsControl.ItemsPanel>
+                                    <ListView ItemsSource="{Binding Category}"
+                                              d:ItemsSource="{d:SampleData ItemCount=10}"
+                                              BorderBrush="Transparent"
+                                              Background="Transparent"
+                                              ScrollViewer.CanContentScroll="False"
+                                              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                              ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                        <ListView.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <StackPanel Orientation="Horizontal"/>
                                             </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
+                                        </ListView.ItemsPanel>
+                                        <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <TextBlock Text="{Binding Name}"
                                                            Margin="10 0 0 0"
                                                            VerticalAlignment="Center"
-                                                           Foreground="White"
-                                                           FontSize="14"/>
+                                                           Foreground="#99FFFFFF"
+                                                           FontSize="14">
+                                                </TextBlock>
                                             </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
                                 </Grid>
                             </Grid>
                         </Border>
@@ -215,7 +219,7 @@
                                 <Frame x:Name="ProductListFrame"
                                        NavigationUIVisibility="Hidden"
                                        DockPanel.Dock="Bottom"
-                                       HorizontalAlignment="Center"/>
+                                       HorizontalAlignment="Stretch"/>
                             </DockPanel>
                         </Grid>
                     </Grid>

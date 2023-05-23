@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:vm="clr-namespace:QualityRange.ViewModel"
       xmlns:fa="http://schemas.fontawesome.io/icons/"
-      mc:Ignorable="d" 
+      mc:Ignorable="d"
       Title="BarsViewProductPage">
 
     <Page.DataContext>
@@ -16,6 +16,7 @@
               d:ItemsSource="{d:SampleData ItemCount=10}"
               BorderBrush="Transparent"
               Background="Transparent"
+              ScrollViewer.CanContentScroll="False"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled">
         <ListView.ItemTemplate>
             <DataTemplate>
@@ -23,41 +24,52 @@
                             CornerRadius="15"
                             Padding="5"
                             Margin="5 5"
-                            TextBlock.Foreground="#99FFFFFF">
+                            TextBlock.Foreground="#99FFFFFF"
+                        Height="130">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
-                            <ColumnDefinition Width="2.5*"/>
-                            <ColumnDefinition Width="2.5*"/>
+                            <ColumnDefinition Width="5*"/>
+                            <ColumnDefinition Width="1*"/>
                             <ColumnDefinition Width="1.6*"/>
                         </Grid.ColumnDefinitions>
                         <Image Source="{Binding SourceFirstImage}"
-                                   Height="80" Width="80"
+                                   Height="120" Width="120"
                                    Stretch="Fill"
                                HorizontalAlignment="Left">
                             <Image.Clip>
-                                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,80,80"/>
+                                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,120,120"/>
                             </Image.Clip>
                         </Image>
-                        <DockPanel  Margin="0 10 0 10"
-                                    Grid.Column="2"
-                                    HorizontalAlignment="Left">
-                            <TextBlock Text="{Binding Cost}"
-                                           FontSize="12"/>
-                            <TextBlock Text="{Binding CostWithDiscount}"
-                                           FontSize="8"
-                                           VerticalAlignment="Top"/>
-                        </DockPanel>
                         <StackPanel HorizontalAlignment="Left"
                                     Grid.Column="1">
                             <TextBlock Text="{Binding Name}"
                                        Margin="0 5 0 0"
                                        TextWrapping="Wrap"
-                                       Height="20"/>
+                                       Height="19"/>
                             <TextBlock Text="{Binding Description}"
                                        Margin="0 5 0 0"
-                                       TextWrapping="Wrap"/>
+                                       TextWrapping="Wrap"
+                                       FontSize="10"/>
                         </StackPanel>
+                        <DockPanel  Margin="0 10 0 10"
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Left">
+                            <TextBlock Text="{Binding Count, StringFormat='В наличии: {0}'}"
+                                       DockPanel.Dock="Top"/>
+                            <StackPanel DockPanel.Dock="Bottom"
+                                        VerticalAlignment="Bottom"
+                                        Orientation="Horizontal">
+                                <TextBlock Text="{Binding CostWithDiscount}"
+                                               FontSize="12"/>
+                                <TextBlock Text="{Binding Cost}"
+                                           FontSize="8"
+                                           Margin="5 0 0 0"
+                                           TextDecorations="Strikethrough"
+                                           VerticalAlignment="Top"
+                                           Foreground="Gray"/>
+                            </StackPanel>
+                        </DockPanel>
                         <Border Background="#272837"
                                 Padding="10"
                                 Grid.Column="3"

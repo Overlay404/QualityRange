@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using QualityRange.Commands.Base;
+using QualityRange.Model;
 using QualityRange.View.Pages;
 using QualityRange.View.Windows;
 using QualityRange.ViewModel.Base;
@@ -23,8 +24,11 @@ namespace QualityRange.ViewModel
         private Page _gridViewPage = new GridViewProductPanel();
         public Page GridViewPage { get => _gridViewPage; set => Set(ref _gridViewPage, value); }
 
-        private int _countProduct = App.db.Product.Count();
+        private int _countProduct = App.db.Product.Local.Count();
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
+
+        private IEnumerable<Category> _category = App.db.Category.Local;
+        public IEnumerable<Category> Category { get => _category; set => Set(ref _category, value); }
         #endregion
 
 
@@ -80,6 +84,14 @@ namespace QualityRange.ViewModel
         {
             MainWindow.Instance.ProductListFrame.Navigate(parameter);
         }
+
+
+        public ICommand CategoryPress { get; }
+        private bool CanCategoryPressExecute(object parameter) => true;
+        private void OnCategoryPressExecute(object parameter)
+        {
+            MessageBox.Show($"asd{parameter as string}");
+        }
         #endregion
 
 
@@ -90,6 +102,7 @@ namespace QualityRange.ViewModel
             MaximizeWindow = new LambdaCommand(OnMaximizeWindowExecute, CanMaximizeWindowExecute);
             DragMoveWindow = new LambdaCommand(OnDragMoveWindowExecute, CanDragMoveWindowExecute);
             GoPage = new LambdaCommand(OnGoPageExecute, CanGoPageExecute);
+            CategoryPress = new LambdaCommand(OnCategoryPressExecute, CanCategoryPressExecute);
         }
     }
 }

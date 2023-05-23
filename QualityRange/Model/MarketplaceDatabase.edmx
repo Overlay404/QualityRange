@@ -337,7 +337,7 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Client" Type="Int32" Nullable="false" />
           <Property Name="AllCost" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="CountPRoduct" Type="Int32" Nullable="false" />
+          <Property Name="CountProduct" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Basket_Client" FromRole="Basket" ToRole="Client" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Basket1" FromRole="Basket" ToRole="Order" />
           <NavigationProperty Name="ProductList" Relationship="Self.FK_ProductList_Basket" FromRole="Basket" ToRole="ProductList" />
@@ -678,7 +678,7 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
                 <ScalarProperty Name="AllCost" ColumnName="AllCost" />
-                <ScalarProperty Name="CountPRoduct" ColumnName="CountPRoduct" />
+                <ScalarProperty Name="CountProduct" ColumnName="CountPRoduct" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

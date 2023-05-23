@@ -18,7 +18,7 @@ namespace QualityRange.ViewModel
 
         public GridAndBarsViewProductPanelVM()
         {
-            Products = App.db.Product.ToList();
+            Products = App.db.Product.Local.ToList();
         }
     }
 }
