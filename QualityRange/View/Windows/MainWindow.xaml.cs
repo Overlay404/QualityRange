@@ -1,4 +1,5 @@
 ﻿using QualityRange.View.Pages;
+using QualityRange.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,24 +29,7 @@ namespace QualityRange.View.Windows
             InitializeComponent();
             Instance = this;
 
-            ProductListFrame.Navigate(new GridViewProductPanel());
-        }
-
-
-        public byte[] GetImage(string uriImage)
-        {
-            try
-            {
-                MemoryStream ms = new MemoryStream();
-                WebRequest.Create(uriImage).GetResponse().GetResponseStream().CopyTo(ms);
-                return ms.ToArray();
-            }
-            catch (Exception ex)
-            {
-                // В случае ошибки вывод сообщения о ней
-                MessageBox.Show($"Ошибка :{ex.Message} ");
-                return null;
-            }
+            ProductListFrame.Navigate(new GridViewProductPanel() { DataContext = GridAndBarsViewProductPanelVM.Instance });
         }
 
         #region ResizeWindows

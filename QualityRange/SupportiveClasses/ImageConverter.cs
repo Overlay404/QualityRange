@@ -2,6 +2,8 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Net;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -17,6 +19,21 @@ namespace QualityRange.SupportiveClasses
             encoder.Frames.Add(BitmapFrame.Create(image));
             encoder.Save(memoryStream);
             return memoryStream.ToArray();
+        }
+
+        public byte[] GetImageFromInternet(string uriImage)
+        {
+            try
+            {
+                MemoryStream ms = new MemoryStream();
+                WebRequest.Create(uriImage).GetResponse().GetResponseStream().CopyTo(ms);
+                return ms.ToArray();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка :{ex.Message} ");
+                return null;
+            }
         }
 
         public static byte[] ConvertToByteCollection(BitmapSource pasteImage)

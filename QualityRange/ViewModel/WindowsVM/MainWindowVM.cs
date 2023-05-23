@@ -17,15 +17,17 @@ namespace QualityRange.ViewModel
     internal class MainWindowVM : ViewModel.Base.ViewModel
     {
         #region Property
-        private Page _barsViewPage = new BarsViewProductPage();
+        private Page _barsViewPage = new BarsViewProductPage() { DataContext = GridAndBarsViewProductPanelVM.Instance };
         public Page BarsViewPage { get => _barsViewPage; set => Set(ref _barsViewPage, value); }
 
 
-        private Page _gridViewPage = new GridViewProductPanel();
+        private Page _gridViewPage = new GridViewProductPanel() { DataContext = GridAndBarsViewProductPanelVM.Instance };
         public Page GridViewPage { get => _gridViewPage; set => Set(ref _gridViewPage, value); }
+
 
         private int _countProduct = App.db.Product.Local.Count();
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
+
 
         private IEnumerable<Category> _category = App.db.Category.Local;
         public IEnumerable<Category> Category { get => _category; set => Set(ref _category, value); }
@@ -90,7 +92,7 @@ namespace QualityRange.ViewModel
         private bool CanCategoryPressExecute(object parameter) => true;
         private void OnCategoryPressExecute(object parameter)
         {
-            MessageBox.Show($"asd{parameter as string}");
+            GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local.Where(p => p.Category.Name == parameter as string);
         }
         #endregion
 

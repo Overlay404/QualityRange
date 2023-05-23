@@ -11,8 +11,8 @@
     <Page.DataContext>
         <vm:GridAndBarsViewProductPanelVM/>
     </Page.DataContext>
-
-    <ListView ItemsSource="{Binding Products}"
+    
+    <ListView ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}"
               d:ItemsSource="{d:SampleData ItemCount=10}"
               BorderBrush="Transparent"
               Background="Transparent"

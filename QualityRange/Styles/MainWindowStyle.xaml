@@ -40,6 +40,16 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="TextBlock" x:Key="CategoryText">
+        <Setter Property="Foreground" Value="#99FFFFFF"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="White"/>
+                <Setter Property="TextDecorations" Value="Underline"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="TextBox" x:Key="TextBox">
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TextBlock.Foreground" Value="#99FFFFFF"/>
