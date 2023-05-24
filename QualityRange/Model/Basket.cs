@@ -23,8 +23,6 @@ namespace QualityRange.Model
     
         public int ID { get; set; }
         public int ID_Client { get; set; }
-        public decimal AllCost { get; set; }
-        public int CountProduct { get; set; }
     
         public virtual Client Client { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

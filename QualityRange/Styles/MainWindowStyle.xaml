@@ -85,6 +85,43 @@
         </Setter>
     </Style>
 
+    <Style TargetType="TextBox" x:Key="TextBoxAuthReg">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="TextBlock.Foreground" Value="#99FFFFFF"/>
+        <Setter Property="TextBlock.FontSize" Value="14"/>
+        <Setter Property="TextBlock.FontWeight" Value="DemiBold"/>
+        <Setter Property="CaretBrush" Value="#99FFFFFF"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBox}">
+                    <Border Name="Bd"
+                        Background="#20242E"
+                        BorderBrush="#272837"
+                        BorderThickness="2"
+                        CornerRadius="10"
+                        SnapsToDevicePixels="true"
+                        Padding="0"
+                        VerticalAlignment="Center">
+                        <Grid Margin="5">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled"
+                                         Value="false">
+                            <Setter TargetName="Bd"
+                                            Property="Background"
+                                            Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"/>
+                            <Setter Property="Foreground"
+                                            Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="RadioButton" x:Key="RadioButtonLeft">
         <Setter Property="Template">
             <Setter.Value>

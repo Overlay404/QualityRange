@@ -15,7 +15,6 @@ namespace QualityRange.Model
     public partial class Employee
     {
         public int ID { get; set; }
-        public int ID_User { get; set; }
     
         public virtual User User { get; set; }
     }

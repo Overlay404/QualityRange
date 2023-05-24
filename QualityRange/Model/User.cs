@@ -14,24 +14,13 @@ namespace QualityRange.Model
     
     public partial class User
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public User()
-        {
-            this.Client = new HashSet<Client>();
-            this.Employee = new HashSet<Employee>();
-            this.Salesman = new HashSet<Salesman>();
-        }
-    
         public int ID { get; set; }
         public string Login { get; set; }
         public string Password { get; set; }
         public Nullable<bool> Removed { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Client> Client { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employee { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Salesman> Salesman { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Employee Employee { get; set; }
+        public virtual Salesman Salesman { get; set; }
     }
 }

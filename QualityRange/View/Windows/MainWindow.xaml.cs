@@ -30,6 +30,7 @@ namespace QualityRange.View.Windows
             Instance = this;
 
             ProductListFrame.Navigate(new GridViewProductPanel() { DataContext = GridAndBarsViewProductPanelVM.Instance });
+            Closing += (sender, e) => App.db.SaveChanges();
         }
 
         #region ResizeWindows

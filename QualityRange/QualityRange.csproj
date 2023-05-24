@@ -128,12 +128,22 @@
     <Compile Include="SupportiveClasses\ImageConverter.cs" />
     <Compile Include="ViewModel\Base\ViewModel.cs" />
     <Compile Include="ViewModel\PagesVM\GridAndBarsViewProductPanelVM.cs" />
+    <Compile Include="ViewModel\WindowsVM\AuthRegWindowVM.cs" />
     <Compile Include="ViewModel\WindowsVM\MainWindowVM.cs" />
+    <Compile Include="View\Pages\AutorizationPage.xaml.cs">
+      <DependentUpon>AutorizationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\BarsViewProductPage.xaml.cs">
       <DependentUpon>BarsViewProductPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\GridViewProductPanel.xaml.cs">
       <DependentUpon>GridViewProductPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\RegistrationPage.xaml.cs">
+      <DependentUpon>RegistrationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\AuthRegWindow.xaml.cs">
+      <DependentUpon>AuthRegWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Windows\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
@@ -190,11 +200,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Pages\AutorizationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Pages\BarsViewProductPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\GridViewProductPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\RegistrationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\AuthRegWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

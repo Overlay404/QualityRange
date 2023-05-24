@@ -24,7 +24,6 @@ namespace QualityRange.Model
         public string NameCompany { get; set; }
         public string Description { get; set; }
         public Nullable<System.DateTime> DateOnMarketplace { get; set; }
-        public Nullable<int> ID_User { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Product { get; set; }

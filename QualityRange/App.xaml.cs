@@ -11,12 +11,11 @@ using System.Windows;
 
 namespace QualityRange
 {
-    /// <summary>
-    /// Логика взаимодействия для App.xaml
-    /// </summary>
     public partial class App : Application
     {
         public static MarketplaceDatabaseEntities db = new MarketplaceDatabaseEntities();
+
+        public static User user = App.db.User.FirstOrDefault(u => u.ID == 3);
 
         public App()
         {
@@ -29,6 +28,7 @@ namespace QualityRange
             db.Order.Load();
             db.Product.Load();
             db.Salesman.Load();
+            db.ProductList.Load();
         }
     }
 }

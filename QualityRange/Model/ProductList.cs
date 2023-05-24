@@ -17,6 +17,7 @@ namespace QualityRange.Model
         public int ID { get; set; }
         public int ID_Product { get; set; }
         public int ID_Basket { get; set; }
+        public Nullable<int> Count { get; set; }
     
         public virtual Basket Basket { get; set; }
         public virtual Product Product { get; set; }

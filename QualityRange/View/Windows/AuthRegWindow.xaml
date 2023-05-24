@@ -1,0 +1,86 @@
+﻿<Window x:Class="QualityRange.View.Windows.AuthRegWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:QualityRange.ViewModel.WindowsVM"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        mc:Ignorable="d" Height="500" Width="450" 
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True" Background="Transparent"
+        WindowStyle="None" ResizeMode="NoResize">
+
+    <Window.DataContext>
+        <vm:AuthRegWindowVM/>
+    </Window.DataContext>
+
+    <Grid Background="#20242E">
+        <Grid VerticalAlignment="Top">
+                <Border Background="#EA000000" 
+                            VerticalAlignment="Center"
+                            Height="28"
+                            CornerRadius="5 5 0 0">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" 
+                                  Command="{Binding DragMoveWindow}"/>
+                    </Border.InputBindings>
+                </Border>
+
+                <fa:ImageAwesome Icon="WindowClose" Width="20"
+                             Style="{StaticResource ShutdownBtnStyle}"
+                             x:Name="ShutdownBtn"
+                             HorizontalAlignment="Right"
+                             Margin="0 0 10 0">
+                    <fa:ImageAwesome.InputBindings>
+                        <MouseBinding MouseAction="LeftClick"
+                                            Command="{Binding ShutdownApplication}"/>
+                    </fa:ImageAwesome.InputBindings>
+                </fa:ImageAwesome>
+            </Grid>
+        <Grid TextBlock.Foreground="#99FFFFFF" VerticalAlignment="Center">
+            <StackPanel Margin="30 0">
+                <Grid Margin="0 0 0 25">
+                    <TextBox Style="{StaticResource TextBoxAuthReg}"
+                                 Height="40"/>
+                    <TextBlock Text="Имя"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Margin="0 0 0 25">
+                    <TextBox Style="{StaticResource TextBoxAuthReg}"
+                                 Height="40"/>
+                    <TextBlock Text="Логин"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Margin="10 0 0 0"/>
+                </Grid>
+                <Grid Margin="0 0 0 25">
+                    <TextBox Style="{StaticResource TextBoxAuthReg}"
+                                 Height="40"/>
+                    <TextBlock Text="Пароль"
+                                   VerticalAlignment="Center"
+                                   FontSize="14"
+                                   Margin="10 0 0 0"/>
+                </Grid>
+
+                <Border Background="#272837"
+                            Padding="10"
+                            Grid.Column="3"
+                            CornerRadius="10"
+                            Margin="0 80 0 0"
+                            x:Name="AddBasketBtn">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding DataContext.AddBasketProduct, ElementName=ListProductBarsView}"
+                                              CommandParameter="{Binding ID}"/>
+                    </Border.InputBindings>
+                    <TextBlock Text="Зарегистрироваться"
+                                   FontSize="20"
+                                   TextAlignment="Center"
+                                   HorizontalAlignment="Center"/>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

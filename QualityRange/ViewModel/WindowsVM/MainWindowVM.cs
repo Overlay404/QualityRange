@@ -16,6 +16,8 @@ namespace QualityRange.ViewModel
 {
     internal class MainWindowVM : ViewModel.Base.ViewModel
     {
+        public static MainWindowVM Instance { get; private set; }
+
         #region Property
         private Page _barsViewPage = new BarsViewProductPage() { DataContext = GridAndBarsViewProductPanelVM.Instance };
         public Page BarsViewPage { get => _barsViewPage; set => Set(ref _barsViewPage, value); }
@@ -25,12 +27,25 @@ namespace QualityRange.ViewModel
         public Page GridViewPage { get => _gridViewPage; set => Set(ref _gridViewPage, value); }
 
 
+        private Window _authRegWin = new AuthRegWindow();
+        public Window AuthRegWin { get => _authRegWin; set => Set(ref _authRegWin, value); }
+
+
         private int _countProduct = App.db.Product.Local.Count();
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
 
 
         private IEnumerable<Category> _category = App.db.Category.Local;
         public IEnumerable<Category> Category { get => _category; set => Set(ref _category, value); }
+
+
+        private int _countProductInBasket;
+        public int CountProductInBasket { get => _countProductInBasket; set => Set(ref _countProductInBasket, value); }
+
+
+        private Visibility _visibilityCountProductInBasket;
+        public Visibility VisibilityCountProductInBasket { get => _visibilityCountProductInBasket; set => Set(ref _visibilityCountProductInBasket, value); }
+        
         #endregion
 
 
@@ -88,6 +103,14 @@ namespace QualityRange.ViewModel
         }
 
 
+        public ICommand GoWindow { get; }
+        private bool CanGoWindowExecute(object parameter) => true;
+        private void OnGoWindowExecute(object parameter)
+        {
+            (parameter as Window).ShowDialog();
+        }
+
+
         public ICommand CategoryPress { get; }
         private bool CanCategoryPressExecute(object parameter) => true;
         private void OnCategoryPressExecute(object parameter)
@@ -99,12 +122,23 @@ namespace QualityRange.ViewModel
 
         public MainWindowVM()
         {
+            Instance = this;
+
+            InitCountProductInBasket();
+
             ShutdownApplication = new LambdaCommand(OnShutdownApplicationExecute, CanShutdownApplicationExecute);
             MinimazeWindow = new LambdaCommand(OnMinimazeWindowExecute, CanMinimazeWindowExecute);
             MaximizeWindow = new LambdaCommand(OnMaximizeWindowExecute, CanMaximizeWindowExecute);
             DragMoveWindow = new LambdaCommand(OnDragMoveWindowExecute, CanDragMoveWindowExecute);
             GoPage = new LambdaCommand(OnGoPageExecute, CanGoPageExecute);
+            GoWindow = new LambdaCommand(OnGoWindowExecute, CanGoWindowExecute);
             CategoryPress = new LambdaCommand(OnCategoryPressExecute, CanCategoryPressExecute);
+        }
+
+        public void InitCountProductInBasket()
+        {
+            CountProductInBasket = (int)(App.db.ProductList.Local.Where(pl => pl.Basket.Client.User == App.user)?.Count());
+            VisibilityCountProductInBasket = CountProductInBasket == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

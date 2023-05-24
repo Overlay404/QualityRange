@@ -17,7 +17,8 @@
               BorderBrush="Transparent"
               Background="Transparent"
               ScrollViewer.CanContentScroll="False"
-              ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+              ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+              x:Name="ListProductBarsView">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <Border Background="#1D1E27"
@@ -76,7 +77,13 @@
                                 CornerRadius="10"
                                 Margin="0 0 10 0"
                                 VerticalAlignment="Center"
-                                HorizontalAlignment="Right">
+                                HorizontalAlignment="Right"
+                                x:Name="AddBasketBtn">
+                            <Border.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding DataContext.AddBasketProduct, ElementName=ListProductBarsView}"
+                                              CommandParameter="{Binding ID}"/>
+                            </Border.InputBindings>
                             <StackPanel Orientation="Horizontal"
                                             HorizontalAlignment="Center">
                                 <TextBlock Text="В корзину"
