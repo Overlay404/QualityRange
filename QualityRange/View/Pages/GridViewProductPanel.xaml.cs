@@ -1,6 +1,7 @@
 ﻿using QualityRange.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,9 +22,11 @@ namespace QualityRange.View.Pages
     /// </summary>
     public partial class GridViewProductPanel : Page
     {
+        public static GridViewProductPanel Instance { get; private set; }
         public GridViewProductPanel()
         {
             InitializeComponent();
+            Instance = this;
         }
     }
 }

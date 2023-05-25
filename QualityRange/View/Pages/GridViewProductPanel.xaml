@@ -82,8 +82,8 @@
                                 Visibility="{Binding IsAddedInProductList}">
                             <Grid HorizontalAlignment="Stretch">
 
-                                <Border Width="30"
-                                        Height="13"
+                                <Border Width="100"
+                                        Height="26"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Left"
                                         Background="#02000000">
@@ -93,12 +93,9 @@
                                                       CommandParameter="{Binding ID}"/>
                                     </Border.InputBindings>
                                     <fa:ImageAwesome Icon="Minus"
-                                                 Width="15"
-                                                 Foreground="#99FFFFFF">
-                                        <fa:ImageAwesome.InputBindings>
-                                            
-                                        </fa:ImageAwesome.InputBindings>
-                                    </fa:ImageAwesome>
+                                                     Width="15"
+                                                     HorizontalAlignment="Left"
+                                                     Foreground="#99FFFFFF"/>
                                 </Border>
                                 <TextBlock Text="{Binding CountProductInBasket}"
                                            FontSize="20"
@@ -106,8 +103,8 @@
                                            HorizontalAlignment="Center"
                                            VerticalAlignment="Center"
                                            TextAlignment="Center"/>
-                                <Border Width="30"
-                                        Height="13"
+                                <Border Width="100"
+                                        Height="26"
                                         VerticalAlignment="Center"
                                         HorizontalAlignment="Right"
                                         Background="#02000000">
@@ -117,8 +114,9 @@
                                                       CommandParameter="{Binding ID}"/>
                                     </Border.InputBindings>
                                     <fa:ImageAwesome Icon="Plus"
-                                                 Width="15"
-                                                 Foreground="#99FFFFFF"/>
+                                                     HorizontalAlignment="Right"
+                                                     Width="15"
+                                                     Foreground="#99FFFFFF"/>
                                 </Border>
                             </Grid>
                         </Border>

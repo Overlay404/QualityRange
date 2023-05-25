@@ -14,7 +14,7 @@ namespace QualityRange.Model
 
         public decimal CostWithDiscount => (decimal)(Cost - (Cost * Discount / 100));
 
-        public int CountProductInBasket => ProductList.Where(pl => pl.Basket.ID_Client == App.user.ID).FirstOrDefault()?.Count ?? 0;
+        public int CountProductInBasket => ProductList.Where(pl => pl.Basket.ID_Client == App.user?.ID).FirstOrDefault()?.Count ?? 0;
 
         public Visibility IsAddedInProductList => CountProductInBasket == 0 ? Visibility.Collapsed : Visibility.Visible;
 

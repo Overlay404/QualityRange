@@ -15,7 +15,7 @@ namespace QualityRange
     {
         public static MarketplaceDatabaseEntities db = new MarketplaceDatabaseEntities();
 
-        public static User user = App.db.User.FirstOrDefault(u => u.ID == 3);
+        public static User user;
 
         public App()
         {

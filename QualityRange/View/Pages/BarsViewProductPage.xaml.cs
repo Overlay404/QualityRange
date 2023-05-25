@@ -21,9 +21,11 @@ namespace QualityRange.View.Pages
     /// </summary>
     public partial class BarsViewProductPage : Page
     {
+        public static BarsViewProductPage Instance { get; private set;}
         public BarsViewProductPage()
         {
             InitializeComponent();
+            Instance = this;
         }
     }
 }

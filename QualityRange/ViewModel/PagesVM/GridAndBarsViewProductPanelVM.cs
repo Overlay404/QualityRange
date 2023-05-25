@@ -98,12 +98,7 @@ namespace QualityRange.ViewModel
             AddProductInListProduct = new LambdaCommand(OnAddProductInListProductExecute, CanAddProductInListProductExecute);
         }
 
-        private static void SaveDataInDataBase()
-        {
-            App.db.SaveChanges();
-        }
-
-        private void InitProductList()
+        public void InitProductList()
         {
             Products = App.db.Product.Local.ToList();
         }

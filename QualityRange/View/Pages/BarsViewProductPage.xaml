@@ -96,6 +96,55 @@
                                                  Foreground="#99FFFFFF"/>
                             </StackPanel>
                         </Border>
+                        <Border Background="#272837"
+                                Padding="6"
+                                Width="125"
+                                Grid.Column="3"
+                                CornerRadius="10"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Right"
+                                Margin="0 0 10 0"
+                                Visibility="{Binding IsAddedInProductList}">
+                            <Grid HorizontalAlignment="Stretch">
+
+                                <Border Width="60"
+                                        Height="26"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Left"
+                                        Background="#02000000">
+                                    <Border.InputBindings>
+                                        <MouseBinding MouseAction="LeftClick"
+                                                      Command="{Binding DataContext.RemoveProductInListProduct, ElementName=ListProductBarsView}"
+                                                      CommandParameter="{Binding ID}"/>
+                                    </Border.InputBindings>
+                                    <fa:ImageAwesome Icon="Minus"
+                                                     Width="15"
+                                                     HorizontalAlignment="Left"
+                                                     Foreground="#99FFFFFF"/>
+                                </Border>
+                                <TextBlock Text="{Binding CountProductInBasket}"
+                                           FontSize="16"
+                                           Margin="10 0"
+                                           HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                                <Border Width="60"
+                                        Height="26"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Right"
+                                        Background="#02000000">
+                                    <Border.InputBindings>
+                                        <MouseBinding MouseAction="LeftClick"
+                                                      Command="{Binding DataContext.AddProductInListProduct, ElementName=ListProductBarsView}"
+                                                      CommandParameter="{Binding ID}"/>
+                                    </Border.InputBindings>
+                                    <fa:ImageAwesome Icon="Plus"
+                                                     HorizontalAlignment="Right"
+                                                     Width="15"
+                                                     Foreground="#99FFFFFF"/>
+                                </Border>
+                            </Grid>
+                        </Border>
                     </Grid>
                 </Border>
             </DataTemplate>

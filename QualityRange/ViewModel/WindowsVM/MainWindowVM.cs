@@ -35,17 +35,21 @@ namespace QualityRange.ViewModel
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
 
 
-        private IEnumerable<Category> _category = App.db.Category.Local;
-        public IEnumerable<Category> Category { get => _category; set => Set(ref _category, value); }
+        private IEnumerable<Category> _categories;
+        public IEnumerable<Category> Categories { get => _categories; set => Set(ref _categories, value); }
+
+
+
+        private Visibility _visibilityBtn = Visibility.Visible;
+        public Visibility VisibilityBtn { get => _visibilityBtn; set => Set(ref _visibilityBtn, value); }
+        
+        
+        private Visibility _visibilityUserIcon = Visibility.Collapsed;
+        public Visibility VisibilityUserIcon { get => _visibilityUserIcon; set => Set(ref _visibilityUserIcon, value); }
 
 
         private int _countProductInBasket;
-        public int CountProductInBasket { get => _countProductInBasket; set => Set(ref _countProductInBasket, value); }
-
-
-        private Visibility _visibilityCountProductInBasket;
-        public Visibility VisibilityCountProductInBasket { get => _visibilityCountProductInBasket; set => Set(ref _visibilityCountProductInBasket, value); }
-        
+        public int CountProductInBasket { get => _countProductInBasket; set => Set(ref _countProductInBasket, value); } 
         #endregion
 
 
@@ -107,7 +111,7 @@ namespace QualityRange.ViewModel
         private bool CanGoWindowExecute(object parameter) => true;
         private void OnGoWindowExecute(object parameter)
         {
-            (parameter as Window).ShowDialog();
+            (parameter as Window).Show();
         }
 
 
@@ -115,6 +119,12 @@ namespace QualityRange.ViewModel
         private bool CanCategoryPressExecute(object parameter) => true;
         private void OnCategoryPressExecute(object parameter)
         {
+
+            if(parameter as string == "Все категории")
+            {
+                GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local;
+                return;
+            }
             GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local.Where(p => p.Category.Name == parameter as string);
         }
         #endregion
@@ -125,6 +135,8 @@ namespace QualityRange.ViewModel
             Instance = this;
 
             InitCountProductInBasket();
+
+            Categories = new List<Category>(App.db.Category.Local).Append(new Category { Name = "Все категории" });
 
             ShutdownApplication = new LambdaCommand(OnShutdownApplicationExecute, CanShutdownApplicationExecute);
             MinimazeWindow = new LambdaCommand(OnMinimazeWindowExecute, CanMinimazeWindowExecute);
@@ -137,8 +149,13 @@ namespace QualityRange.ViewModel
 
         public void InitCountProductInBasket()
         {
+            if(App.user != null)
+            {
+                VisibilityBtn = Visibility.Collapsed;
+                VisibilityUserIcon = Visibility.Visible;
+            }
+
             CountProductInBasket = (int)(App.db.ProductList.Local.Where(pl => pl.Basket.Client.User == App.user)?.Count());
-            VisibilityCountProductInBasket = CountProductInBasket == 0 ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

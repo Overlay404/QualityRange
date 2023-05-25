@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QualityRange.View.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,7 @@ namespace QualityRange.View.Windows
         {
             InitializeComponent();
             Instance = this;
+            RegAuthFrame.Navigate(new AutorizationPage());
         }
     }
 }
