@@ -36,8 +36,11 @@ namespace QualityRange.ViewModel
 
 
         private IEnumerable<Category> _categories;
-        public IEnumerable<Category> Categories { get => _categories; set => Set(ref _categories, value); }
-
+        public IEnumerable<Category> Categories { get => _categories; set => Set(ref _categories, value); } 
+        
+                
+        private Client _clientDC;
+        public Client ClientDC { get => _clientDC; set => Set(ref _clientDC, value); }
 
 
         private Visibility _visibilityBtn = Visibility.Visible;
@@ -46,6 +49,10 @@ namespace QualityRange.ViewModel
         
         private Visibility _visibilityUserIcon = Visibility.Collapsed;
         public Visibility VisibilityUserIcon { get => _visibilityUserIcon; set => Set(ref _visibilityUserIcon, value); }
+
+
+        private Visibility _userInfoPanel = Visibility.Collapsed;
+        public Visibility UserInfoPanel { get => _userInfoPanel; set => Set(ref _userInfoPanel, value); }
 
 
         private int _countProductInBasket;
@@ -123,9 +130,30 @@ namespace QualityRange.ViewModel
             if(parameter as string == "Все категории")
             {
                 GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local;
+                CountProduct = App.db.Product.Local.Count();
                 return;
             }
-            GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local.Where(p => p.Category.Name == parameter as string);
+            var products = App.db.Product.Local.Where(p => p.Category.Name == parameter as string);
+            GridAndBarsViewProductPanelVM.Instance.Products = products;
+            CountProduct = products.Count();
+        }
+        
+        
+        public ICommand UserInfo { get; }
+        private bool CanUserInfoExecute(object parameter) => true;
+        private void OnUserInfoExecute(object parameter)
+        {
+            UserInfoPanel = UserInfoPanel ==  Visibility.Visible? Visibility.Collapsed : Visibility.Visible;
+        }
+        
+        
+        public ICommand LogOut { get; }
+        private bool CanLogOutExecute(object parameter) => true;
+        private void OnLogOutExecute(object parameter)
+        {
+            App.user = null;
+            InitCountProductInBasket();
+            GridAndBarsViewProductPanelVM.Instance.InitProductList();
         }
         #endregion
 
@@ -145,6 +173,8 @@ namespace QualityRange.ViewModel
             GoPage = new LambdaCommand(OnGoPageExecute, CanGoPageExecute);
             GoWindow = new LambdaCommand(OnGoWindowExecute, CanGoWindowExecute);
             CategoryPress = new LambdaCommand(OnCategoryPressExecute, CanCategoryPressExecute);
+            UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
+            LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
         }
 
         public void InitCountProductInBasket()
@@ -153,6 +183,13 @@ namespace QualityRange.ViewModel
             {
                 VisibilityBtn = Visibility.Collapsed;
                 VisibilityUserIcon = Visibility.Visible;
+                ClientDC = App.user.Client;
+            }
+            else
+            {
+                VisibilityBtn = Visibility.Visible;
+                VisibilityUserIcon = Visibility.Collapsed;
+                UserInfoPanel = Visibility.Collapsed;
             }
 
             CountProductInBasket = (int)(App.db.ProductList.Local.Where(pl => pl.Basket.Client.User == App.user)?.Count());

@@ -21,7 +21,7 @@ namespace QualityRange.SupportiveClasses
             return memoryStream.ToArray();
         }
 
-        public byte[] GetImageFromInternet(string uriImage)
+        public static byte[] GetImageFromInternet(string uriImage)
         {
             try
             {

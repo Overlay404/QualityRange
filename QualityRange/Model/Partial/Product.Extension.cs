@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QualityRange.SupportiveClasses;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,9 @@ namespace QualityRange.Model
 {
     partial class Product
     {
-        public ImageSource SourceFirstImage => SupportiveClasses.ImageConverter.ConvertToImageSource(App.db.PhotoProduct.Local.FirstOrDefault(p => p.ID_Product == ID)?.Photo);
+
+        byte[] NullebleImage = ImageConverter.GetImageFromInternet("https://public.nftstatic.com/static/nft/webp/nft-extdata-loader/S3/1681483013058_miqj1i1hln9xmkal3euikxss4xla2qmr_600x600.webp");
+        public byte[] SourceFirstImage => App.db.PhotoProduct.Local.FirstOrDefault(p => p.ID_Product == ID)?.Photo ?? NullebleImage;
 
         public decimal CostWithDiscount => (decimal)(Cost - (Cost * Discount / 100));
 

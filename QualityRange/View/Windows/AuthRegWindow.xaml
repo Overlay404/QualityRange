@@ -14,41 +14,45 @@
         <vm:AuthRegWindowVM/>
     </Window.DataContext>
 
-    <Grid Background="#20242E">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="29*"/>
-            <RowDefinition Height="471*"/>
-        </Grid.RowDefinitions>
-        <Grid VerticalAlignment="Center" Height="28">
-            <Border Background="#EA000000" 
-                            VerticalAlignment="Center"
-                            Height="28"
-                            CornerRadius="5 5 0 0">
-                <Border.InputBindings>
-                    <MouseBinding MouseAction="LeftClick" 
+    <Border BorderBrush="Black"
+            BorderThickness="2 0 2 2"
+            CornerRadius="10 10 0 0">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="29*"/>
+                <RowDefinition Height="471*"/>
+            </Grid.RowDefinitions>
+            <Grid VerticalAlignment="Stretch">
+                <Border Background="#EA000000" 
+                        CornerRadius="5 5 0 0">
+                    <Border.InputBindings>
+                        <MouseBinding MouseAction="LeftClick" 
                                   Command="{Binding DragMoveWindow}"/>
-                </Border.InputBindings>
-            </Border>
+                    </Border.InputBindings>
+                </Border>
 
-            <fa:ImageAwesome Icon="WindowClose" Width="20"
+                <fa:ImageAwesome Icon="WindowClose" Width="20"
                              Style="{StaticResource ShutdownBtnStyle}"
                              x:Name="ShutdownBtn"
                              HorizontalAlignment="Right"
                              Margin="0 0 10 0">
-                <fa:ImageAwesome.InputBindings>
-                    <MouseBinding MouseAction="LeftClick"
+                    <fa:ImageAwesome.InputBindings>
+                        <MouseBinding MouseAction="LeftClick"
                                             Command="{Binding ShutdownApplication}"/>
-                </fa:ImageAwesome.InputBindings>
-            </fa:ImageAwesome>
-        </Grid>
-        <Grid Grid.Row="1">
-            <Frame x:Name="RegAuthFrame" 
-                   NavigationUIVisibility="Hidden"/>
-            <TextBlock Foreground="#FF822E2E"
+                    </fa:ImageAwesome.InputBindings>
+                </fa:ImageAwesome>
+            </Grid>
+            <Grid Grid.Row="1"
+                  Background="#20242E">
+                <Frame x:Name="RegAuthFrame" 
+                       NavigationUIVisibility="Hidden"
+                       Margin="0"/>
+                <TextBlock Foreground="#FF822E2E"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Bottom"
                        Margin="0 0 0 60"
                        x:Name="ShowMessageTextBlock"/>
+            </Grid>
         </Grid>
-    </Grid>
+    </Border>
 </Window>

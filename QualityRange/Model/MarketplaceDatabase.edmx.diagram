@@ -5,18 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="5e8239abbb8a4582a9107594cc885039" Name="Diagram1" ZoomLevel="77">
-        <EntityTypeShape EntityType="MarketShopModel.Address" Width="1.5" PointX="5.25" PointY="10" />
-        <EntityTypeShape EntityType="MarketShopModel.Basket" Width="1.5" PointX="5.25" PointY="6.75" />
-        <EntityTypeShape EntityType="MarketShopModel.Category" Width="1.5" PointX="3" PointY="12.25" />
-        <EntityTypeShape EntityType="MarketShopModel.Client" Width="1.5" PointX="3" PointY="6.625" />
-        <EntityTypeShape EntityType="MarketShopModel.Employee" Width="1.5" PointX="3" PointY="9.625" />
-        <EntityTypeShape EntityType="MarketShopModel.Order" Width="1.5" PointX="7.5" PointY="7.75" />
-        <EntityTypeShape EntityType="MarketShopModel.PhotoProduct" Width="1.5" PointX="7.5" PointY="1" />
-        <EntityTypeShape EntityType="MarketShopModel.Product" Width="1.5" PointX="5.25" PointY="1.75" />
-        <EntityTypeShape EntityType="MarketShopModel.ProductList" Width="1.5" PointX="7.5" PointY="4.125" />
-        <EntityTypeShape EntityType="MarketShopModel.Salesman" Width="1.5" PointX="3" PointY="3.75" />
-        <EntityTypeShape EntityType="MarketShopModel.Status" Width="1.5" PointX="3" PointY="0.875" />
-        <EntityTypeShape EntityType="MarketShopModel.User" Width="1.5" PointX="0.75" PointY="6.25" />
+        <EntityTypeShape EntityType="MarketShopModel.Address" Width="1.5" PointX="5.25" PointY="1" />
+        <EntityTypeShape EntityType="MarketShopModel.Basket" Width="1.5" PointX="5.25" PointY="3.75" />
+        <EntityTypeShape EntityType="MarketShopModel.Category" Width="1.5" PointX="3" PointY="13" />
+        <EntityTypeShape EntityType="MarketShopModel.Client" Width="1.5" PointX="3" PointY="3.5" />
+        <EntityTypeShape EntityType="MarketShopModel.Employee" Width="1.5" PointX="3" PointY="6.75" />
+        <EntityTypeShape EntityType="MarketShopModel.Order" Width="1.5" PointX="7.5" PointY="0.75" />
+        <EntityTypeShape EntityType="MarketShopModel.PhotoProduct" Width="1.5" PointX="7.5" PointY="10" />
+        <EntityTypeShape EntityType="MarketShopModel.Product" Width="1.5" PointX="5.25" PointY="8.875" />
+        <EntityTypeShape EntityType="MarketShopModel.ProductList" Width="1.5" PointX="7.5" PointY="3.75" />
+        <EntityTypeShape EntityType="MarketShopModel.Salesman" Width="1.5" PointX="3" PointY="9.75" />
+        <EntityTypeShape EntityType="MarketShopModel.Status" Width="1.5" PointX="3" PointY="15.25" />
+        <EntityTypeShape EntityType="MarketShopModel.User" Width="1.5" PointX="0.75" PointY="6.625" />
         <AssociationConnector Association="MarketShopModel.FK_Order_Address" />
         <AssociationConnector Association="MarketShopModel.FK_Basket_Client" />
         <AssociationConnector Association="MarketShopModel.FK_Order_Basket1" />

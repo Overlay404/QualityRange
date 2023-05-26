@@ -106,6 +106,7 @@
     <Compile Include="Model\Order.cs">
       <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\Partial\Client.Extension.cs" />
     <Compile Include="Model\Partial\Product.Extension.cs" />
     <Compile Include="Model\PhotoProduct.cs">
       <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
@@ -196,7 +197,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\MainWindowStyle.xaml">
+    <Page Include="Styles\MainStyle.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -1,6 +1,7 @@
 ﻿using QualityRange.Commands.Base;
 using QualityRange.Model;
 using QualityRange.View.Pages;
+using QualityRange.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,7 +31,7 @@ namespace QualityRange.ViewModel
         {
             if (App.user == null)
             {
-                // Вызов регистрации
+                new AuthRegWindow().Show();
                 return;
             }
 

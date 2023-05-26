@@ -24,6 +24,8 @@ namespace QualityRange.Model
         public string Surname { get; set; }
         public string Name { get; set; }
         public string Patronymic { get; set; }
+        public byte[] ProfilePhoto { get; set; }
+        public string NumberOfCreditCard { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Basket> Basket { get; set; }

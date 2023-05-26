@@ -30,16 +30,22 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="150" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="Patronymic" Type="nvarchar" MaxLength="150" />
+          <Property Name="ProfilePhoto" Type="varbinary(max)" />
+          <Property Name="NumberOfCreditCard" Type="nvarchar" MaxLength="16" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar" MaxLength="150" />
+          <Property Name="Name" Type="nvarchar" MaxLength="150" />
+          <Property Name="Patronymic" Type="nvarchar" MaxLength="150" />
+          <Property Name="ProfilePhoto" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -90,6 +96,7 @@
           <Property Name="NameCompany" Type="nvarchar" MaxLength="150" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="DateOnMarketplace" Type="date" />
+          <Property Name="ProfilePhoto" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="Status">
           <Key>
@@ -409,10 +416,12 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID" Type="Int32" Nullable="false" />
           <Property Name="Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Patronymic" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProfilePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="NumberOfCreditCard" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Basket" Relationship="MarketShopModel.FK_Basket_Client" FromRole="Client" ToRole="Basket" />
           <NavigationProperty Name="User" Relationship="MarketShopModel.FK_Client_User1" FromRole="Client" ToRole="User" />
         </EntityType>
@@ -421,6 +430,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProfilePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="User" Relationship="MarketShopModel.FK_Employee_User1" FromRole="Employee" ToRole="User" />
         </EntityType>
         <EntityType Name="Order">
@@ -482,6 +495,7 @@
           <Property Name="NameCompany" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateOnMarketplace" Type="DateTime" Precision="0" />
+          <Property Name="ProfilePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
           <NavigationProperty Name="Product" Relationship="MarketShopModel.FK_Product_Salesman1" FromRole="Salesman" ToRole="Product" />
           <NavigationProperty Name="User" Relationship="MarketShopModel.FK_Salesman_User1" FromRole="Salesman" ToRole="User" />
         </EntityType>
@@ -682,6 +696,8 @@
           <EntitySetMapping Name="Client">
             <EntityTypeMapping TypeName="MarketShopModel.Client">
               <MappingFragment StoreEntitySet="Client">
+                <ScalarProperty Name="NumberOfCreditCard" ColumnName="NumberOfCreditCard" />
+                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
                 <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Surname" ColumnName="Surname" />
@@ -692,6 +708,10 @@
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="MarketShopModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -744,6 +764,7 @@
           <EntitySetMapping Name="Salesman">
             <EntityTypeMapping TypeName="MarketShopModel.Salesman">
               <MappingFragment StoreEntitySet="Salesman">
+                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
                 <ScalarProperty Name="DateOnMarketplace" ColumnName="DateOnMarketplace" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NameCompany" ColumnName="NameCompany" />
