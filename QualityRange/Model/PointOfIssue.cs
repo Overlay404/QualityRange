@@ -12,19 +12,20 @@ namespace QualityRange.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Basket
+    public partial class PointOfIssue
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Basket()
+        public PointOfIssue()
         {
-            this.ProductList = new HashSet<ProductList>();
+            this.Order = new HashSet<Order>();
         }
     
         public int ID { get; set; }
-        public int ID_Client { get; set; }
+        public string Name { get; set; }
+        public Nullable<decimal> lat { get; set; }
+        public Nullable<decimal> lot { get; set; }
     
-        public virtual Client Client { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ProductList> ProductList { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

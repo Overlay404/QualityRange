@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -118,7 +119,7 @@ namespace QualityRange.ViewModel
         private bool CanGoWindowExecute(object parameter) => true;
         private void OnGoWindowExecute(object parameter)
         {
-            (parameter as Window).Show();
+            new AuthRegWindow().Show();
         }
 
 
@@ -133,7 +134,7 @@ namespace QualityRange.ViewModel
                 CountProduct = App.db.Product.Local.Count();
                 return;
             }
-            var products = App.db.Product.Local.Where(p => p.Category.Name == parameter as string);
+            var products = new ObservableCollection<Product>(App.db.Product.Local.Where(p => p.Category.Name == parameter as string));
             GridAndBarsViewProductPanelVM.Instance.Products = products;
             CountProduct = products.Count();
         }
@@ -153,6 +154,7 @@ namespace QualityRange.ViewModel
         {
             App.user = null;
             InitCountProductInBasket();
+            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(App.db.Product.Local);
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
         }
         #endregion

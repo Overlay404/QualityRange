@@ -18,6 +18,7 @@ namespace QualityRange.Model
         public Client()
         {
             this.Basket = new HashSet<Basket>();
+            this.Order = new HashSet<Order>();
         }
     
         public int ID { get; set; }
@@ -30,5 +31,7 @@ namespace QualityRange.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Basket> Basket { get; set; }
         public virtual User User { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Order { get; set; }
     }
 }

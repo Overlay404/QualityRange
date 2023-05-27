@@ -78,6 +78,10 @@
                         </fa:ImageAwesome>
                     </StackPanel>
                 </Grid>
+                <Frame Grid.RowSpan="3"
+                       Grid.Row="1"
+                       Panel.ZIndex="3"
+                       x:Name="BasketFrame"/>
                 <Border Background="#20242E"
                       Grid.RowSpan="2" Grid.Row="1"
                         CornerRadius="10">

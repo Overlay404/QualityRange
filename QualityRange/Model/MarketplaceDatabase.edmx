@@ -5,13 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище MarketShopModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
-        </EntityType>
         <EntityType Name="Basket">
           <Key>
             <PropertyRef Name="ID" />
@@ -52,8 +45,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ID_Basket" Type="int" Nullable="false" />
-          <Property Name="ID_Address" Type="int" Nullable="false" />
+          <Property Name="ID_PointOfIssue" Type="int" Nullable="false" />
+          <Property Name="ID_Client" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="PhotoProduct">
           <Key>
@@ -62,6 +55,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Photo" Type="image" Nullable="false" />
           <Property Name="ID_Product" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PointOfIssue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="lat" Type="decimal" Precision="8" Scale="6" />
+          <Property Name="lot" Type="decimal" Precision="9" Scale="6" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -86,6 +88,15 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ID_Product" Type="int" Nullable="false" />
           <Property Name="ID_Basket" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" />
+        </EntityType>
+        <EntityType Name="ProductListOrder">
+          <Key>
+            <PropertyRef Name="ID_Product" />
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Product" Type="int" Nullable="false" />
+          <Property Name="ID_Order" Type="int" Nullable="false" />
           <Property Name="Count" Type="int" />
         </EntityType>
         <EntityType Name="Salesman">
@@ -151,26 +162,26 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Address">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
+          <End Role="PointOfIssue" Type="Self.PointOfIssue" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Address">
+            <Principal Role="PointOfIssue">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="ID_Address" />
+              <PropertyRef Name="ID_PointOfIssue" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Basket1">
-          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+        <Association Name="FK_Order_Client">
+          <End Role="Client" Type="Self.Client" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Basket">
+            <Principal Role="Client">
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="ID_Basket" />
+              <PropertyRef Name="ID_Client" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -246,6 +257,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductListOrder_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="ProductListOrder" Type="Self.ProductListOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductListOrder">
+              <PropertyRef Name="ID_Order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductListOrder_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductListOrder" Type="Self.ProductListOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductListOrder">
+              <PropertyRef Name="ID_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Salesman_User1">
           <End Role="User" Type="Self.User" Multiplicity="1" />
           <End Role="Salesman" Type="Self.Salesman" Multiplicity="0..1" />
@@ -259,15 +294,16 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище MarketShopModelContainer">
-          <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Basket" EntityType="Self.Basket" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Client" EntityType="Self.Client" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhotoProduct" EntityType="Self.PhotoProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PointOfIssue" EntityType="Self.PointOfIssue" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductList" EntityType="Self.ProductList" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductListOrder" EntityType="Self.ProductListOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Salesman" EntityType="Self.Salesman" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -284,11 +320,11 @@
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Address" Association="Self.FK_Order_Address">
-            <End Role="Address" EntitySet="Address" />
+            <End Role="PointOfIssue" EntitySet="PointOfIssue" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Basket1" Association="Self.FK_Order_Basket1">
-            <End Role="Basket" EntitySet="Basket" />
+          <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_PhotoProduct_Product1" Association="Self.FK_PhotoProduct_Product1">
@@ -315,6 +351,14 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductList" EntitySet="ProductList" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductListOrder_Order" Association="Self.FK_ProductListOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ProductListOrder" EntitySet="ProductListOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductListOrder_Product" Association="Self.FK_ProductListOrder_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductListOrder" EntitySet="ProductListOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_Salesman_User1" Association="Self.FK_Salesman_User1">
             <End Role="User" EntitySet="User" />
             <End Role="Salesman" EntitySet="Salesman" />
@@ -325,29 +369,22 @@
     <edmx:ConceptualModels>
       <Schema Namespace="MarketShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="MarketplaceDatabaseEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Address" EntityType="MarketShopModel.Address" />
           <EntitySet Name="Basket" EntityType="MarketShopModel.Basket" />
           <EntitySet Name="Category" EntityType="MarketShopModel.Category" />
           <EntitySet Name="Client" EntityType="MarketShopModel.Client" />
           <EntitySet Name="Employee" EntityType="MarketShopModel.Employee" />
           <EntitySet Name="Order" EntityType="MarketShopModel.Order" />
           <EntitySet Name="PhotoProduct" EntityType="MarketShopModel.PhotoProduct" />
+          <EntitySet Name="PointOfIssue" EntityType="MarketShopModel.PointOfIssue" />
           <EntitySet Name="Product" EntityType="MarketShopModel.Product" />
           <EntitySet Name="ProductList" EntityType="MarketShopModel.ProductList" />
+          <EntitySet Name="ProductListOrder" EntityType="MarketShopModel.ProductListOrder" />
           <EntitySet Name="Salesman" EntityType="MarketShopModel.Salesman" />
           <EntitySet Name="Status" EntityType="MarketShopModel.Status" />
           <EntitySet Name="User" EntityType="MarketShopModel.User" />
-          <AssociationSet Name="FK_Order_Address" Association="MarketShopModel.FK_Order_Address">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
           <AssociationSet Name="FK_Basket_Client" Association="MarketShopModel.FK_Basket_Client">
             <End Role="Client" EntitySet="Client" />
             <End Role="Basket" EntitySet="Basket" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Basket1" Association="MarketShopModel.FK_Order_Basket1">
-            <End Role="Basket" EntitySet="Basket" />
-            <End Role="Order" EntitySet="Order" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductList_Basket" Association="MarketShopModel.FK_ProductList_Basket">
             <End Role="Basket" EntitySet="Basket" />
@@ -361,9 +398,21 @@
             <End Role="User" EntitySet="User" />
             <End Role="Client" EntitySet="Client" />
           </AssociationSet>
+          <AssociationSet Name="FK_Order_Client" Association="MarketShopModel.FK_Order_Client">
+            <End Role="Client" EntitySet="Client" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_User1" Association="MarketShopModel.FK_Employee_User1">
             <End Role="User" EntitySet="User" />
             <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Address" Association="MarketShopModel.FK_Order_Address">
+            <End Role="PointOfIssue" EntitySet="PointOfIssue" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductListOrder_Order" Association="MarketShopModel.FK_ProductListOrder_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="ProductListOrder" EntitySet="ProductListOrder" />
           </AssociationSet>
           <AssociationSet Name="FK_PhotoProduct_Product1" Association="MarketShopModel.FK_PhotoProduct_Product1">
             <End Role="Product" EntitySet="Product" />
@@ -381,19 +430,15 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductList" EntitySet="ProductList" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProductListOrder_Product" Association="MarketShopModel.FK_ProductListOrder_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductListOrder" EntitySet="ProductListOrder" />
+          </AssociationSet>
           <AssociationSet Name="FK_Salesman_User1" Association="MarketShopModel.FK_Salesman_User1">
             <End Role="User" EntitySet="User" />
             <End Role="Salesman" EntitySet="Salesman" />
           </AssociationSet>
         </EntityContainer>
-        <EntityType Name="Address">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="MarketShopModel.FK_Order_Address" FromRole="Address" ToRole="Order" />
-        </EntityType>
         <EntityType Name="Basket">
           <Key>
             <PropertyRef Name="ID" />
@@ -401,7 +446,6 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ID_Client" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Client" Relationship="MarketShopModel.FK_Basket_Client" FromRole="Basket" ToRole="Client" />
-          <NavigationProperty Name="Order" Relationship="MarketShopModel.FK_Order_Basket1" FromRole="Basket" ToRole="Order" />
           <NavigationProperty Name="ProductList" Relationship="MarketShopModel.FK_ProductList_Basket" FromRole="Basket" ToRole="ProductList" />
         </EntityType>
         <EntityType Name="Category">
@@ -424,6 +468,7 @@
           <Property Name="NumberOfCreditCard" Type="String" MaxLength="16" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Basket" Relationship="MarketShopModel.FK_Basket_Client" FromRole="Client" ToRole="Basket" />
           <NavigationProperty Name="User" Relationship="MarketShopModel.FK_Client_User1" FromRole="Client" ToRole="User" />
+          <NavigationProperty Name="Order" Relationship="MarketShopModel.FK_Order_Client" FromRole="Client" ToRole="Order" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -441,10 +486,11 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ID_Basket" Type="Int32" Nullable="false" />
-          <Property Name="ID_Address" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Address" Relationship="MarketShopModel.FK_Order_Address" FromRole="Order" ToRole="Address" />
-          <NavigationProperty Name="Basket" Relationship="MarketShopModel.FK_Order_Basket1" FromRole="Order" ToRole="Basket" />
+          <Property Name="ID_PointOfIssue" Type="Int32" Nullable="false" />
+          <Property Name="ID_Client" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Client" Relationship="MarketShopModel.FK_Order_Client" FromRole="Order" ToRole="Client" />
+          <NavigationProperty Name="PointOfIssue" Relationship="MarketShopModel.FK_Order_Address" FromRole="Order" ToRole="PointOfIssue" />
+          <NavigationProperty Name="ProductListOrder" Relationship="MarketShopModel.FK_ProductListOrder_Order" FromRole="Order" ToRole="ProductListOrder" />
         </EntityType>
         <EntityType Name="PhotoProduct">
           <Key>
@@ -454,6 +500,16 @@
           <Property Name="Photo" Type="Binary" Nullable="false" MaxLength="Max" FixedLength="false" />
           <Property Name="ID_Product" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="MarketShopModel.FK_PhotoProduct_Product1" FromRole="PhotoProduct" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="PointOfIssue">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="lat" Type="Decimal" Precision="8" Scale="6" />
+          <Property Name="lot" Type="Decimal" Precision="9" Scale="6" />
+          <NavigationProperty Name="Order" Relationship="MarketShopModel.FK_Order_Address" FromRole="PointOfIssue" ToRole="Order" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -475,6 +531,7 @@
           <NavigationProperty Name="Salesman" Relationship="MarketShopModel.FK_Product_Salesman1" FromRole="Product" ToRole="Salesman" />
           <NavigationProperty Name="Status" Relationship="MarketShopModel.FK_Product_Status1" FromRole="Product" ToRole="Status" />
           <NavigationProperty Name="ProductList" Relationship="MarketShopModel.FK_ProductList_Product" FromRole="Product" ToRole="ProductList" />
+          <NavigationProperty Name="ProductListOrder" Relationship="MarketShopModel.FK_ProductListOrder_Product" FromRole="Product" ToRole="ProductListOrder" />
         </EntityType>
         <EntityType Name="ProductList">
           <Key>
@@ -486,6 +543,17 @@
           <Property Name="Count" Type="Int32" />
           <NavigationProperty Name="Basket" Relationship="MarketShopModel.FK_ProductList_Basket" FromRole="ProductList" ToRole="Basket" />
           <NavigationProperty Name="Product" Relationship="MarketShopModel.FK_ProductList_Product" FromRole="ProductList" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="ProductListOrder">
+          <Key>
+            <PropertyRef Name="ID_Product" />
+            <PropertyRef Name="ID_Order" />
+          </Key>
+          <Property Name="ID_Product" Type="Int32" Nullable="false" />
+          <Property Name="ID_Order" Type="Int32" Nullable="false" />
+          <Property Name="Count" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="MarketShopModel.FK_ProductListOrder_Order" FromRole="ProductListOrder" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="MarketShopModel.FK_ProductListOrder_Product" FromRole="ProductListOrder" ToRole="Product" />
         </EntityType>
         <EntityType Name="Salesman">
           <Key>
@@ -519,18 +587,6 @@
           <NavigationProperty Name="Employee" Relationship="MarketShopModel.FK_Employee_User1" FromRole="User" ToRole="Employee" />
           <NavigationProperty Name="Salesman" Relationship="MarketShopModel.FK_Salesman_User1" FromRole="User" ToRole="Salesman" />
         </EntityType>
-        <Association Name="FK_Order_Address">
-          <End Type="MarketShopModel.Address" Role="Address" Multiplicity="1" />
-          <End Type="MarketShopModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Address">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="ID_Address" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Basket_Client">
           <End Type="MarketShopModel.Client" Role="Client" Multiplicity="1" />
           <End Type="MarketShopModel.Basket" Role="Basket" Multiplicity="*" />
@@ -540,18 +596,6 @@
             </Principal>
             <Dependent Role="Basket">
               <PropertyRef Name="ID_Client" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Basket1">
-          <End Type="MarketShopModel.Basket" Role="Basket" Multiplicity="1" />
-          <End Type="MarketShopModel.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Basket">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="ID_Basket" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -591,6 +635,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Client">
+          <End Type="MarketShopModel.Client" Role="Client" Multiplicity="1" />
+          <End Type="MarketShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Client">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_Client" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_User1">
           <End Type="MarketShopModel.User" Role="User" Multiplicity="1" />
           <End Type="MarketShopModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -600,6 +656,30 @@
             </Principal>
             <Dependent Role="Employee">
               <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Address">
+          <End Type="MarketShopModel.PointOfIssue" Role="PointOfIssue" Multiplicity="1" />
+          <End Type="MarketShopModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PointOfIssue">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ID_PointOfIssue" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductListOrder_Order">
+          <End Type="MarketShopModel.Order" Role="Order" Multiplicity="1" />
+          <End Type="MarketShopModel.ProductListOrder" Role="ProductListOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductListOrder">
+              <PropertyRef Name="ID_Order" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -651,6 +731,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductListOrder_Product">
+          <End Type="MarketShopModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="MarketShopModel.ProductListOrder" Role="ProductListOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductListOrder">
+              <PropertyRef Name="ID_Product" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Salesman_User1">
           <End Type="MarketShopModel.User" Role="User" Multiplicity="1" />
           <End Type="MarketShopModel.Salesman" Role="Salesman" Multiplicity="0..1" />
@@ -669,14 +761,6 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище MarketShopModelContainer" CdmEntityContainer="MarketplaceDatabaseEntities">
-          <EntitySetMapping Name="Address">
-            <EntityTypeMapping TypeName="MarketShopModel.Address">
-              <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Basket">
             <EntityTypeMapping TypeName="MarketShopModel.Basket">
               <MappingFragment StoreEntitySet="Basket">
@@ -719,8 +803,8 @@
           <EntitySetMapping Name="Order">
             <EntityTypeMapping TypeName="MarketShopModel.Order">
               <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="ID_Address" ColumnName="ID_Address" />
-                <ScalarProperty Name="ID_Basket" ColumnName="ID_Basket" />
+                <ScalarProperty Name="ID_Client" ColumnName="ID_Client" />
+                <ScalarProperty Name="ID_PointOfIssue" ColumnName="ID_PointOfIssue" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -730,6 +814,16 @@
               <MappingFragment StoreEntitySet="PhotoProduct">
                 <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
                 <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PointOfIssue">
+            <EntityTypeMapping TypeName="MarketShopModel.PointOfIssue">
+              <MappingFragment StoreEntitySet="PointOfIssue">
+                <ScalarProperty Name="lot" ColumnName="lot" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -758,6 +852,15 @@
                 <ScalarProperty Name="ID_Basket" ColumnName="ID_Basket" />
                 <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductListOrder">
+            <EntityTypeMapping TypeName="MarketShopModel.ProductListOrder">
+              <MappingFragment StoreEntitySet="ProductListOrder">
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ID_Order" ColumnName="ID_Order" />
+                <ScalarProperty Name="ID_Product" ColumnName="ID_Product" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

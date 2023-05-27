@@ -73,9 +73,6 @@
     </Compile>
     <Compile Include="Commands\Base\Command.cs" />
     <Compile Include="Commands\Base\LambdaCommand.cs" />
-    <Compile Include="Model\Address.cs">
-      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
-    </Compile>
     <Compile Include="Model\Basket.cs">
       <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
     </Compile>
@@ -111,10 +108,16 @@
     <Compile Include="Model\PhotoProduct.cs">
       <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\PointOfIssue.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Product.cs">
       <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\ProductList.cs">
+      <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ProductListOrder.cs">
       <DependentUpon>MarketplaceDatabase.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\Salesman.cs">
@@ -136,6 +139,9 @@
     </Compile>
     <Compile Include="View\Pages\BarsViewProductPage.xaml.cs">
       <DependentUpon>BarsViewProductPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\BasketPage.xaml.cs">
+      <DependentUpon>BasketPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\GridViewProductPanel.xaml.cs">
       <DependentUpon>GridViewProductPanel.xaml</DependentUpon>
@@ -206,6 +212,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\BarsViewProductPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\BasketPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

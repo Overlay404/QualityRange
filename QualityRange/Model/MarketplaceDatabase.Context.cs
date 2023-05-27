@@ -25,15 +25,16 @@ namespace QualityRange.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<Basket> Basket { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Client> Client { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<PhotoProduct> PhotoProduct { get; set; }
+        public virtual DbSet<PointOfIssue> PointOfIssue { get; set; }
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductList> ProductList { get; set; }
+        public virtual DbSet<ProductListOrder> ProductListOrder { get; set; }
         public virtual DbSet<Salesman> Salesman { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User> User { get; set; }

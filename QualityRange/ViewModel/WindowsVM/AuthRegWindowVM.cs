@@ -41,7 +41,7 @@ namespace QualityRange.ViewModel.WindowsVM
             ClearMessageInTextBlock(null, null);
 
             var loginIntroduced = AutorizationPage.Instance.LoginTB.Text;
-            var passwordIntroduced = AutorizationPage.Instance.LoginTB.Text;
+            var passwordIntroduced = AutorizationPage.Instance.PasswordTB.Text;
 
             if (String.IsNullOrWhiteSpace(loginIntroduced) && String.IsNullOrWhiteSpace(passwordIntroduced))
             {
@@ -49,7 +49,7 @@ namespace QualityRange.ViewModel.WindowsVM
                 return;
             }
 
-            App.user = App.db.User.FirstOrDefault(u => u.Login == loginIntroduced.Trim() && u.Password == passwordIntroduced.Trim() && u.Removed == false);
+            App.user = App.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false);
 
             if (App.user == null)
             {
@@ -57,7 +57,7 @@ namespace QualityRange.ViewModel.WindowsVM
                 return;
             }
 
-            AuthRegWindow.Instance.Hide();
+            AuthRegWindow.Instance.Close();
             MainWindowVM.Instance.InitCountProductInBasket();
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
         }

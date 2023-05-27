@@ -19,6 +19,7 @@ namespace QualityRange.Model
         {
             this.PhotoProduct = new HashSet<PhotoProduct>();
             this.ProductList = new HashSet<ProductList>();
+            this.ProductListOrder = new HashSet<ProductListOrder>();
         }
     
         public int ID { get; set; }
@@ -40,5 +41,7 @@ namespace QualityRange.Model
         public virtual Status Status { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductList> ProductList { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductListOrder> ProductListOrder { get; set; }
     }
 }

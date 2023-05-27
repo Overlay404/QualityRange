@@ -11,9 +11,7 @@ namespace QualityRange.Model
 {
     partial class Product
     {
-
-        byte[] NullebleImage = ImageConverter.GetImageFromInternet("https://public.nftstatic.com/static/nft/webp/nft-extdata-loader/S3/1681483013058_miqj1i1hln9xmkal3euikxss4xla2qmr_600x600.webp");
-        public byte[] SourceFirstImage => App.db.PhotoProduct.Local.FirstOrDefault(p => p.ID_Product == ID)?.Photo ?? NullebleImage;
+        public byte[] SourceFirstImage => App.db.PhotoProduct.Local.FirstOrDefault(p => p.ID_Product == ID)?.Photo ?? App.ImageNullebleProduct;
 
         public decimal CostWithDiscount => (decimal)(Cost - (Cost * Discount / 100));
 

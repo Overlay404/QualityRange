@@ -14,11 +14,19 @@ namespace QualityRange.Model
     
     public partial class Order
     {
-        public int ID { get; set; }
-        public int ID_Basket { get; set; }
-        public int ID_Address { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Order()
+        {
+            this.ProductListOrder = new HashSet<ProductListOrder>();
+        }
     
-        public virtual Address Address { get; set; }
-        public virtual Basket Basket { get; set; }
+        public int ID { get; set; }
+        public int ID_PointOfIssue { get; set; }
+        public int ID_Client { get; set; }
+    
+        public virtual Client Client { get; set; }
+        public virtual PointOfIssue PointOfIssue { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ProductListOrder> ProductListOrder { get; set; }
     }
 }

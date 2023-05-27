@@ -4,6 +4,7 @@ using QualityRange.View.Pages;
 using QualityRange.View.Windows;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -11,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Input;
 
 namespace QualityRange.ViewModel
@@ -20,8 +22,8 @@ namespace QualityRange.ViewModel
         public static GridAndBarsViewProductPanelVM Instance { get; set; }
 
         #region Property
-        private IEnumerable<Product> _products;
-        public IEnumerable<Product> Products { get => _products; set => Set(ref _products, value); }
+        private ObservableCollection<Product> _products = new ObservableCollection<Product>(App.db.Product.Local);
+        public ObservableCollection<Product> Products { get => _products; set => Set(ref _products, value); }
         #endregion
 
         #region Commands
@@ -61,6 +63,11 @@ namespace QualityRange.ViewModel
         {
             var prodListItem = App.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == App.user.ID && prodlist.Product.ID == (int)parameter);
 
+            if(prodListItem == null)
+            {
+                return;
+            }
+
             if(prodListItem.Count == 1) 
             {
                 App.db.ProductList.Local.Remove(prodListItem);
@@ -79,7 +86,6 @@ namespace QualityRange.ViewModel
         private void OnAddProductInListProductExecute(object parameter)
         {
             var prodListItem = App.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == App.user.ID && prodlist.Product.ID == (int)parameter);
-
             prodListItem.Count++;
 
             MainWindowVM.Instance.InitCountProductInBasket();
@@ -101,7 +107,14 @@ namespace QualityRange.ViewModel
 
         public void InitProductList()
         {
-            Products = App.db.Product.Local.ToList();
+            var classBars = BarsViewProductPage.Instance;
+            var classGrid = GridViewProductPanel.Instance;
+            if (classBars == null || classGrid == null)
+            {
+                return;
+            }
+            classBars.ListProductBarsView.Items.Refresh();
+            classGrid.ListProductGridView.Items.Refresh();
         }
     }
 }
