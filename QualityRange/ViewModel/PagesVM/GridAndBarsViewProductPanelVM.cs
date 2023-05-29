@@ -2,6 +2,7 @@
 using QualityRange.Model;
 using QualityRange.View.Pages;
 using QualityRange.View.Windows;
+using QualityRange.ViewModel.PagesVM;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -91,6 +92,18 @@ namespace QualityRange.ViewModel
             MainWindowVM.Instance.InitCountProductInBasket();
             InitProductList();
         }
+        
+        
+        public ICommand AdoutProductWidowShow { get; }
+        private bool CanAdoutProductWidowShowExecute(object parameter) => true;
+        private void OnAdoutProductWidowShowExecute(object parameter)
+        {
+            var aboutProduct = new AboutProduct();
+            MainWindow.Instance.BasketFrame.Navigate(aboutProduct);
+            AboutProductVM.Instance.Product = App.db.Product.Local.FirstOrDefault(p => p.ID == (int)parameter);
+            AboutProductVM.Instance.Images = AboutProductVM.Instance.Product.PhotoProduct.Count() == 0 ? AboutProductVM.Instance.Product.PhotoProduct.Append(new PhotoProduct { Photo = App.ImageNullebleProduct }): AboutProductVM.Instance.Product.PhotoProduct;
+            AboutProductVM.Instance.SelectedImage = AboutProductVM.Instance.Images.FirstOrDefault()?.Photo;
+        }
         #endregion
 
         public GridAndBarsViewProductPanelVM()
@@ -103,6 +116,7 @@ namespace QualityRange.ViewModel
             AddBasketProduct = new LambdaCommand(OnAddBasketProductExecute, CanAddBasketProductExecute);
             RemoveProductInListProduct = new LambdaCommand(OnRemoveProductInListProductExecute, CanRemoveProductInListProductExecute);
             AddProductInListProduct = new LambdaCommand(OnAddProductInListProductExecute, CanAddProductInListProductExecute);
+            AdoutProductWidowShow = new LambdaCommand(OnAdoutProductWidowShowExecute, CanAdoutProductWidowShowExecute);
         }
 
         public void InitProductList()

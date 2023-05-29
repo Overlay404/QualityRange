@@ -131,9 +131,13 @@
     </Compile>
     <Compile Include="SupportiveClasses\ImageConverter.cs" />
     <Compile Include="ViewModel\Base\ViewModel.cs" />
+    <Compile Include="ViewModel\PagesVM\AboutProductVM.cs" />
     <Compile Include="ViewModel\PagesVM\GridAndBarsViewProductPanelVM.cs" />
     <Compile Include="ViewModel\WindowsVM\AuthRegWindowVM.cs" />
     <Compile Include="ViewModel\WindowsVM\MainWindowVM.cs" />
+    <Compile Include="View\Pages\AboutProduct.xaml.cs">
+      <DependentUpon>AboutProduct.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
     </Compile>
@@ -204,6 +208,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\MainStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\AboutProduct.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

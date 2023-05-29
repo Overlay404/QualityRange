@@ -18,7 +18,8 @@
               Background="Transparent"
               ScrollViewer.CanContentScroll="False"
               ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-              x:Name="ListProductBarsView">
+              x:Name="ListProductBarsView"
+              SelectionMode="Extended">
         <ListView.ItemTemplate>
             <DataTemplate>
                 <Border Background="#1D1E27"
@@ -29,51 +30,62 @@
                         Height="130">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition Width="5*"/>
-                            <ColumnDefinition Width="1*"/>
+                            <ColumnDefinition Width="7*"/>
                             <ColumnDefinition Width="1.6*"/>
                         </Grid.ColumnDefinitions>
-                        <Image Source="{Binding SourceFirstImage}"
+                        <Grid Grid.Column="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition Width="5*"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick" 
+                                      Command="{Binding DataContext.AdoutProductWidowShow, ElementName=ListProductBarsView}"
+                                      CommandParameter="{Binding ID}"/>
+                            </Grid.InputBindings>
+                            <Image Source="{Binding SourceFirstImage}"
                                    Height="120" Width="120"
                                    Stretch="Fill"
                                HorizontalAlignment="Left">
-                            <Image.Clip>
-                                <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,120,120"/>
-                            </Image.Clip>
-                        </Image>
-                        <StackPanel HorizontalAlignment="Left"
+                                <Image.Clip>
+                                    <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,120,120"/>
+                                </Image.Clip>
+                            </Image>
+                            <StackPanel HorizontalAlignment="Left"
                                     Grid.Column="1">
-                            <TextBlock Text="{Binding Name}"
+                                <TextBlock Text="{Binding Name}"
                                        Margin="0 5 0 0"
                                        TextWrapping="Wrap"
                                        Height="19"/>
-                            <TextBlock Text="{Binding Description}"
+                                <TextBlock Text="{Binding Description}"
                                        Margin="0 5 0 0"
                                        TextWrapping="Wrap"
                                        FontSize="10"/>
-                        </StackPanel>
-                        <DockPanel  Margin="0 10 0 10"
+                            </StackPanel>
+                            <DockPanel  Margin="0 10 0 10"
                                     Grid.Column="2"
                                     HorizontalAlignment="Left">
-                            <TextBlock Text="{Binding Count, StringFormat='В наличии: {0}'}"
+                                <TextBlock Text="{Binding Count, StringFormat='В наличии: {0}'}"
                                        DockPanel.Dock="Top"/>
-                            <StackPanel DockPanel.Dock="Bottom"
+                                <StackPanel DockPanel.Dock="Bottom"
                                         VerticalAlignment="Bottom"
                                         Orientation="Horizontal">
-                                <TextBlock Text="{Binding CostWithDiscount}"
+                                    <TextBlock Text="{Binding CostWithDiscount}"
                                                FontSize="12"/>
-                                <TextBlock Text="{Binding Cost}"
+                                    <TextBlock Text="{Binding Cost}"
                                            FontSize="8"
                                            Margin="5 0 0 0"
                                            TextDecorations="Strikethrough"
                                            VerticalAlignment="Top"
                                            Foreground="Gray"/>
-                            </StackPanel>
-                        </DockPanel>
+                                </StackPanel>
+                            </DockPanel>
+                        </Grid>
                         <Border Background="#272837"
                                 Padding="10"
-                                Grid.Column="3"
+                                Grid.Column="1"
+                                Width="155"
                                 CornerRadius="10"
                                 Margin="0 0 10 0"
                                 VerticalAlignment="Center"
@@ -98,8 +110,8 @@
                         </Border>
                         <Border Background="#272837"
                                 Padding="6"
-                                Width="125"
-                                Grid.Column="3"
+                                Width="155"
+                                Grid.Column="1"
                                 CornerRadius="10"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Right"

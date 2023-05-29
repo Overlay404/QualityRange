@@ -1,7 +1,5 @@
-﻿using QualityRange.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,17 +16,13 @@ using System.Windows.Shapes;
 namespace QualityRange.View.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для GridViewProductPanel.xaml
+    /// Логика взаимодействия для AboutProductWindow.xaml
     /// </summary>
-    public partial class GridViewProductPanel : Page
+    public partial class AboutProduct : Page
     {
-        public static GridViewProductPanel Instance { get; private set; }
-        public GridViewProductPanel()
+        public AboutProduct()
         {
             InitializeComponent();
-            Instance = this;
-
-            ListProductGridView.SelectionChanged += (sender, e) => ListProductGridView.SelectedIndex = -1;
         }
     }
 }

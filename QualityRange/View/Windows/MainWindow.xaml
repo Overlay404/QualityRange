@@ -81,7 +81,8 @@
                 <Frame Grid.RowSpan="3"
                        Grid.Row="1"
                        Panel.ZIndex="3"
-                       x:Name="BasketFrame"/>
+                       x:Name="BasketFrame"
+                       NavigationUIVisibility="Hidden"/>
                 <Border Background="#20242E"
                       Grid.RowSpan="2" Grid.Row="1"
                         CornerRadius="10">
@@ -243,6 +244,7 @@
                                 </Grid>
                             </Grid>
                         </Border>
+                        
                         <Grid Grid.RowSpan="2"
                               HorizontalAlignment="Right"
                               VerticalAlignment="Top"
