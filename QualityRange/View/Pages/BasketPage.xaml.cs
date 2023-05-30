@@ -1,4 +1,5 @@
-﻿using System;
+﻿using QualityRange.ViewModel.PagesVM;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace QualityRange.View.Pages
         public BasketPage()
         {
             InitializeComponent();
+        }
+
+        private void CheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            BasketPageVM.Instance.UpdateInfo();
         }
     }
 }

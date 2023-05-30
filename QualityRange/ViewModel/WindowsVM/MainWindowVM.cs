@@ -121,6 +121,18 @@ namespace QualityRange.ViewModel
         {
             new AuthRegWindow().Show();
         }
+        
+        
+        public ICommand ShowBasketPage { get; }
+        private bool CanShowBasketPageExecute(object parameter) => true;
+        private void OnShowBasketPageExecute(object parameter)
+        {
+            if(App.user == null)
+            {
+                return;
+            }
+            MainWindow.Instance.BasketFrame.Navigate(new BasketPage());
+        }
 
 
         public ICommand CategoryPress { get; }
@@ -174,6 +186,7 @@ namespace QualityRange.ViewModel
             DragMoveWindow = new LambdaCommand(OnDragMoveWindowExecute, CanDragMoveWindowExecute);
             GoPage = new LambdaCommand(OnGoPageExecute, CanGoPageExecute);
             GoWindow = new LambdaCommand(OnGoWindowExecute, CanGoWindowExecute);
+            ShowBasketPage = new LambdaCommand(OnShowBasketPageExecute, CanShowBasketPageExecute);
             CategoryPress = new LambdaCommand(OnCategoryPressExecute, CanCategoryPressExecute);
             UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);

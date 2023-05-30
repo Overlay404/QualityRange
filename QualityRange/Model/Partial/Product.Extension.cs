@@ -20,5 +20,7 @@ namespace QualityRange.Model
         public Visibility IsAddedInProductList => CountProductInBasket == 0 ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility IsNotAddedInProductList => CountProductInBasket == 0 ? Visibility.Visible : Visibility.Collapsed;
+
+        public bool IsSelected { get; set; }
     }
 }

@@ -3,12 +3,248 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:QualityRange.View.Pages"
-      mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      xmlns:fa="http://schemas.fontawesome.io/icons/"
+      xmlns:vm="clr-namespace:QualityRange.ViewModel.PagesVM"
+      mc:Ignorable="d" x:Name="Root"
+      d:DesignHeight="750" d:DesignWidth="1000"
       Title="BasketPage">
 
+    <Page.DataContext>
+        <vm:BasketPageVM/>
+    </Page.DataContext>
+
     <Grid>
-        
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <Border Background="#1D1E27" Grid.Row="0">
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="8" Color="Black" Direction="270" ShadowDepth="3" Opacity="0.25"/>
+                </Border.Effect>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Orientation="Horizontal" 
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            Margin="30 0 0 0">
+                        <fa:ImageAwesome Icon="LightbulbOutline" 
+                                                     Width="15"
+                                                     Foreground="#FFE6E680"/>
+                        <TextBlock Text="QuantityRange"
+                                               TextAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Foreground="#99FFFFFF"
+                                               Margin="10 0 0 0"
+                                               FontSize="16"/>
+                    </StackPanel>
+
+                    <Border VerticalAlignment="Center"
+                                        Background="#272837"
+                                        CornerRadius="10"
+                                        Padding="10 3"
+                                        Grid.Column="1">
+                        <Grid>
+                            <TextBox Style="{StaticResource TextBox}"
+                                                 Margin="0 0 20 0"/>
+                            <fa:ImageAwesome Icon="Search"
+                                                         Width="20"
+                                                         Foreground="#99FFFFFF"
+                                                         HorizontalAlignment="Right"
+                                                         x:Name="SearchBtn"/>
+                        </Grid>
+                    </Border>
+
+                    <Grid Grid.Column="2" 
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+                        <Grid.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding Return}"/>
+                        </Grid.InputBindings>
+                        <Border Style="{StaticResource BorderShopBasket}"
+                                CornerRadius="10"
+                                Padding="1"
+                                x:Name="ListProductBtn">
+                            <Grid>
+                                <StackPanel>
+                                    <fa:ImageAwesome Icon="ShoppingBasket"
+                                                             Width="20"
+                                                             Foreground="#99FFFFFF"/>
+                                    <TextBlock Text="Список товаров"
+                                                       FontSize="14"/>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <TextBlock Text="{Binding CountElementInBasket, StringFormat='Товаров в корзине {0}'}"
+                               Grid.ColumnSpan="2"
+                               Grid.Row="1"
+                               Foreground="#99FFFFFF"
+                               HorizontalAlignment="Left"
+                               FontSize="20"
+                               Margin="20 0"/>
+                </Grid>
+            </Border>
+            <Border Background="#20242E"
+                    Grid.Row="1">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="150*"/>
+                        <ColumnDefinition Width="50*"/>
+                    </Grid.ColumnDefinitions>
+                    <Border Background="#1D1E27" Grid.Column="1"
+                            CornerRadius="20"
+                            Margin="10 40"
+                            TextBlock.Foreground="#99FFFFFF">
+                        <Grid>
+                            <StackPanel HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        Margin="0 30 0 0">
+                                <StackPanel Margin="10">
+                                    <TextBlock Text="{Binding CountSelectedProductInBasket, StringFormat='{}{0} товара на сумму:'}"
+                                   FontSize="20"/>
+                                    <TextBlock Text="{Binding CostAllProductInBasket, StringFormat='{}{0}₽'}"
+                                               FontSize="18"/>
+                                </StackPanel>
+                                <StackPanel Margin="10">
+                                    <TextBlock Text="Доставка:"
+                                   FontSize="20"/>
+                                    <TextBlock Text="Бесплатно"
+                                   FontSize="18"/>
+                                </StackPanel>
+                            </StackPanel>
+                            <StackPanel Margin="20 0 20 30"
+                                        VerticalAlignment="Bottom">
+                                <Border Background="White" 
+                                    Height="2"/>
+                                <TextBlock Text="{Binding CostAllProductInBasket, StringFormat='Итого: {0}₽'}"
+                                           FontSize="22"
+                                           HorizontalAlignment="Center"
+                                           Margin="0 10 0 40"/>
+                                <Border CornerRadius="25"
+                                        HorizontalAlignment="Center"
+                                        Padding="20 15"
+                                        Background="#272837">
+                                    <TextBlock Text="Оформить заказ"
+                                               HorizontalAlignment="Center"
+                                               FontSize="20"/>
+                                    <Border.InputBindings>
+                                        <MouseBinding Gesture="LeftClick"
+                                                      Command="{Binding ShowPointIfIssuePage}"/>
+                                    </Border.InputBindings>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+                    <ScrollViewer x:Name="Scroll">
+                        <ItemsControl ItemsSource="{Binding ProductListInBasket}"
+                                  d:ItemsSource="{d:SampleData ItemCount=3}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border Background="#1D1E27" Grid.ColumnSpan="2"
+                                        CornerRadius="20"
+                                            Padding="0 10"
+                                        Margin="30 20 0 0">
+                                        <CheckBox IsChecked="{Binding IsSelected}"
+                                                  Click="CheckBox_Click">
+                                            <CheckBox.Content>
+                                                <Grid HorizontalAlignment="Center"
+                                                  TextBlock.Foreground="#99FFFFFF">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="1.5*"/>
+                                                        <ColumnDefinition Width="6*"/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Image Source="{Binding SourceFirstImage}"
+                                                           Height="80" Width="80"
+                                                           Stretch="Fill"
+                                                           HorizontalAlignment="Left">
+                                                        <Image.Clip>
+                                                            <RectangleGeometry RadiusX="10" RadiusY="10" Rect="0,0,80,80"/>
+                                                        </Image.Clip>
+                                                    </Image>
+                                                    <StackPanel HorizontalAlignment="Left"
+                                                                Grid.Column="1"
+                                                            Margin="10 0">
+                                                        <TextBlock Text="{Binding Name}"
+                                                                   Margin="0 5 0 0"
+                                                                   TextWrapping="Wrap"
+                                                                   Height="19"/>
+                                                        <TextBlock Text="{Binding Description}"
+                                                                   Margin="0 5 0 0"
+                                                                   TextWrapping="Wrap"
+                                                                   FontSize="10"/>
+                                                    </StackPanel>
+                                                    <DockPanel  Margin="0 10 0 10"
+                                                            Grid.Column="2"
+                                                            HorizontalAlignment="Left">
+                                                        <TextBlock Text="{Binding CountProductInBasket, StringFormat='В корзине: {0}'}"
+                                                                DockPanel.Dock="Top"/>
+                                                        <StackPanel DockPanel.Dock="Bottom"
+                                                                VerticalAlignment="Bottom"
+                                                                Orientation="Horizontal">
+                                                            <TextBlock Text="{Binding CostWithDiscount}"
+                                                                        FontSize="12"/>
+                                                            <TextBlock Text="{Binding Cost}"
+                                                                       FontSize="8"
+                                                                       Margin="5 0 0 0"
+                                                                       TextDecorations="Strikethrough"
+                                                                       VerticalAlignment="Top"
+                                                                       Foreground="Gray"/>
+                                                        </StackPanel>
+                                                    </DockPanel>
+                                                </Grid>
+                                            </CheckBox.Content>
+                                            <CheckBox.Style>
+                                                <Style TargetType="{x:Type CheckBox}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate TargetType="CheckBox">
+                                                                <Grid x:Name="Grid">
+                                                                    <Border x:Name="Border"
+                                                                        Background="#B2000000"
+                                                                        CornerRadius="50"
+                                                                        Padding="5"
+                                                                        Margin="5 0 0 0"
+                                                                        HorizontalAlignment="Left"
+                                                                        VerticalAlignment="Center">
+                                                                        <fa:ImageAwesome Icon="Check"
+                                                                                     x:Name="ImageAwesome"
+                                                                                     Foreground="#99FFFFFF"
+                                                                                     Width="10"
+                                                                                     Visibility="Hidden"/>
+                                                                    </Border>
+                                                                    <ContentPresenter HorizontalAlignment="Left"
+                                                                                      Margin="30 0 0 0"/>
+                                                                </Grid>
+                                                                <ControlTemplate.Triggers>
+                                                                    <Trigger Property="IsChecked" Value="True">
+                                                                        <Setter TargetName="ImageAwesome" Property="Visibility" Value="Visible"/>
+                                                                    </Trigger>
+                                                                </ControlTemplate.Triggers>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </CheckBox.Style>
+                                        </CheckBox>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Page>
