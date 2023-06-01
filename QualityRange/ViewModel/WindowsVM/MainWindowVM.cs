@@ -137,7 +137,7 @@ namespace QualityRange.ViewModel
         }
         private void OnShowBasketPageExecute(object parameter)
         {
-            MainWindow.Instance.BasketFrame.Navigate(new BasketPage());
+            MainWindow.Instance.GlobalFrame.Navigate(new BasketPage());
         }
 
 
@@ -176,6 +176,13 @@ namespace QualityRange.ViewModel
             InitCountProductInBasket();
             GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(App.db.Product.Local);
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
+        } 
+        
+        public ICommand EditClient { get; }
+        private bool CanEditClientExecute(object parameter) => true;
+        private void OnEditClientExecute(object parameter)
+        {
+            MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
         }
         #endregion
 
@@ -198,6 +205,7 @@ namespace QualityRange.ViewModel
             CategoryPress = new LambdaCommand(OnCategoryPressExecute, CanCategoryPressExecute);
             UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
+            EditClient = new LambdaCommand(OnEditClientExecute, CanEditClientExecute);
         }
 
         public void InitCountProductInBasket()

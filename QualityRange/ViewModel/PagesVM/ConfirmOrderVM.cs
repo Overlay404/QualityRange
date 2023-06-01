@@ -2,6 +2,7 @@
 using QualityRange.Model;
 using QualityRange.View.Pages;
 using QualityRange.View.Windows;
+using QualityRange.ViewModel.WindowsVM;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -34,11 +35,20 @@ namespace QualityRange.ViewModel.PagesVM
         private bool CanReturnExecute(object parameter) => true;
         private void OnReturnExecute(object parameter)
         {
-            MainWindow.Instance.BasketFrame.GoBack();
+            MainWindow.Instance.GlobalFrame.GoBack();
         }
 
         public ICommand ConfirmOrder { get; }
-        private bool CanConfirmOrderExecute(object parameter) => true;
+        private bool CanConfirmOrderExecute(object parameter)
+        {
+            if(String.IsNullOrEmpty(Client.NumberOfCreditCard) || Order.PointOfIssue == null || ProductListOrder.Count == 0)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Для оформления заказа укажите номер карты. Это можно сделать при редактировании профиля.");
+                return false;
+            }
+            return true;
+        }
         private void OnConfirmOrderExecute(object parameter)
         {
             
@@ -48,7 +58,7 @@ namespace QualityRange.ViewModel.PagesVM
         private bool CanChangeNumberCardExecute(object parameter) => true;
         private void OnChangeNumberCardExecute(object parameter)
         {
-            
+            //Вызов окна редактирования пользователя
         }
 
         #endregion

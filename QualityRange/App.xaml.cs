@@ -15,6 +15,8 @@ namespace QualityRange
             "https://w7.pngwing.com/pngs/685/826/png-transparent-computer-icons-cardboard-box-packaging-and-labeling-business-box-miscellaneous-angle-freight-transport-thumbnail.png");
 
 
+        public static byte[] EmptyUserImage = ImageConverter.ConvertToByteCollection(@"Resourses\Image\EmptyUserPhoto.png");
+
         public App()
         {
             db.PointOfIssue.Load();

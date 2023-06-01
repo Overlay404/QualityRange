@@ -105,7 +105,7 @@ namespace QualityRange.ViewModel
         private void OnAdoutProductWidowShowExecute(object parameter)
         {
             var aboutProduct = new AboutProduct();
-            MainWindow.Instance.BasketFrame.Navigate(aboutProduct);
+            MainWindow.Instance.GlobalFrame.Navigate(aboutProduct);
             AboutProductVM.Instance.Product = App.db.Product.Local.FirstOrDefault(p => p.ID == (int)parameter);
             AboutProductVM.Instance.Images = AboutProductVM.Instance.Product.PhotoProduct.Count() == 0 ? AboutProductVM.Instance.Product.PhotoProduct.Append(new PhotoProduct { Photo = App.ImageNullebleProduct }): AboutProductVM.Instance.Product.PhotoProduct;
             AboutProductVM.Instance.SelectedImage = AboutProductVM.Instance.Images.FirstOrDefault()?.Photo;

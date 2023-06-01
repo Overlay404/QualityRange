@@ -46,7 +46,7 @@
                 </StackPanel>
                 <ScrollViewer Margin="0 80 0 0" HorizontalAlignment="Center">
                     <ItemsControl ItemsSource="{Binding ProductListOrder}"
-                                  Width="800">
+                                  Width="600">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border  Background="#272837"

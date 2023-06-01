@@ -82,10 +82,12 @@
               TextBlock.Foreground="#99FFFFFF">
             <Border CornerRadius="15"
                 HorizontalAlignment="Left"
-                Padding="20 15"
+                VerticalAlignment="Bottom"
+                Padding="15 10"
+                Margin="10"
                 Background="#1D1E27">
                 <TextBlock Text="Назад"
-                       FontSize="20"/>
+                       FontSize="12"/>
                 <Border.InputBindings>
                     <MouseBinding Gesture="LeftClick"
                               Command="{Binding Return}"/>
@@ -94,10 +96,12 @@
 
             <Border CornerRadius="15"
                 HorizontalAlignment="Right"
-                Padding="20 15"
+                VerticalAlignment="Bottom"
+                Padding="15 10"
+                Margin="10"
                 Background="#1D1E27">
                 <TextBlock Text="Далее"
-                       FontSize="20"/>
+                       FontSize="12"/>
                 <Border.InputBindings>
                     <MouseBinding Gesture="LeftClick"
                               Command="{Binding NextStage}"/>

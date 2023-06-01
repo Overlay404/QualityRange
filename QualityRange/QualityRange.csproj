@@ -130,6 +130,7 @@
     <Compile Include="ViewModel\PagesVM\AboutProductVM.cs" />
     <Compile Include="ViewModel\PagesVM\BasketPageVM.cs" />
     <Compile Include="ViewModel\PagesVM\ConfirmOrderVM.cs" />
+    <Compile Include="ViewModel\PagesVM\EditDataUserVM.cs" />
     <Compile Include="ViewModel\PagesVM\GridAndBarsViewProductPanelVM.cs" />
     <Compile Include="ViewModel\PagesVM\PointOfIssueVM.cs" />
     <Compile Include="ViewModel\WindowsVM\AuthRegWindowVM.cs" />
@@ -149,6 +150,9 @@
     </Compile>
     <Compile Include="View\Pages\ConfirmOrderPage.xaml.cs">
       <DependentUpon>ConfirmOrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\EditDataUser.xaml.cs">
+      <DependentUpon>EditDataUser.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\GridViewProductPanel.xaml.cs">
       <DependentUpon>GridViewProductPanel.xaml</DependentUpon>
@@ -213,6 +217,9 @@
       <DependentUpon>MarketplaceDatabase.edmx</DependentUpon>
       <LastGenOutput>MarketplaceDatabase.cs</LastGenOutput>
     </Content>
+    <Content Include="Resourses\Image\EmptyUserPhoto.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resourses\Image\MapMarker.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -239,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\ConfirmOrderPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\EditDataUser.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

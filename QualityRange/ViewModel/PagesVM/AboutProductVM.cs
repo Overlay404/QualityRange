@@ -32,7 +32,7 @@ namespace QualityRange.ViewModel.PagesVM
         private bool CanReturnExecute(object parameter) => true;
         private void OnReturnExecute(object parameter)
         {
-            MainWindow.Instance.BasketFrame.Navigate(null);
+            MainWindow.Instance.GlobalFrame.Navigate(null);
         }
 
         public ICommand SelectImage { get; }

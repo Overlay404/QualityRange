@@ -52,7 +52,8 @@
                            VerticalAlignment="Center"
                            FontSize="16"
                            TextWrapping="Wrap"
-                           Margin="20 20 20 40"/>
+                           Margin="20 20 20 40"
+                           TextAlignment="Center"/>
                 <Border CornerRadius="10"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Bottom"

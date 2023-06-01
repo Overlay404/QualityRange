@@ -34,7 +34,7 @@ namespace QualityRange.ViewModel.PagesVM
         private bool CanReturnExecute(object parameter) => true;
         private void OnReturnExecute(object parameter)
         {
-            MainWindow.Instance.BasketFrame.GoBack();
+            MainWindow.Instance.GlobalFrame.GoBack();
         }
         
         public ICommand ShowPosition { get; }
@@ -60,7 +60,7 @@ namespace QualityRange.ViewModel.PagesVM
         }
         private void OnNextStageExecute(object parameter)
         {
-            MainWindow.Instance.BasketFrame.Navigate(new ConfirmOrderPage());
+            MainWindow.Instance.GlobalFrame.Navigate(new ConfirmOrderPage());
         }
         #endregion
 
