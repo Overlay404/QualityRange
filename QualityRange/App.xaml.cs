@@ -1,13 +1,6 @@
 ﻿using QualityRange.Model;
 using QualityRange.SupportiveClasses;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Data.Entity;
-using System.Linq;
-using System.Management.Instrumentation;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace QualityRange
@@ -19,8 +12,7 @@ namespace QualityRange
         public static User user;
 
         public static byte[] ImageNullebleProduct = ImageConverter.GetImageFromInternet(
-            "https://w7.pngwing.com/pngs/685/826/png-transparent-computer-icons-cardboard-box-packaging-and-labeling-business-box-miscellaneous-angle-freight-transport-thumbnail.png"
-            );
+            "https://w7.pngwing.com/pngs/685/826/png-transparent-computer-icons-cardboard-box-packaging-and-labeling-business-box-miscellaneous-angle-freight-transport-thumbnail.png");
 
 
         public App()

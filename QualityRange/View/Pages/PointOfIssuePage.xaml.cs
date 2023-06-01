@@ -1,17 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using GMap.NET;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace QualityRange.View.Pages
 {
@@ -20,25 +11,61 @@ namespace QualityRange.View.Pages
     /// </summary>
     public partial class PointOfIssuePage : Page
     {
+        public static PointOfIssuePage Instance { get; private set; }
+
         public PointOfIssuePage()
         {
             InitializeComponent();
 
+            Instance = this;
+
             this.Loaded += (sender, e) =>
             {
-                GMap.NET.GMaps.Instance.Mode = GMap.NET.AccessMode.ServerAndCache; //выбор подгрузки карты – онлайн или из ресурсов
-                gMapControl1.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance; //какой провайдер карт используется (в нашем случае гугл) 
-                gMapControl1.MinZoom = 4; //минимальный зум
-                gMapControl1.MaxZoom = 16; //максимальный зум
-                gMapControl1.Zoom = 10; // какой используется зум при открытии 
-                gMapControl1.Position = new GMap.NET.PointLatLng(66.4169575018027, 94.25025752215694);// точка в центре карты при открытии (центр России)
-                gMapControl1.MouseWheelZoomType = GMap.NET.MouseWheelZoomType.MousePositionAndCenter; // как приближает (просто в центр карты или по положению мыши)
-                gMapControl1.CanDragMap = true; // перетаскивание карты мышью
-                gMapControl1.DragButton = MouseButton.Left; // какой кнопкой осуществляется перетаскивание
-                gMapControl1.ShowCenter = false; //показывать или скрывать красный крестик в центре
-                gMapControl1.ShowTileGridLines = false; //показывать или скрывать тайлы
+                GMaps.Instance.Mode = AccessMode.ServerAndCache;
+                gMapControl1.MapProvider = GMap.NET.MapProviders.GoogleMapProvider.Instance;
+                gMapControl1.MinZoom = 10;
+                gMapControl1.MaxZoom = 25;
+                gMapControl1.Zoom = 12;
+                gMapControl1.Position = new PointLatLng(55.786419471, 49.121932983);
+                gMapControl1.MouseWheelZoomType = MouseWheelZoomType.MousePositionAndCenter;
+                gMapControl1.CanDragMap = true;
+                gMapControl1.DragButton = MouseButton.Left;
+                gMapControl1.ShowCenter = false;
+                gMapControl1.ShowTileGridLines = false;
+
+                foreach (var item in App.db.PointOfIssue.Local)
+                {
+                    GMap.NET.WindowsPresentation.GMapMarker gMapMarker = new GMap.NET.WindowsPresentation.GMapMarker(new GMap.NET.PointLatLng((double)item.lat, (double)item.lot));
+                    gMapMarker.Shape = InitUIElement(item.Name);
+                    gMapControl1.Markers.Add(gMapMarker);
+                }
+            };
+        }
+
+        private static StackPanel InitUIElement(string name)
+        {
+            Border border = new Border()
+            {
+                CornerRadius = new CornerRadius(20),
+                Width = 25,
+                Height = 25,
+                BorderBrush = new SolidColorBrush(Colors.Black),
+                BorderThickness = new Thickness(2),
+                Background = new SolidColorBrush(Colors.Gray)
             };
 
+            TextBlock textBlock = new TextBlock()
+            {
+                Text = name,
+                FontSize = 14,
+                FontWeight = FontWeights.Bold,
+            };
+
+            StackPanel stackPanel = new StackPanel();
+            stackPanel.Children.Add(border);
+            stackPanel.Children.Add(textBlock);
+
+            return stackPanel;
         }
     }
 }

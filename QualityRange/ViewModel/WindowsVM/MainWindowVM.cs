@@ -37,17 +37,17 @@ namespace QualityRange.ViewModel
 
 
         private IEnumerable<Category> _categories;
-        public IEnumerable<Category> Categories { get => _categories; set => Set(ref _categories, value); } 
-        
-                
+        public IEnumerable<Category> Categories { get => _categories; set => Set(ref _categories, value); }
+
+
         private Client _clientDC;
         public Client ClientDC { get => _clientDC; set => Set(ref _clientDC, value); }
 
 
         private Visibility _visibilityBtn = Visibility.Visible;
         public Visibility VisibilityBtn { get => _visibilityBtn; set => Set(ref _visibilityBtn, value); }
-        
-        
+
+
         private Visibility _visibilityUserIcon = Visibility.Collapsed;
         public Visibility VisibilityUserIcon { get => _visibilityUserIcon; set => Set(ref _visibilityUserIcon, value); }
 
@@ -57,7 +57,7 @@ namespace QualityRange.ViewModel
 
 
         private int _countProductInBasket;
-        public int CountProductInBasket { get => _countProductInBasket; set => Set(ref _countProductInBasket, value); } 
+        public int CountProductInBasket { get => _countProductInBasket; set => Set(ref _countProductInBasket, value); }
         #endregion
 
 
@@ -79,15 +79,17 @@ namespace QualityRange.ViewModel
 
 
         public ICommand MaximizeWindow { get; }
-        private bool CanMaximizeWindowExecute(object parameter) => true;
-        private void OnMaximizeWindowExecute(object parameter)
+        private bool CanMaximizeWindowExecute(object parameter)
         {
             if (MainWindow.Instance.WindowState == WindowState.Maximized)
             {
                 MainWindow.Instance.WindowState = WindowState.Normal;
-                return;
-            }
-
+                return false;
+            };
+            return true;
+        }
+        private void OnMaximizeWindowExecute(object parameter)
+        {
             MainWindow.Instance.WindowState = WindowState.Maximized;
         }
 
@@ -124,28 +126,34 @@ namespace QualityRange.ViewModel
         
         
         public ICommand ShowBasketPage { get; }
-        private bool CanShowBasketPageExecute(object parameter) => true;
+        private bool CanShowBasketPageExecute(object parameter)
+        {
+            if (App.user == null)
+            {
+                new AuthRegWindow().Show();
+                return false;
+            }
+            return true;
+        }
         private void OnShowBasketPageExecute(object parameter)
         {
-            if(App.user == null)
-            {
-                return;
-            }
             MainWindow.Instance.BasketFrame.Navigate(new BasketPage());
         }
 
 
         public ICommand CategoryPress { get; }
-        private bool CanCategoryPressExecute(object parameter) => true;
-        private void OnCategoryPressExecute(object parameter)
+        private bool CanCategoryPressExecute(object parameter)
         {
-
-            if(parameter as string == "Все категории")
+            if (parameter as string == "Все категории")
             {
                 GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local;
                 CountProduct = App.db.Product.Local.Count();
-                return;
+                return false;
             }
+            return true;
+        }
+        private void OnCategoryPressExecute(object parameter)
+        {
             var products = new ObservableCollection<Product>(App.db.Product.Local.Where(p => p.Category.Name == parameter as string));
             GridAndBarsViewProductPanelVM.Instance.Products = products;
             CountProduct = products.Count();

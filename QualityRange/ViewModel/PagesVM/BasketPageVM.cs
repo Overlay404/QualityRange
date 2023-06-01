@@ -2,8 +2,8 @@
 using QualityRange.Model;
 using QualityRange.View.Pages;
 using QualityRange.View.Windows;
+using QualityRange.ViewModel.WindowsVM;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
@@ -38,9 +38,18 @@ namespace QualityRange.ViewModel.PagesVM
         {
             MainWindow.Instance.BasketFrame.Navigate(null);
         }
-        
+
         public ICommand ShowPointIfIssuePage { get; }
-        private bool CanShowPointIfIssuePageExecute(object parameter) => true;
+        private bool CanShowPointIfIssuePageExecute(object parameter)
+        {
+            if (CountSelectedProductInBasket == 0)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Не выбран ни один товар");
+                return false;
+            }
+            return true;
+        }
         private void OnShowPointIfIssuePageExecute(object parameter)
         {
             MainWindow.Instance.BasketFrame.Navigate(new PointOfIssuePage());
@@ -57,7 +66,7 @@ namespace QualityRange.ViewModel.PagesVM
 
             ProductListInBasket = new BindingList<Product>(listProduct);
             CountElementInBasket = listProduct.Count;
-            
+
             UpdateInfo();
 
             Return = new LambdaCommand(OnReturnExecute, CanReturnExecute);

@@ -22,6 +22,8 @@ namespace QualityRange.ViewModel
     {
         public static GridAndBarsViewProductPanelVM Instance { get; set; }
 
+        ProductList ProdListItem;
+
         #region Property
         private ObservableCollection<Product> _products = new ObservableCollection<Product>(App.db.Product.Local);
         public ObservableCollection<Product> Products { get => _products; set => Set(ref _products, value); }
@@ -29,15 +31,17 @@ namespace QualityRange.ViewModel
 
         #region Commands
         public ICommand AddBasketProduct { get; }
-        private bool CanAddBasketProductExecute(object parameter) => true;
-        private void OnAddBasketProductExecute(object parameter)
+        private bool CanAddBasketProductExecute(object parameter)
         {
             if (App.user == null)
             {
                 new AuthRegWindow().Show();
-                return;
+                return false;
             }
-
+            return true;
+        }
+        private void OnAddBasketProductExecute(object parameter)
+        {
             var basket = App.db.Basket.Local.FirstOrDefault(b => b.Client.User == App.user);
             if (basket == null)
             {
@@ -59,23 +63,25 @@ namespace QualityRange.ViewModel
         }
 
         public ICommand RemoveProductInListProduct { get; }
-        private bool CanRemoveProductInListProductExecute(object parameter) => true;
+        private bool CanRemoveProductInListProductExecute(object parameter)
+        {
+            ProdListItem = App.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == App.user.ID && prodlist.Product.ID == (int)parameter);
+
+            if (ProdListItem == null)
+            {
+                return false;
+            }
+            return true;
+        }
         private void OnRemoveProductInListProductExecute(object parameter) 
         {
-            var prodListItem = App.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == App.user.ID && prodlist.Product.ID == (int)parameter);
-
-            if(prodListItem == null)
+            if(ProdListItem.Count == 1) 
             {
-                return;
-            }
-
-            if(prodListItem.Count == 1) 
-            {
-                App.db.ProductList.Local.Remove(prodListItem);
+                App.db.ProductList.Local.Remove(ProdListItem);
             }
             else
             {
-                prodListItem.Count--;
+                ProdListItem.Count--;
             }
 
             MainWindowVM.Instance.InitCountProductInBasket();

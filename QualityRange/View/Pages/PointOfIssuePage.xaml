@@ -4,12 +4,108 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-      xmlns:local="clr-namespace:QualityRange.View.Pages"
-      mc:Ignorable="d" 
+      xmlns:vm="clr-namespace:QualityRange.ViewModel.PagesVM"
+      mc:Ignorable="d" x:Name="Root"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="PointOfIssuePage">
+      Title="PointOfIssuePage" Background="#20242E">
 
-    <Grid Background="Black">
-        <gmap:GMapControl x:Name="gMapControl1"/>
+    <Page.DataContext>
+        <vm:PointOfIssueVM/>
+    </Page.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="21*"/>
+        </Grid.ColumnDefinitions>
+        <ListView Background="Transparent"
+                  BorderBrush="Transparent"
+                  Margin="0 0 0 50"
+                  x:Name="ListViewPointOfIssie"
+                  ItemsSource="{Binding PointOfIssueList}"
+                  d:ItemsSource="{d:SampleData ItemCount=3}">
+            <ListView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel HorizontalAlignment="Stretch"/>
+                </ItemsPanelTemplate>
+            </ListView.ItemsPanel>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="#1D1E27"
+                            TextBlock.Foreground="#99FFFFFF"
+                            Padding="10"
+                            CornerRadius="10">
+                        <Border.InputBindings>
+                            <MouseBinding Gesture="LeftClick"
+                                          Command="{Binding DataContext.ShowPosition, ElementName=Root}"
+                                          CommandParameter="{Binding ID}"/>
+                        </Border.InputBindings>
+                        <Grid>
+                            <TextBlock Text="{Binding Name}"/>
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="SnapsToDevicePixels" Value="true"/>
+                    <Setter Property="OverridesDefaultStyle" Value="true"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border Name="Border" 
+                                        Padding="7" 
+                                        CornerRadius="10" 
+                                        SnapsToDevicePixels="True"
+                                        Background="{TemplateBinding Background}"
+                                        Margin="18 0">
+                                    <ContentPresenter/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="Border" Property="Background" Value="#05FFFFFF"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="true">
+                                        <Setter TargetName="Border" Property="Background" Value="#0CFFFFFF"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
+
+        <Grid VerticalAlignment="Bottom"
+              Margin="10"
+              TextBlock.Foreground="#99FFFFFF">
+            <Border CornerRadius="15"
+                HorizontalAlignment="Left"
+                Padding="20 15"
+                Background="#1D1E27">
+                <TextBlock Text="Назад"
+                       FontSize="20"/>
+                <Border.InputBindings>
+                    <MouseBinding Gesture="LeftClick"
+                              Command="{Binding Return}"/>
+                </Border.InputBindings>
+            </Border>
+
+            <Border CornerRadius="15"
+                HorizontalAlignment="Right"
+                Padding="20 15"
+                Background="#1D1E27">
+                <TextBlock Text="Далее"
+                       FontSize="20"/>
+                <Border.InputBindings>
+                    <MouseBinding Gesture="LeftClick"
+                              Command="{Binding NextStage}"/>
+                </Border.InputBindings>
+            </Border>
+        </Grid>
+
+        <gmap:GMapControl x:Name="gMapControl1" 
+                          Grid.Column="1"/>
     </Grid>
 </Page>
