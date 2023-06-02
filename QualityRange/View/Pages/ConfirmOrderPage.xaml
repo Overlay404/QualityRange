@@ -46,6 +46,7 @@
                 </StackPanel>
                 <ScrollViewer Margin="0 80 0 0" HorizontalAlignment="Center">
                     <ItemsControl ItemsSource="{Binding ProductListOrder}"
+                                  d:ItemsSource="{d:SampleData ItemCount=4}"
                                   Width="600">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -58,7 +59,7 @@
                                       Margin="10 10">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1.5*"/>
-                                            <ColumnDefinition Width="6*"/>
+                                            <ColumnDefinition Width="5*"/>
                                             <ColumnDefinition/>
                                         </Grid.ColumnDefinitions>
                                         <Image Source="{Binding SourceFirstImage}"
@@ -81,14 +82,22 @@
                                                Grid.Column="2"
                                                HorizontalAlignment="Left">
 
-                                            <TextBlock Text="{Binding CostWithDiscount}"
+                                            <StackPanel DockPanel.Dock="Top"
+                                                        Orientation="Horizontal">
+                                                <TextBlock Text="{Binding CostWithDiscount}"
                                                         FontSize="12"/>
-                                            <TextBlock Text="{Binding Cost}"
+                                                <TextBlock Text="{Binding Cost}"
                                                     FontSize="8"
                                                     Margin="5 0 0 0"
                                                     TextDecorations="Strikethrough"
                                                     VerticalAlignment="Top"
                                                     Foreground="Gray"/>
+                                            </StackPanel>
+
+                                            <StackPanel DockPanel.Dock="Bottom" Margin="0 10 0 0">
+                                                <TextBlock Text="{Binding CountProductInBasket, StringFormat='В корзине: {0}'}"
+                                                        FontSize="12"/>
+                                            </StackPanel>
                                         </DockPanel>
                                     </Grid>
                                 </Border>

@@ -11,7 +11,7 @@
         <vm:EditDataUserVM/>
     </Page.DataContext>
     
-    <Grid DataContext="{Binding EditingClient}">
+    <Grid DataContext="{Binding EditingClient}" x:Name="GridRoot">
         <Grid.RowDefinitions>
             <RowDefinition Height="8*"/>
             <RowDefinition Height="7*"/>
@@ -21,85 +21,88 @@
             <ColumnDefinition Width="53*"/>
         </Grid.ColumnDefinitions>
         <Image HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch"
-                  Source="{Binding ProfilePhoto}">
-            <Image.Style>
-                <Style TargetType="{x:Type Image}">
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding DataContext.ProfilePhoto}" Value="{x:Null}">
-                            <Setter Property="Source" Value="..\..\Resourses\Image\EmptyUserPhoto.png"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Image.Style>
+               VerticalAlignment="Stretch"
+               x:Name="ProfilePhotoImage"
+               Source="{Binding ProfilePhoto}">
             <Image.InputBindings>
                 <MouseBinding Gesture="LeftClick"
                               Command="{Binding DataContext.ChangeImage, ElementName=Root}"/>
             </Image.InputBindings>
         </Image>
 
-        <StackPanel Grid.Column="1">
+        <StackPanel Grid.Column="1" TextBlock.FontSize="20">
             <Grid Margin="10">
                 <TextBlock Text="Имя:"
                            VerticalAlignment="Center"/>
                 <TextBox Text="{Binding Name}"
+                         x:Name="NameClient"
                          Style="{StaticResource TextBox}"
-                         Margin="100 0 0 0"
-                         MaxLength="50"/>
+                         Margin="150 0 0 0"
+                         MaxLength="50"
+                         FontSize="20"/>
             </Grid>
 
             <Grid Margin="10">
                 <TextBlock Text="Фамилия:"
                            VerticalAlignment="Center"/>
                 <TextBox Text="{Binding Surname}"
+                         x:Name="SurnameClient"
                          Style="{StaticResource TextBox}"
-                         Margin="100 0 0 0"
-                         MaxLength="50"/>
+                         Margin="150 0 0 0"
+                         MaxLength="50"
+                         FontSize="20"/>
             </Grid>
 
             <Grid Margin="10">
                 <TextBlock Text="Отчество:"
                            VerticalAlignment="Center"/>
-                <TextBox Text="{Binding Patronomic}"
+                <TextBox Text="{Binding Patronymic}"
+                         x:Name="PatronymicClient"
                          Style="{StaticResource TextBox}"
-                         Margin="100 0 0 0"
-                         MaxLength="50"/>
+                         Margin="150 0 0 0"
+                         MaxLength="50"
+                         FontSize="20"/>
             </Grid>
 
             <Grid Margin="10">
                 <TextBlock Text="Номер карты:"
                            VerticalAlignment="Center"/>
                 <TextBox Text="{Binding NumberOfCreditCard}"
+                         x:Name="NumberOfCreditCardClient"
                          Style="{StaticResource TextBox}"
-                         Margin="100 0 0 0"
-                         MaxLength="16"/>
+                         Margin="150 0 0 0"
+                         MaxLength="16"
+                         FontSize="20"/>
             </Grid>
         </StackPanel>
 
         <Border Grid.Row="1" Grid.ColumnSpan="2"
-                Padding="0 50">
+                Padding="0 50" TextBlock.FontSize="20">
             <Grid>
-                <Grid Margin="10" 
+                <Grid Margin="10 50" 
                       VerticalAlignment="Top">
                     <TextBlock Text="Логин:"
                            VerticalAlignment="Center"/>
                     <TextBox Text="{Binding User.Login}"
                          Style="{StaticResource TextBox}"
                          Margin="100 0 0 0"
-                             MaxLength="50"/>
+                             MaxLength="50"
+                             FontSize="20"/>
                 </Grid>
-                <Grid Margin="10"
+                <Grid Margin="10 50"
                       VerticalAlignment="Bottom">
                     <TextBlock Text="Пароль:"
                            VerticalAlignment="Center"/>
                     <TextBox Text="{Binding User.Password}"
                          Style="{StaticResource TextBox}"
                          Margin="100 0 0 0"
-                             MaxLength="50"/>
+                             MaxLength="50"
+                             FontSize="20"/>
                 </Grid>
             </Grid>
         </Border>
         <Border CornerRadius="15"
+                Panel.ZIndex="10"
                 Grid.Row="1"
                 Grid.Column="1"
                 HorizontalAlignment="Right"
@@ -112,6 +115,22 @@
             <Border.InputBindings>
                 <MouseBinding Gesture="LeftClick"
                               Command="{Binding DataContext.SaveChanges, ElementName=Root}"/>
+            </Border.InputBindings>
+        </Border>
+
+        <Border CornerRadius="15"
+                Panel.ZIndex="10"
+                Grid.Row="1"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom"
+                Padding="15 10"
+                Margin="10"
+                Background="#1D1E27">
+            <TextBlock Text="Назад"
+                       FontSize="12"/>
+            <Border.InputBindings>
+                <MouseBinding Gesture="LeftClick"
+                              Command="{Binding DataContext.Return, ElementName=Root}"/>
             </Border.InputBindings>
         </Border>
     </Grid>

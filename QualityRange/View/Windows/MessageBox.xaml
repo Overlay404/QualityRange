@@ -47,7 +47,8 @@
                         </fa:ImageAwesome>
                     </StackPanel>
                 </Grid>
-                <TextBlock Text="{Binding Message}" Grid.Row="1"
+                <TextBlock Text="{Binding Message}"
+                           Grid.Row="1" x:Name="Message"
                            HorizontalAlignment="Center"
                            VerticalAlignment="Center"
                            FontSize="16"

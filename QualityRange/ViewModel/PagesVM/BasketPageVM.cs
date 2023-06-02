@@ -61,7 +61,7 @@ namespace QualityRange.ViewModel.PagesVM
         {
             Instance = this;
 
-            var userBasket = App.user.Client.Basket.FirstOrDefault().ID;
+            var userBasket = App.user.Client.Basket.FirstOrDefault()?.ID;
             var listProduct = App.db.ProductList.Local.Where(pl => pl.ID_Basket == userBasket).Select(p => p.Product).ToList();
 
             ProductListInBasket = new BindingList<Product>(listProduct);
@@ -77,8 +77,8 @@ namespace QualityRange.ViewModel.PagesVM
         {
             var selectedItemList = ProductListInBasket.Where(p => p.IsSelected == true);
 
-            CountSelectedProductInBasket = selectedItemList.Count();
-            CostAllProductInBasket = selectedItemList.Sum(pl => pl.CostWithDiscount);
+            CountSelectedProductInBasket = (int)selectedItemList.Sum(si => si.CountProductInBasket);
+            CostAllProductInBasket = selectedItemList.Sum(pl => pl.CostWithDiscount * pl.CountProductInBasket);
         }
     }
 }

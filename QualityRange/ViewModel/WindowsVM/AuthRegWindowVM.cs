@@ -11,6 +11,7 @@ using QualityRange.View.Pages;
 using QualityRange.Model;
 using System.Windows.Controls;
 using System.Windows.Threading;
+using QualityRange.ViewModel.PagesVM;
 
 namespace QualityRange.ViewModel.WindowsVM
 {
@@ -49,32 +50,101 @@ namespace QualityRange.ViewModel.WindowsVM
                 return;
             }
 
-            App.user = App.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false);
-
-            if (App.user == null)
+            if(AutorizateUser(loginIntroduced, passwordIntroduced) == false)
             {
-                AddMessageInTextBlock("Такого пользователя не существует");
                 return;
             }
 
-            AuthRegWindow.Instance.Close();
-            MainWindowVM.Instance.InitCountProductInBasket();
-            GridAndBarsViewProductPanelVM.Instance.InitProductList();
+            ClosingPageAuthReg();
         }
+
 
         public ICommand LogIn { get; }
         private bool CanLogInExecute(object parameter) => true;
         private void OnLogInExecute(object parameter)
         {
+            var loginIntroduced = RegistrationPage.Instance.LoginTB.Text;
+            var passwordIntroduced = RegistrationPage.Instance.PasswordTB.Text;
+            var nameIntroduced = RegistrationPage.Instance.NameTB.Text;
+            var surnameIntroduced = RegistrationPage.Instance.SurnameTB.Text;
+            var patronymicIntroduced = RegistrationPage.Instance.PatronymicTB.Text;
 
+
+            if (String.IsNullOrWhiteSpace(loginIntroduced) && String.IsNullOrWhiteSpace(passwordIntroduced)
+                && String.IsNullOrWhiteSpace(nameIntroduced) && String.IsNullOrWhiteSpace(surnameIntroduced)
+                && String.IsNullOrWhiteSpace(patronymicIntroduced))
+            {
+                AddMessageInTextBlock("Поля не заполнены");
+                return;
+            }
+
+            (List<string> messages, bool IsValid) = EditDataUserVM.ValidatePassword(passwordIntroduced);
+
+            if (IsValid == false)
+            {
+                AddMessageInTextBlock(messages.Aggregate((x, y) => x + "\n" + y));
+                return;
+            }
+
+            var user = new User()
+            {
+                Login = loginIntroduced,
+                Password = passwordIntroduced,
+                Removed = false
+            };
+
+            App.db.User.Local.Add(user);
+
+            App.db.Client.Local.Add(new Client()
+            {
+                Name = nameIntroduced,
+                Surname = surnameIntroduced,
+                Patronymic = patronymicIntroduced,
+                User = user
+            });
+
+            App.db.SaveChanges();
+
+            if (AutorizateUser(loginIntroduced, passwordIntroduced) == false)
+            {
+                return;
+            }
+
+            ClosingPageAuthReg();
         }
         #endregion
 
+        #region Methods
+        private static void ClosingPageAuthReg()
+        {
+            AuthRegWindow.Instance.Close();
+            MainWindowVM.Instance.InitCountProductInBasket();
+            GridAndBarsViewProductPanelVM.Instance.InitProductList();
+        }
+
+        private static bool AutorizateUser(string loginIntroduced, string passwordIntroduced)
+        {
+            App.user = App.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false);
+
+            if (App.user == null)
+            {
+                AddMessageInTextBlock("Такого пользователя не существует");
+                return false;
+            }
+
+            if (App.user.Client.ProfilePhoto == null)
+            {
+                App.user.Client.ProfilePhoto = App.EmptyUserImage;
+            }
+            return true;
+        }
 
         private static DispatcherTimer InitDispatcher()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(2500);
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromMilliseconds(2500)
+            };
             timer.Tick += ClearMessageInTextBlock;
             return timer;
         }
@@ -90,7 +160,8 @@ namespace QualityRange.ViewModel.WindowsVM
         private static void ClearMessageInTextBlock(object sender, EventArgs e)
         {
             AuthRegWindow.Instance.ShowMessageTextBlock.Text = String.Empty;
-        }
+        } 
+        #endregion
 
 
         public AuthRegWindowVM()

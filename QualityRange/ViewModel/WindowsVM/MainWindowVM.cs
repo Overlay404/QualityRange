@@ -64,21 +64,34 @@ namespace QualityRange.ViewModel
         #region Commands
         public ICommand ShutdownApplication { get; }
         private bool CanShutdownApplicationExecute(object parameter) => true;
-        private void OnShutdownApplicationExecute(object parameter)
-        {
-            App.Current.Shutdown();
-        }
-
+        private void OnShutdownApplicationExecute(object parameter) => App.Current.Shutdown();
 
         public ICommand MinimazeWindow { get; }
         private bool CanMinimazeWindowExecute(object parameter) => true;
-        private void OnMinimazeWindowExecute(object parameter)
-        {
-            MainWindow.Instance.WindowState = WindowState.Minimized;
-        }
+        private void OnMinimazeWindowExecute(object parameter) => MainWindow.Instance.WindowState = WindowState.Minimized;
 
+        public ICommand GoPage { get; }
+        private bool CanGoPageExecute(object parameter) => true;
+        private void OnGoPageExecute(object parameter) => MainWindow.Instance.ProductListFrame.Navigate(parameter);
+
+        public ICommand GoWindow { get; }
+        private bool CanGoWindowExecute(object parameter) => true;
+        private void OnGoWindowExecute(object parameter) => new AuthRegWindow().Show();
+        
+        public ICommand UserInfo { get; }
+        private bool CanUserInfoExecute(object parameter) => true;
+        private void OnUserInfoExecute(object parameter) => UserInfoPanel = UserInfoPanel == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        
+        public ICommand EditClient { get; }
+        private bool CanEditClientExecute(object parameter) => true;
+        private void OnEditClientExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
+        
+        public ICommand SearchProduct { get; }
+        private bool CanSearchProductExecute(object parameter) => true;
+        private void OnSearchProductExecute(object parameter) => SearchProducts();
 
         public ICommand MaximizeWindow { get; }
+        private void OnMaximizeWindowExecute(object parameter) => MainWindow.Instance.WindowState = WindowState.Maximized;
         private bool CanMaximizeWindowExecute(object parameter)
         {
             if (MainWindow.Instance.WindowState == WindowState.Maximized)
@@ -88,11 +101,18 @@ namespace QualityRange.ViewModel
             };
             return true;
         }
-        private void OnMaximizeWindowExecute(object parameter)
-        {
-            MainWindow.Instance.WindowState = WindowState.Maximized;
-        }
 
+        public ICommand ShowBasketPage { get; }
+        private void OnShowBasketPageExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new BasketPage());
+        private bool CanShowBasketPageExecute(object parameter)
+        {
+            if (App.user == null)
+            {
+                new AuthRegWindow().Show();
+                return false;
+            }
+            return true;
+        }
 
         public ICommand DragMoveWindow { get; }
         private bool CanDragMoveWindowExecute(object parameter) => true;
@@ -107,39 +127,6 @@ namespace QualityRange.ViewModel
             }
             MainWindow.Instance.DragMove();
         }
-
-
-        public ICommand GoPage { get; }
-        private bool CanGoPageExecute(object parameter) => true;
-        private void OnGoPageExecute(object parameter)
-        {
-            MainWindow.Instance.ProductListFrame.Navigate(parameter);
-        }
-
-
-        public ICommand GoWindow { get; }
-        private bool CanGoWindowExecute(object parameter) => true;
-        private void OnGoWindowExecute(object parameter)
-        {
-            new AuthRegWindow().Show();
-        }
-        
-        
-        public ICommand ShowBasketPage { get; }
-        private bool CanShowBasketPageExecute(object parameter)
-        {
-            if (App.user == null)
-            {
-                new AuthRegWindow().Show();
-                return false;
-            }
-            return true;
-        }
-        private void OnShowBasketPageExecute(object parameter)
-        {
-            MainWindow.Instance.GlobalFrame.Navigate(new BasketPage());
-        }
-
 
         public ICommand CategoryPress { get; }
         private bool CanCategoryPressExecute(object parameter)
@@ -158,33 +145,20 @@ namespace QualityRange.ViewModel
             GridAndBarsViewProductPanelVM.Instance.Products = products;
             CountProduct = products.Count();
         }
-        
-        
-        public ICommand UserInfo { get; }
-        private bool CanUserInfoExecute(object parameter) => true;
-        private void OnUserInfoExecute(object parameter)
-        {
-            UserInfoPanel = UserInfoPanel ==  Visibility.Visible? Visibility.Collapsed : Visibility.Visible;
-        }
-        
-        
+        #endregion
+
+
         public ICommand LogOut { get; }
         private bool CanLogOutExecute(object parameter) => true;
         private void OnLogOutExecute(object parameter)
         {
+            App.db.SaveChanges();
             App.user = null;
             InitCountProductInBasket();
             GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(App.db.Product.Local);
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
         } 
         
-        public ICommand EditClient { get; }
-        private bool CanEditClientExecute(object parameter) => true;
-        private void OnEditClientExecute(object parameter)
-        {
-            MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
-        }
-        #endregion
 
 
         public MainWindowVM()
@@ -206,6 +180,7 @@ namespace QualityRange.ViewModel
             UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
             EditClient = new LambdaCommand(OnEditClientExecute, CanEditClientExecute);
+            SearchProduct = new LambdaCommand(OnSearchProductExecute, CanSearchProductExecute);
         }
 
         public void InitCountProductInBasket()
@@ -224,6 +199,14 @@ namespace QualityRange.ViewModel
             }
 
             CountProductInBasket = (int)(App.db.ProductList.Local.Where(pl => pl.Basket.Client.User == App.user)?.Count());
+        }
+
+        private void SearchProducts()
+        {
+            var listProductSearched = App.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
+            CountProduct = listProductSearched.Count();
+            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(listProductSearched);
+            GridAndBarsViewProductPanelVM.Instance.InitProductList();
         }
     }
 }

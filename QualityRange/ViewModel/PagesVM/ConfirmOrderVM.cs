@@ -33,10 +33,7 @@ namespace QualityRange.ViewModel.PagesVM
         #region Commands
         public ICommand Return { get; }
         private bool CanReturnExecute(object parameter) => true;
-        private void OnReturnExecute(object parameter)
-        {
-            MainWindow.Instance.GlobalFrame.GoBack();
-        }
+        private void OnReturnExecute(object parameter) => MainWindow.Instance.GlobalFrame.GoBack();
 
         public ICommand ConfirmOrder { get; }
         private bool CanConfirmOrderExecute(object parameter)
@@ -51,16 +48,27 @@ namespace QualityRange.ViewModel.PagesVM
         }
         private void OnConfirmOrderExecute(object parameter)
         {
-            
+            App.db.Order.Local.Add(Order);
+            foreach(var item in ProductListOrder)
+            {
+                App.db.ProductListOrder.Local.Add(new ProductListOrder
+                {
+                    Order = Order,
+                    Product = item,
+                    Count = item.CountProductInBasket
+                });
+            }
+            new MessageBox().Show();
+            MessageBoxVM.SetMessage($"Ваш заказ офрмлен ID={Order.ID}");
+
+            App.db.SaveChanges();
+
+            MainWindow.Instance.GlobalFrame.Navigate(null);
         }
         
         public ICommand ChangeNumberCard { get; }
         private bool CanChangeNumberCardExecute(object parameter) => true;
-        private void OnChangeNumberCardExecute(object parameter)
-        {
-            //Вызов окна редактирования пользователя
-        }
-
+        private void OnChangeNumberCardExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser(true));
         #endregion
 
 

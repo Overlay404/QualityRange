@@ -51,5 +51,10 @@ namespace QualityRange.ViewModel.WindowsVM
         {
             Instance.Message = message;
         }
+
+        public static void SetFontSize(int size)
+        {
+            MessageBox.Instance.Message.FontSize = size;
+        }
     }
 }

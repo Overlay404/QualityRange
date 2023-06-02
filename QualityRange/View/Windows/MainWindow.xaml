@@ -127,13 +127,18 @@
                                         Grid.Column="1">
                                     <Grid>
                                         <TextBox Style="{StaticResource TextBox}"
-                                                 Margin="0 0 20 0"/>
+                                                 Margin="0 0 20 0"
+                                                 x:Name="SearchText"/>
                                         <fa:ImageAwesome Icon="Search"
                                                          Width="20"
                                                          Foreground="#99FFFFFF"
                                                          HorizontalAlignment="Right"
-                                                         x:Name="SearchBtn"/>
-
+                                                         x:Name="SearchBtn">
+                                            <fa:ImageAwesome.InputBindings>
+                                                <MouseBinding Gesture="LeftCLick"
+                                                              Command="{Binding SearchProduct}"/>
+                                            </fa:ImageAwesome.InputBindings>
+                                        </fa:ImageAwesome>
                                     </Grid>
                                 </Border>
 
@@ -265,6 +270,7 @@
                             </Grid.RowDefinitions>
                             <Grid DataContext="{Binding ClientDC}">
                                 <Image Source="{Binding ProfilePhoto}"
+                                       x:Name="ProfilePhotoImage"
                                        Width="80"
                                        Height="80"
                                        Margin="10 0"
