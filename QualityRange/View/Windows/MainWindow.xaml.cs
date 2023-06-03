@@ -1,5 +1,5 @@
-﻿using QualityRange.View.Pages;
-using QualityRange.ViewModel;
+﻿using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -16,7 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace QualityRange.View.Windows
+namespace QualityRangeForClient.View.Windows
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
@@ -30,7 +30,7 @@ namespace QualityRange.View.Windows
             Instance = this;
 
             ProductListFrame.Navigate(new GridViewProductPanel() { DataContext = GridAndBarsViewProductPanelVM.Instance });
-            Closing += (sender, e) => App.db.SaveChanges();
+            Closing += (sender, e) => DataBase.ConnectionDataBase.db.SaveChanges();
         }
 
         #region ResizeWindows

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace QualityRange.Properties
+namespace QualityRangeForClient.Properties
 {
 
 

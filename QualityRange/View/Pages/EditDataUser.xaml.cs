@@ -1,11 +1,11 @@
-﻿using QualityRange.SupportiveClasses;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.PagesVM;
+﻿using QualityRangeForClient.SupportiveClasses;
+using QualityRangeForClient.View.Windows;
+using QualityRangeForClient.ViewModel.PagesVM;
 using System.Linq;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace QualityRange.View.Pages
+namespace QualityRangeForClient.View.Pages
 {
     /// <summary>
     /// Логика взаимодействия для EditDataUser.xaml

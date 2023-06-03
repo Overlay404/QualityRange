@@ -1,14 +1,14 @@
-﻿using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Pages;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.WindowsVM;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.View.Windows;
+using QualityRangeForClient.ViewModel.WindowsVM;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows.Input;
 
-namespace QualityRange.ViewModel.PagesVM
+namespace QualityRangeForClient.ViewModel.PagesVM
 {
     internal class BasketPageVM : ViewModel.Base.ViewModel
     {
@@ -61,8 +61,8 @@ namespace QualityRange.ViewModel.PagesVM
         {
             Instance = this;
 
-            var userBasket = App.user.Client.Basket.FirstOrDefault()?.ID;
-            var listProduct = App.db.ProductList.Local.Where(pl => pl.ID_Basket == userBasket).Select(p => p.Product).ToList();
+            var userBasket = DataBase.ConnectionDataBase.client.Basket.FirstOrDefault()?.ID;
+            var listProduct = DataBase.ConnectionDataBase.db.ProductList.Local.Where(pl => pl.ID_Basket == userBasket).Select(p => p.Product).ToList();
 
             ProductListInBasket = new BindingList<Product>(listProduct);
             CountElementInBasket = listProduct.Count;

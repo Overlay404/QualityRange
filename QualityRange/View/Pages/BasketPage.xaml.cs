@@ -1,4 +1,4 @@
-﻿using QualityRange.ViewModel.PagesVM;
+﻿using QualityRangeForClient.ViewModel.PagesVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QualityRange.View.Pages
+namespace QualityRangeForClient.View.Pages
 {
     /// <summary>
     /// Логика взаимодействия для BasketPage.xaml

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c069086adfd849d1aa8502aff881095d" Name="Diagram1">
+        <EntityTypeShape EntityType="MarketShopModel.Basket" Width="1.5" PointX="5.25" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Category" Width="1.5" PointX="3" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Client" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Employee" Width="1.5" PointX="3" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Order" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.PhotoProduct" Width="1.5" PointX="7.5" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.PointOfIssue" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Product" Width="1.5" PointX="5.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.ProductList" Width="1.5" PointX="7.5" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.ProductListOrder" Width="1.5" PointX="7.5" PointY="7.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Salesman" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.Status" Width="1.5" PointX="3" PointY="16.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="MarketShopModel.User" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <AssociationConnector Association="MarketShopModel.FK_Basket_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_ProductList_Basket" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Product_Category1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Client_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Order_Client" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Employee_User1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Order_Address" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_ProductListOrder_Order" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_PhotoProduct_Product1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Product_Salesman1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Product_Status1" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_ProductList_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_ProductListOrder_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="MarketShopModel.FK_Salesman_User1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

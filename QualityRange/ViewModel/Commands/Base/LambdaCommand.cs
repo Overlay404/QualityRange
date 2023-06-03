@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QualityRange.Commands.Base
+namespace QualityRangeForClient.Commands.Base
 {
     internal class LambdaCommand : Command
     {

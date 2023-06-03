@@ -1,4 +1,4 @@
-﻿using QualityRange.ViewModel;
+﻿using QualityRangeForClient.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QualityRange.View.Pages
+namespace QualityRangeForClient.View.Pages
 {
     /// <summary>
     /// Логика взаимодействия для BarsViewProductPage.xaml

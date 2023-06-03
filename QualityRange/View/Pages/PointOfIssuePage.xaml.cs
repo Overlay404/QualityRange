@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace QualityRange.View.Pages
+namespace QualityRangeForClient.View.Pages
 {
     /// <summary>
     /// Логика взаимодействия для PointOfIssuePage.xaml
@@ -33,10 +33,12 @@ namespace QualityRange.View.Pages
                 gMapControl1.ShowCenter = false;
                 gMapControl1.ShowTileGridLines = false;
 
-                foreach (var item in App.db.PointOfIssue.Local)
+                foreach (var item in DataBase.ConnectionDataBase.db.PointOfIssue.Local)
                 {
-                    GMap.NET.WindowsPresentation.GMapMarker gMapMarker = new GMap.NET.WindowsPresentation.GMapMarker(new GMap.NET.PointLatLng((double)item.lat, (double)item.lot));
-                    gMapMarker.Shape = InitUIElement(item.Name);
+                    GMap.NET.WindowsPresentation.GMapMarker gMapMarker = new GMap.NET.WindowsPresentation.GMapMarker(new GMap.NET.PointLatLng((double)item.lat, (double)item.lot))
+                    {
+                        Shape = InitUIElement(item.Name)
+                    };
                     gMapControl1.Markers.Add(gMapMarker);
                 }
             };

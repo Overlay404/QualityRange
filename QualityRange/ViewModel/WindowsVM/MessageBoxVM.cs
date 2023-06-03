@@ -1,17 +1,8 @@
-﻿using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Pages;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.PagesVM;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Windows;
 using System.Windows.Input;
 
-namespace QualityRange.ViewModel.WindowsVM
+namespace QualityRangeForClient.ViewModel.WindowsVM
 {
     internal class MessageBoxVM : ViewModel.Base.ViewModel
     {
@@ -29,7 +20,7 @@ namespace QualityRange.ViewModel.WindowsVM
         {
             MessageBox.Instance.Close();
         }
-        
+
         public ICommand DragMoveWindow { get; }
         private bool CanDragMoveWindowExecute(object parameter) => true;
         private void OnDragMoveWindowExecute(object parameter)

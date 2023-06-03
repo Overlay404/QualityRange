@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace QualityRange.View.Windows
+namespace QualityRangeForClient.View.Windows
 {
     /// <summary>
     /// Логика взаимодействия для MessageBox.xaml

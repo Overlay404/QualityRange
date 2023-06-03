@@ -1,4 +1,4 @@
-﻿using QualityRange.View.Pages;
+﻿using QualityRangeForClient.View.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace QualityRange.View.Windows
+namespace QualityRangeForClient.View.Windows
 {
     /// <summary>
     /// Логика взаимодействия для AuthRegWindow.xaml

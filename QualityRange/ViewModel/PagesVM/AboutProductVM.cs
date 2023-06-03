@@ -1,16 +1,10 @@
-﻿using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Windows;
-using System;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Windows;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows.Media;
 
-namespace QualityRange.ViewModel.PagesVM
+namespace QualityRangeForClient.ViewModel.PagesVM
 {
     internal class AboutProductVM : ViewModel.Base.ViewModel
     {
@@ -22,7 +16,7 @@ namespace QualityRange.ViewModel.PagesVM
 
         private byte[] _selectedImage;
         public byte[] SelectedImage { get => _selectedImage; set => Set(ref _selectedImage, value); }
-        
+
         private IEnumerable<PhotoProduct> _images;
         public IEnumerable<PhotoProduct> Images { get => _images; set => Set(ref _images, value); }
         #endregion

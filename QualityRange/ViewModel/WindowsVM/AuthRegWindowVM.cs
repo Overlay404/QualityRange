@@ -1,19 +1,15 @@
-﻿using QualityRange.View.Windows;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.View.Windows;
+using QualityRangeForClient.ViewModel.PagesVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Windows;
-using QualityRange.Commands.Base;
-using QualityRange.View.Pages;
-using QualityRange.Model;
-using System.Windows.Controls;
 using System.Windows.Threading;
-using QualityRange.ViewModel.PagesVM;
 
-namespace QualityRange.ViewModel.WindowsVM
+namespace QualityRangeForClient.ViewModel.WindowsVM
 {
     internal class AuthRegWindowVM : ViewModel.Base.ViewModel
     {
@@ -50,7 +46,7 @@ namespace QualityRange.ViewModel.WindowsVM
                 return;
             }
 
-            if(AutorizateUser(loginIntroduced, passwordIntroduced) == false)
+            if (AutorizateClient(loginIntroduced, passwordIntroduced) == false)
             {
                 return;
             }
@@ -93,9 +89,9 @@ namespace QualityRange.ViewModel.WindowsVM
                 Removed = false
             };
 
-            App.db.User.Local.Add(user);
+            DataBase.ConnectionDataBase.db.User.Local.Add(user);
 
-            App.db.Client.Local.Add(new Client()
+            DataBase.ConnectionDataBase.db.Client.Local.Add(new Client()
             {
                 Name = nameIntroduced,
                 Surname = surnameIntroduced,
@@ -103,9 +99,9 @@ namespace QualityRange.ViewModel.WindowsVM
                 User = user
             });
 
-            App.db.SaveChanges();
+            DataBase.ConnectionDataBase.db.SaveChanges();
 
-            if (AutorizateUser(loginIntroduced, passwordIntroduced) == false)
+            if (AutorizateClient(loginIntroduced, passwordIntroduced) == false)
             {
                 return;
             }
@@ -122,19 +118,19 @@ namespace QualityRange.ViewModel.WindowsVM
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
         }
 
-        private static bool AutorizateUser(string loginIntroduced, string passwordIntroduced)
+        private static bool AutorizateClient(string loginIntroduced, string passwordIntroduced)
         {
-            App.user = App.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false);
+            DataBase.ConnectionDataBase.client = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false).Client;
 
-            if (App.user == null)
+            if (DataBase.ConnectionDataBase.client == null)
             {
                 AddMessageInTextBlock("Такого пользователя не существует");
                 return false;
             }
 
-            if (App.user.Client.ProfilePhoto == null)
+            if (DataBase.ConnectionDataBase.client.ProfilePhoto == null)
             {
-                App.user.Client.ProfilePhoto = App.EmptyUserImage;
+                DataBase.ConnectionDataBase.client.ProfilePhoto = DataBase.ConnectionDataBase.EmptyUserImage;
             }
             return true;
         }
@@ -160,7 +156,7 @@ namespace QualityRange.ViewModel.WindowsVM
         private static void ClearMessageInTextBlock(object sender, EventArgs e)
         {
             AuthRegWindow.Instance.ShowMessageTextBlock.Text = String.Empty;
-        } 
+        }
         #endregion
 
 

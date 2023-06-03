@@ -1,10 +1,10 @@
-﻿<Page x:Class="QualityRange.View.Pages.PointOfIssuePage"
+﻿<Page x:Class="QualityRangeForClient.View.Pages.PointOfIssuePage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:gmap="clr-namespace:GMap.NET.WindowsPresentation;assembly=GMap.NET.WindowsPresentation"
-      xmlns:vm="clr-namespace:QualityRange.ViewModel.PagesVM"
+      xmlns:vm="clr-namespace:QualityRangeForClient.ViewModel.PagesVM"
       mc:Ignorable="d" x:Name="Root"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="PointOfIssuePage" Background="#20242E">

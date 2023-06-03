@@ -1,26 +1,22 @@
-﻿using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Pages;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.WindowsVM;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.View.Windows;
+using QualityRangeForClient.ViewModel.WindowsVM;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace QualityRange.ViewModel.PagesVM
+namespace QualityRangeForClient.ViewModel.PagesVM
 {
     internal class EditDataUserVM : ViewModel.Base.ViewModel
     {
         public static EditDataUserVM Instance { get; private set; }
 
         #region Property
-        private Client _editingClient = App.user.Client;
+        private Client _editingClient = DataBase.ConnectionDataBase.client;
         public Client EditingClient { get => _editingClient; set => Set(ref _editingClient, value); }
         #endregion
 
@@ -68,7 +64,7 @@ namespace QualityRange.ViewModel.PagesVM
         private void OnSaveChangesExecute(object parameter)
         {
             BackPage();
-            App.db.SaveChanges();
+            DataBase.ConnectionDataBase.db.SaveChanges();
         }
 
         private static void BackPage()

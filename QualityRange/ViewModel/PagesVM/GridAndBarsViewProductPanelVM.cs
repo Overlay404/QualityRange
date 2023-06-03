@@ -1,22 +1,13 @@
-﻿using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Pages;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.PagesVM;
-using System;
-using System.Collections.Generic;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.View.Windows;
+using QualityRangeForClient.ViewModel.PagesVM;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Input;
 
-namespace QualityRange.ViewModel
+namespace QualityRangeForClient.ViewModel
 {
     public class GridAndBarsViewProductPanelVM : ViewModel.Base.ViewModel
     {
@@ -25,7 +16,7 @@ namespace QualityRange.ViewModel
         ProductList ProdListItem;
 
         #region Property
-        private ObservableCollection<Product> _products = new ObservableCollection<Product>(App.db.Product.Local);
+        private ObservableCollection<Product> _products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local);
         public ObservableCollection<Product> Products { get => _products; set => Set(ref _products, value); }
         #endregion
 
@@ -33,7 +24,7 @@ namespace QualityRange.ViewModel
         public ICommand AddBasketProduct { get; }
         private bool CanAddBasketProductExecute(object parameter)
         {
-            if (App.user == null)
+            if (DataBase.ConnectionDataBase.client == null)
             {
                 new AuthRegWindow().Show();
                 return false;
@@ -42,16 +33,16 @@ namespace QualityRange.ViewModel
         }
         private void OnAddBasketProductExecute(object parameter)
         {
-            var basket = App.db.Basket.Local.FirstOrDefault(b => b.Client.User == App.user);
+            var basket = DataBase.ConnectionDataBase.db.Basket.Local.FirstOrDefault(b => b.Client == DataBase.ConnectionDataBase.client);
             if (basket == null)
             {
-                basket = new Basket { Client = App.db.Client.Local.FirstOrDefault(c => c.User == App.user) };
-                App.db.Basket.Local.Add(basket);
+                basket = new Basket { Client = DataBase.ConnectionDataBase.db.Client.Local.FirstOrDefault(c => c == DataBase.ConnectionDataBase.client) };
+                DataBase.ConnectionDataBase.db.Basket.Local.Add(basket);
             }
 
-            var productList = App.db.ProductList.Local.FirstOrDefault(p => p.ID_Product == (int)parameter);
+            var productList = DataBase.ConnectionDataBase.db.ProductList.Local.FirstOrDefault(p => p.ID_Product == (int)parameter);
 
-            App.db.ProductList.Local.Add(new ProductList
+            DataBase.ConnectionDataBase.db.ProductList.Local.Add(new ProductList
             {
                 Basket = basket,
                 ID_Product = (int)parameter,
@@ -65,7 +56,7 @@ namespace QualityRange.ViewModel
         public ICommand RemoveProductInListProduct { get; }
         private bool CanRemoveProductInListProductExecute(object parameter)
         {
-            ProdListItem = App.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == App.user.ID && prodlist.Product.ID == (int)parameter);
+            ProdListItem = DataBase.ConnectionDataBase.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == DataBase.ConnectionDataBase.client.ID && prodlist.Product.ID == (int)parameter);
 
             if (ProdListItem == null)
             {
@@ -73,11 +64,11 @@ namespace QualityRange.ViewModel
             }
             return true;
         }
-        private void OnRemoveProductInListProductExecute(object parameter) 
+        private void OnRemoveProductInListProductExecute(object parameter)
         {
-            if(ProdListItem.Count == 1) 
+            if (ProdListItem.Count == 1)
             {
-                App.db.ProductList.Local.Remove(ProdListItem);
+                DataBase.ConnectionDataBase.db.ProductList.Local.Remove(ProdListItem);
             }
             else
             {
@@ -92,22 +83,22 @@ namespace QualityRange.ViewModel
         private bool CanAddProductInListProductExecute(object parameter) => true;
         private void OnAddProductInListProductExecute(object parameter)
         {
-            var prodListItem = App.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == App.user.ID && prodlist.Product.ID == (int)parameter);
+            var prodListItem = DataBase.ConnectionDataBase.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == DataBase.ConnectionDataBase.client.ID && prodlist.Product.ID == (int)parameter);
             prodListItem.Count++;
 
             MainWindowVM.Instance.InitCountProductInBasket();
             InitProductList();
         }
-        
-        
+
+
         public ICommand AdoutProductWidowShow { get; }
         private bool CanAdoutProductWidowShowExecute(object parameter) => true;
         private void OnAdoutProductWidowShowExecute(object parameter)
         {
             var aboutProduct = new AboutProduct();
             MainWindow.Instance.GlobalFrame.Navigate(aboutProduct);
-            AboutProductVM.Instance.Product = App.db.Product.Local.FirstOrDefault(p => p.ID == (int)parameter);
-            AboutProductVM.Instance.Images = AboutProductVM.Instance.Product.PhotoProduct.Count() == 0 ? AboutProductVM.Instance.Product.PhotoProduct.Append(new PhotoProduct { Photo = App.ImageNullebleProduct }): AboutProductVM.Instance.Product.PhotoProduct;
+            AboutProductVM.Instance.Product = DataBase.ConnectionDataBase.db.Product.Local.FirstOrDefault(p => p.ID == (int)parameter);
+            AboutProductVM.Instance.Images = AboutProductVM.Instance.Product.PhotoProduct.Count() == 0 ? AboutProductVM.Instance.Product.PhotoProduct.Append(new PhotoProduct { Photo = DataBase.ConnectionDataBase.ImageNullebleProduct }) : AboutProductVM.Instance.Product.PhotoProduct;
             AboutProductVM.Instance.SelectedImage = AboutProductVM.Instance.Images.FirstOrDefault()?.Photo;
         }
         #endregion

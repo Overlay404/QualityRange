@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace QualityRange.Commands.Base
+namespace QualityRangeForClient.Commands.Base
 {
     internal abstract class Command : ICommand
     {

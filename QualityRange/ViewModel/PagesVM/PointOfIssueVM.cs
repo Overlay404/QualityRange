@@ -1,21 +1,14 @@
-﻿using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Pages;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.WindowsVM;
-using System;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.View.Windows;
+using QualityRangeForClient.ViewModel.WindowsVM;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using MessageBox = QualityRange.View.Windows.MessageBox;
+using MessageBox = QualityRangeForClient.View.Windows.MessageBox;
 
-namespace QualityRange.ViewModel.PagesVM
+namespace QualityRangeForClient.ViewModel.PagesVM
 {
     internal class PointOfIssueVM : ViewModel.Base.ViewModel
     {
@@ -24,7 +17,7 @@ namespace QualityRange.ViewModel.PagesVM
         #region Property
         private IEnumerable<PhotoProduct> _images;
         public IEnumerable<PhotoProduct> Images { get => _images; set => Set(ref _images, value); }
-        
+
         private IEnumerable<PointOfIssue> _pointOfIssueList;
         public IEnumerable<PointOfIssue> PointOfIssueList { get => _pointOfIssueList; set => Set(ref _pointOfIssueList, value); }
         #endregion
@@ -36,17 +29,17 @@ namespace QualityRange.ViewModel.PagesVM
         {
             MainWindow.Instance.GlobalFrame.GoBack();
         }
-        
+
         public ICommand ShowPosition { get; }
         private bool CanShowPositionExecute(object parameter) => true;
         private void OnShowPositionExecute(object parameter)
         {
-            var itemPointOfIssue = App.db.PointOfIssue.Local.FirstOrDefault(p => p.ID == (int)parameter);
+            var itemPointOfIssue = DataBase.ConnectionDataBase.db.PointOfIssue.Local.FirstOrDefault(p => p.ID == (int)parameter);
             PointOfIssuePage.Instance.ListViewPointOfIssie.SelectedItem = itemPointOfIssue;
             PointOfIssuePage.Instance.gMapControl1.Position = new GMap.NET.PointLatLng((double)itemPointOfIssue.lat, (double)itemPointOfIssue.lot);
-        } 
-        
-        
+        }
+
+
         public ICommand NextStage { get; }
         private bool CanNextStageExecute(object parameter)
         {
@@ -69,7 +62,7 @@ namespace QualityRange.ViewModel.PagesVM
         {
             Instance = this;
 
-            PointOfIssueList = App.db.PointOfIssue.Local;
+            PointOfIssueList = DataBase.ConnectionDataBase.db.PointOfIssue.Local;
 
             Return = new LambdaCommand(OnReturnExecute, CanReturnExecute);
             ShowPosition = new LambdaCommand(OnShowPositionExecute, CanShowPositionExecute);

@@ -7,7 +7,7 @@ using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace QualityRange.SupportiveClasses
+namespace QualityRangeForClient.SupportiveClasses
 {
     internal class ImageConverter
     {

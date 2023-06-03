@@ -1,19 +1,15 @@
-﻿using System;
+﻿using DataBase.Model;
+using QualityRangeForClient.Commands.Base;
+using QualityRangeForClient.View.Pages;
+using QualityRangeForClient.View.Windows;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using QualityRange.Commands.Base;
-using QualityRange.Model;
-using QualityRange.View.Pages;
-using QualityRange.View.Windows;
-using QualityRange.ViewModel.Base;
 
-namespace QualityRange.ViewModel
+namespace QualityRangeForClient.ViewModel
 {
     internal class MainWindowVM : ViewModel.Base.ViewModel
     {
@@ -32,7 +28,7 @@ namespace QualityRange.ViewModel
         public Window AuthRegWin { get => _authRegWin; set => Set(ref _authRegWin, value); }
 
 
-        private int _countProduct = App.db.Product.Local.Count();
+        private int _countProduct = DataBase.ConnectionDataBase.db.Product.Local.Count();
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
 
 
@@ -77,15 +73,15 @@ namespace QualityRange.ViewModel
         public ICommand GoWindow { get; }
         private bool CanGoWindowExecute(object parameter) => true;
         private void OnGoWindowExecute(object parameter) => new AuthRegWindow().Show();
-        
+
         public ICommand UserInfo { get; }
         private bool CanUserInfoExecute(object parameter) => true;
         private void OnUserInfoExecute(object parameter) => UserInfoPanel = UserInfoPanel == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        
+
         public ICommand EditClient { get; }
         private bool CanEditClientExecute(object parameter) => true;
         private void OnEditClientExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
-        
+
         public ICommand SearchProduct { get; }
         private bool CanSearchProductExecute(object parameter) => true;
         private void OnSearchProductExecute(object parameter) => SearchProducts();
@@ -106,7 +102,7 @@ namespace QualityRange.ViewModel
         private void OnShowBasketPageExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new BasketPage());
         private bool CanShowBasketPageExecute(object parameter)
         {
-            if (App.user == null)
+            if (DataBase.ConnectionDataBase.client == null)
             {
                 new AuthRegWindow().Show();
                 return false;
@@ -133,15 +129,15 @@ namespace QualityRange.ViewModel
         {
             if (parameter as string == "Все категории")
             {
-                GridAndBarsViewProductPanelVM.Instance.Products = App.db.Product.Local;
-                CountProduct = App.db.Product.Local.Count();
+                GridAndBarsViewProductPanelVM.Instance.Products = DataBase.ConnectionDataBase.db.Product.Local;
+                CountProduct = DataBase.ConnectionDataBase.db.Product.Local.Count();
                 return false;
             }
             return true;
         }
         private void OnCategoryPressExecute(object parameter)
         {
-            var products = new ObservableCollection<Product>(App.db.Product.Local.Where(p => p.Category.Name == parameter as string));
+            var products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Category.Name == parameter as string));
             GridAndBarsViewProductPanelVM.Instance.Products = products;
             CountProduct = products.Count();
         }
@@ -152,13 +148,13 @@ namespace QualityRange.ViewModel
         private bool CanLogOutExecute(object parameter) => true;
         private void OnLogOutExecute(object parameter)
         {
-            App.db.SaveChanges();
-            App.user = null;
+            DataBase.ConnectionDataBase.db.SaveChanges();
+            DataBase.ConnectionDataBase.client = null;
             InitCountProductInBasket();
-            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(App.db.Product.Local);
+            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local);
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
-        } 
-        
+        }
+
 
 
         public MainWindowVM()
@@ -167,7 +163,7 @@ namespace QualityRange.ViewModel
 
             InitCountProductInBasket();
 
-            Categories = new List<Category>(App.db.Category.Local).Append(new Category { Name = "Все категории" });
+            Categories = new List<Category>(DataBase.ConnectionDataBase.db.Category.Local).Append(new Category { Name = "Все категории" });
 
             ShutdownApplication = new LambdaCommand(OnShutdownApplicationExecute, CanShutdownApplicationExecute);
             MinimazeWindow = new LambdaCommand(OnMinimazeWindowExecute, CanMinimazeWindowExecute);
@@ -185,11 +181,11 @@ namespace QualityRange.ViewModel
 
         public void InitCountProductInBasket()
         {
-            if(App.user != null)
+            if (DataBase.ConnectionDataBase.client != null)
             {
                 VisibilityBtn = Visibility.Collapsed;
                 VisibilityUserIcon = Visibility.Visible;
-                ClientDC = App.user.Client;
+                ClientDC = DataBase.ConnectionDataBase.client;
             }
             else
             {
@@ -198,12 +194,12 @@ namespace QualityRange.ViewModel
                 UserInfoPanel = Visibility.Collapsed;
             }
 
-            CountProductInBasket = (int)(App.db.ProductList.Local.Where(pl => pl.Basket.Client.User == App.user)?.Count());
+            CountProductInBasket = (int)(DataBase.ConnectionDataBase.db.ProductList.Local.Where(pl => pl.Basket.Client == DataBase.ConnectionDataBase.client)?.Count());
         }
 
         private void SearchProducts()
         {
-            var listProductSearched = App.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
+            var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
             CountProduct = listProductSearched.Count();
             GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(listProductSearched);
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
