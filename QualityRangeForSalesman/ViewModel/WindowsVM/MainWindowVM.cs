@@ -25,12 +25,8 @@ namespace QualityRangeForSalesman.ViewModel
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
 
 
-        private IEnumerable<Category> _categories;
-        public IEnumerable<Category> Categories { get => _categories; set => Set(ref _categories, value); }
-
-
-        private Client _clientDC;
-        public Client ClientDC { get => _clientDC; set => Set(ref _clientDC, value); }
+        private Salesman _salesmantDC;
+        public Salesman SalesmanDC { get => _salesmantDC; set => Set(ref _salesmantDC, value); }
 
 
         private Visibility _visibilityBtn = Visibility.Visible;
@@ -101,7 +97,7 @@ namespace QualityRangeForSalesman.ViewModel
         }
         private bool CanShowOrderPageExecute(object parameter)
         {
-            if (DataBase.ConnectionDataBase.client == null)
+            if (DataBase.ConnectionDataBase.salesman == null)
             {
                 new AuthRegWindow().Show();
                 return false;
@@ -123,32 +119,15 @@ namespace QualityRangeForSalesman.ViewModel
             MainWindow.Instance.DragMove();
         }
 
-        public ICommand CategoryPress { get; }
-        private bool CanCategoryPressExecute(object parameter)
-        {
-            if (parameter as string == "Все категории")
-            {
-                CountProduct = DataBase.ConnectionDataBase.db.Product.Local.Count();
-                return false;
-            }
-            return true;
-        }
-        private void OnCategoryPressExecute(object parameter)
-        {
-            var products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Category.Name == parameter as string));
-            CountProduct = products.Count();
-        }
-        #endregion
-
-
         public ICommand LogOut { get; }
         private bool CanLogOutExecute(object parameter) => true;
         private void OnLogOutExecute(object parameter)
         {
             DataBase.ConnectionDataBase.db.SaveChanges();
-            DataBase.ConnectionDataBase.client = null;
+            DataBase.ConnectionDataBase.salesman = null;
             InitCountProductInBasket();
         }
+        #endregion
 
 
 
@@ -158,8 +137,6 @@ namespace QualityRangeForSalesman.ViewModel
 
             InitCountProductInBasket();
 
-            Categories = new List<Category>(DataBase.ConnectionDataBase.db.Category.Local).Append(new Category { Name = "Все категории" });
-
             ShutdownApplication = new LambdaCommand(OnShutdownApplicationExecute, CanShutdownApplicationExecute);
             MinimazeWindow = new LambdaCommand(OnMinimazeWindowExecute, CanMinimazeWindowExecute);
             MaximizeWindow = new LambdaCommand(OnMaximizeWindowExecute, CanMaximizeWindowExecute);
@@ -167,7 +144,6 @@ namespace QualityRangeForSalesman.ViewModel
             GoPage = new LambdaCommand(OnGoPageExecute, CanGoPageExecute);
             GoWindow = new LambdaCommand(OnGoWindowExecute, CanGoWindowExecute);
             ShowOrderPage = new LambdaCommand(OnShowOrderPageExecute, CanShowOrderPageExecute);
-            CategoryPress = new LambdaCommand(OnCategoryPressExecute, CanCategoryPressExecute);
             UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
             EditClient = new LambdaCommand(OnEditClientExecute, CanEditClientExecute);
@@ -176,11 +152,11 @@ namespace QualityRangeForSalesman.ViewModel
 
         public void InitCountProductInBasket()
         {
-            if (DataBase.ConnectionDataBase.client != null)
+            if (DataBase.ConnectionDataBase.salesman != null)
             {
                 VisibilityBtn = Visibility.Collapsed;
                 VisibilityUserIcon = Visibility.Visible;
-                ClientDC = DataBase.ConnectionDataBase.client;
+                SalesmanDC = DataBase.ConnectionDataBase.salesman;
             }
             else
             {

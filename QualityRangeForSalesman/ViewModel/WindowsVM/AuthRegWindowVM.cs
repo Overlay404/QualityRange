@@ -120,17 +120,17 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
 
         private static bool AutorizateUser(string loginIntroduced, string passwordIntroduced)
         {
-            DataBase.ConnectionDataBase.client = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false).Client;
+            DataBase.ConnectionDataBase.salesman = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false).Salesman;
 
-            if (DataBase.ConnectionDataBase.client == null)
+            if (DataBase.ConnectionDataBase.salesman == null)
             {
                 AddMessageInTextBlock("Такого пользователя не существует");
                 return false;
             }
 
-            if (DataBase.ConnectionDataBase.client.ProfilePhoto == null)
+            if (DataBase.ConnectionDataBase.salesman.ProfilePhoto == null)
             {
-                DataBase.ConnectionDataBase.client.ProfilePhoto = DataBase.ConnectionDataBase.EmptyUserImage;
+                DataBase.ConnectionDataBase.salesman.ProfilePhoto = DataBase.ConnectionDataBase.EmptyUserImage;
             }
             return true;
         }

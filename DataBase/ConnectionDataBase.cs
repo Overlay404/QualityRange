@@ -10,6 +10,8 @@ namespace DataBase
 
         public static Client client;
 
+        public static Salesman salesman;
+
         public static byte[] ImageNullebleProduct = ImageConverter.GetImageFromInternet(
             "https://w7.pngwing.com/pngs/685/826/png-transparent-computer-icons-cardboard-box-packaging-and-labeling-business-box-miscellaneous-angle-freight-transport-thumbnail.png");
 
