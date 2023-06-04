@@ -46,14 +46,12 @@ namespace QualityRangeForClient.View.Pages
 
         private static StackPanel InitUIElement(string name)
         {
-            Border border = new Border()
+            FontAwesome.WPF.ImageAwesome imageAwesome = new FontAwesome.WPF.ImageAwesome()
             {
-                CornerRadius = new CornerRadius(20),
-                Width = 25,
-                Height = 25,
-                BorderBrush = new SolidColorBrush(Colors.Black),
-                BorderThickness = new Thickness(2),
-                Background = new SolidColorBrush(Colors.Gray)
+                Icon = FontAwesome.WPF.FontAwesomeIcon.MapMarker,
+                Width = 35,
+                Height = 35,
+                Foreground = new SolidColorBrush(Colors.Red)
             };
 
             TextBlock textBlock = new TextBlock()
@@ -64,7 +62,7 @@ namespace QualityRangeForClient.View.Pages
             };
 
             StackPanel stackPanel = new StackPanel();
-            stackPanel.Children.Add(border);
+            stackPanel.Children.Add(imageAwesome);
             stackPanel.Children.Add(textBlock);
 
             return stackPanel;

@@ -24,7 +24,7 @@ namespace DataBase.Model
         {
             throw new UnintentionalCodeFirstException();
         }
-
+    
         public virtual DbSet<Basket> Basket { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Client> Client { get; set; }
@@ -35,8 +35,8 @@ namespace DataBase.Model
         public virtual DbSet<Product> Product { get; set; }
         public virtual DbSet<ProductList> ProductList { get; set; }
         public virtual DbSet<ProductListOrder> ProductListOrder { get; set; }
-        public virtual DbSet<Salesman> Salesman { get; set; }
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<Salesman> Salesman { get; set; }
     }
 }

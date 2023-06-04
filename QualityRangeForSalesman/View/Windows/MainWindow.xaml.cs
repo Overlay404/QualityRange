@@ -29,7 +29,7 @@ namespace QualityRangeForSalesman.View.Windows
             InitializeComponent();
             Instance = this;
 
-            ProductListFrame.Navigate(null);
+            ProductListFrame.Navigate(new ProductsSalesman());
             Closing += (sender, e) => DataBase.ConnectionDataBase.db.SaveChanges();
         }
 

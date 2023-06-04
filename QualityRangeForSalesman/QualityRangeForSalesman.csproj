@@ -76,11 +76,19 @@
     <Compile Include="ViewModel\Base\ViewModel.cs" />
     <Compile Include="ViewModel\Commands\Base\Command.cs" />
     <Compile Include="ViewModel\Commands\Base\LambdaCommand.cs" />
+    <Compile Include="ViewModel\PagesVM\EditDataUserVM.cs" />
+    <Compile Include="ViewModel\PagesVM\ProductsSalesmanVM.cs" />
     <Compile Include="ViewModel\WindowsVM\AuthRegWindowVM.cs" />
     <Compile Include="ViewModel\WindowsVM\MainWindowVM.cs" />
     <Compile Include="ViewModel\WindowsVM\MessageBoxVM.cs" />
     <Compile Include="View\Pages\AutorizationPage.xaml.cs">
       <DependentUpon>AutorizationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\EditDataUser.xaml.cs">
+      <DependentUpon>EditDataUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\ProductsSalesman.xaml.cs">
+      <DependentUpon>ProductsSalesman.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\RegistrationPage.xaml.cs">
       <DependentUpon>RegistrationPage.xaml</DependentUpon>
@@ -131,6 +139,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="View\Pages\EditDataUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\ProductsSalesman.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Pages\RegistrationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -148,9 +164,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="ViewModel\PagesVM\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\DataBase\DataBase.csproj">
       <Project>{45ea3130-6d9a-4ffa-b005-82a27db82d90}</Project>

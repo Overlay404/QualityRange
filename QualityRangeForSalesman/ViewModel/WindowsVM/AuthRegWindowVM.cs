@@ -62,13 +62,9 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
             var loginIntroduced = RegistrationPage.Instance.LoginTB.Text;
             var passwordIntroduced = RegistrationPage.Instance.PasswordTB.Text;
             var nameIntroduced = RegistrationPage.Instance.NameTB.Text;
-            var surnameIntroduced = RegistrationPage.Instance.SurnameTB.Text;
-            var patronymicIntroduced = RegistrationPage.Instance.PatronymicTB.Text;
 
 
-            if (String.IsNullOrWhiteSpace(loginIntroduced) && String.IsNullOrWhiteSpace(passwordIntroduced)
-                && String.IsNullOrWhiteSpace(nameIntroduced) && String.IsNullOrWhiteSpace(surnameIntroduced)
-                && String.IsNullOrWhiteSpace(patronymicIntroduced))
+            if (String.IsNullOrWhiteSpace(loginIntroduced) && String.IsNullOrWhiteSpace(passwordIntroduced) && String.IsNullOrWhiteSpace(nameIntroduced))
             {
                 AddMessageInTextBlock("Поля не заполнены");
                 return;
@@ -91,11 +87,9 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
 
             DataBase.ConnectionDataBase.db.User.Local.Add(user);
 
-            DataBase.ConnectionDataBase.db.Client.Local.Add(new Client()
+            DataBase.ConnectionDataBase.db.Salesman.Local.Add(new Salesman()
             {
-                Name = nameIntroduced,
-                Surname = surnameIntroduced,
-                Patronymic = patronymicIntroduced,
+                NameCompany = nameIntroduced,
                 User = user
             });
 
@@ -120,7 +114,7 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
 
         private static bool AutorizateUser(string loginIntroduced, string passwordIntroduced)
         {
-            DataBase.ConnectionDataBase.salesman = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false).Salesman;
+            DataBase.ConnectionDataBase.salesman = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login == loginIntroduced && u.Password == passwordIntroduced && u.Removed == false)?.Salesman;
 
             if (DataBase.ConnectionDataBase.salesman == null)
             {

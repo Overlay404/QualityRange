@@ -1,7 +1,9 @@
-﻿using DataBase.Model;
+﻿using DataBase;
+using DataBase.Model;
 using QualityRangeForSalesman.Commands.Base;
 using QualityRangeForSalesman.View.Pages;
 using QualityRangeForSalesman.View.Windows;
+using QualityRangeForSalesman.ViewModel.PagesVM;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -71,7 +73,7 @@ namespace QualityRangeForSalesman.ViewModel
         private bool CanEditClientExecute(object parameter) => true;
         private void OnEditClientExecute(object parameter)
         {
-
+            MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
         }
 
         public ICommand SearchProduct { get; }
@@ -152,17 +154,23 @@ namespace QualityRangeForSalesman.ViewModel
 
         public void InitCountProductInBasket()
         {
+            if (ProductsSalesmanVM.Instance == null) return;
+
             if (DataBase.ConnectionDataBase.salesman != null)
             {
                 VisibilityBtn = Visibility.Collapsed;
                 VisibilityUserIcon = Visibility.Visible;
                 SalesmanDC = DataBase.ConnectionDataBase.salesman;
+                ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>(ConnectionDataBase.db.Product.Local.Where(p => p.Salesman == ConnectionDataBase.salesman));
+                ProductsSalesmanVM.Instance.CountProducts = ProductsSalesmanVM.Instance.Products.Count();
             }
             else
             {
                 VisibilityBtn = Visibility.Visible;
                 VisibilityUserIcon = Visibility.Collapsed;
                 UserInfoPanel = Visibility.Collapsed;
+                ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>();
+                ProductsSalesmanVM.Instance.CountProducts = 0;
             }
 
             //CountOrder = вывод количества заказов

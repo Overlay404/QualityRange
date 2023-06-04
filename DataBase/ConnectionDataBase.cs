@@ -30,6 +30,7 @@ namespace DataBase
             db.Product.Load();
             db.Salesman.Load();
             db.ProductList.Load();
+            db.ProductListOrder.Load();
         }
     }
 }
