@@ -166,7 +166,7 @@
                                 <Border.InputBindings>
                                     <MouseBinding MouseAction="LeftClick"
                                               Command="{Binding DataContext.EditProduct, ElementName=ListProductGridView}"
-                                              CommandParameter="{Binding ID}"/>
+                                              CommandParameter="{Binding}"/>
                                 </Border.InputBindings>
                                 <StackPanel Orientation="Horizontal"
                                         HorizontalAlignment="Center">
@@ -227,7 +227,7 @@
         <Grid Grid.Column="1"
               Grid.Row="1"
               Margin="10"
-              DataContext="{Binding SelectedItem, ElementName=ListProductGridView}">
+              DataContext="{Binding SelectedItem, UpdateSourceTrigger=PropertyChanged, ElementName=ListProductGridView}">
             <ScrollViewer TextBlock.Foreground="#99FFFFFF"
                           TextBlock.FontSize="14">
                 <StackPanel>
@@ -277,7 +277,87 @@
                          Style="{StaticResource TextBox}"/>
                     </StackPanel>
 
+                    <StackPanel>
+                        <TextBlock Text="Фотографии: "/>
+                        <fa:ImageAwesome Icon="Plus"
+                                         Margin="0 0 20 0"
+                                         Width="15"
+                                         Foreground="Green"
+                                         HorizontalAlignment="Right">
+                            <fa:ImageAwesome.InputBindings>
+                                <MouseBinding MouseAction="LeftClick"
+                                              Command="{Binding DataContext.AddPhoto, ElementName=Root}"
+                                              CommandParameter="{Binding}"/>
+                            </fa:ImageAwesome.InputBindings>
+                        </fa:ImageAwesome>
+                        <ScrollViewer HorizontalAlignment="Stretch"
+                                  MaxHeight="200">
+                            <Grid>
+                                <ItemsControl x:Name="PhotoList"
+                                    ItemsSource="{Binding PhotoProduct, UpdateSourceTrigger=PropertyChanged}"
+                                      HorizontalAlignment="Center">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <WrapPanel Orientation="Horizontal"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border Margin="5 5"
+                                            BorderBrush="Gray"
+                                            CornerRadius="7"
+                                            BorderThickness="4">
+                                                <Grid>
+                                                    <fa:ImageAwesome Icon="Close"
+                                                                 Margin="5"
+                                                                 Width="10"
+                                                                 Height="10"
+                                                                 Foreground="Red"
+                                                                 VerticalAlignment="Top"
+                                                                 HorizontalAlignment="Right"
+                                                                 Panel.ZIndex="1">
+                                                        <fa:ImageAwesome.InputBindings>
+                                                            <MouseBinding MouseAction="LeftClick"
+                                                                      Command="{Binding DataContext.DeletePhoto, ElementName=Root}"
+                                                                      CommandParameter="{Binding}"/>
+                                                        </fa:ImageAwesome.InputBindings>
+                                                    </fa:ImageAwesome>
 
+                                                    <Image Source="{Binding Photo}"
+                                                       Opacity="0.5"
+                                                        Height="80" Width="80"
+                                                        Stretch="Fill">
+                                                        <Image.Clip>
+                                                            <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0,0,80,80"/>
+                                                        </Image.Clip>
+                                                    </Image>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <TextBlock Text="Нет фотографий"
+                                            Panel.ZIndex="1"
+                                            FontSize="15"
+                                           x:Name="textInfo"
+                                            FontWeight="Bold"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock.Style>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding PhotoProductCount, UpdateSourceTrigger=PropertyChanged}" Value="0">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </TextBlock.Style>
+                                </TextBlock>
+                            </Grid>
+                        </ScrollViewer>
+                    </StackPanel>
 
 
                 </StackPanel>

@@ -11,7 +11,7 @@
     <Page.DataContext>
         <vm:AuthRegWindowVM/>
     </Page.DataContext>
-    
+
     <Grid>
         <Grid TextBlock.Foreground="#99FFFFFF" 
               Margin="0 100 0 0">

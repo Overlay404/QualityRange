@@ -77,6 +77,7 @@
     <Compile Include="ViewModel\Commands\Base\Command.cs" />
     <Compile Include="ViewModel\Commands\Base\LambdaCommand.cs" />
     <Compile Include="ViewModel\PagesVM\EditDataUserVM.cs" />
+    <Compile Include="ViewModel\PagesVM\OrderSalesmanVM.cs" />
     <Compile Include="ViewModel\PagesVM\ProductsSalesmanVM.cs" />
     <Compile Include="ViewModel\WindowsVM\AuthRegWindowVM.cs" />
     <Compile Include="ViewModel\WindowsVM\MainWindowVM.cs" />
@@ -86,6 +87,9 @@
     </Compile>
     <Compile Include="View\Pages\EditDataUser.xaml.cs">
       <DependentUpon>EditDataUser.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\OrderSalesman.xaml.cs">
+      <DependentUpon>OrderSalesman.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\ProductsSalesman.xaml.cs">
       <DependentUpon>ProductsSalesman.xaml</DependentUpon>
@@ -142,6 +146,10 @@
     <Page Include="View\Pages\EditDataUser.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\Pages\OrderSalesman.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\ProductsSalesman.xaml">
       <SubType>Designer</SubType>

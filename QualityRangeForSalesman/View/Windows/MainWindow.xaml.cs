@@ -1,7 +1,9 @@
 ﻿using QualityRangeForSalesman.View.Pages;
 using QualityRangeForSalesman.ViewModel;
+using QualityRangeForSalesman.ViewModel.PagesVM;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Metadata.Edm;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -30,7 +32,14 @@ namespace QualityRangeForSalesman.View.Windows
             Instance = this;
 
             ProductListFrame.Navigate(new ProductsSalesman());
-            Closing += (sender, e) => DataBase.ConnectionDataBase.db.SaveChanges();
+            Closing += (sender, e) =>
+            {
+                if(ProductsSalesmanVM.IsAddingNewProduct == true)
+                {
+                    return;
+                }
+                DataBase.ConnectionDataBase.db.SaveChanges();
+            };
         }
 
         #region ResizeWindows

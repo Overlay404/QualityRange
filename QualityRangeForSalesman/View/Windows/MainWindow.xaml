@@ -148,8 +148,7 @@
                                         <ColumnDefinition Width="*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Border Style="{StaticResource BorderShopBasket}"
-                                            CornerRadius="10"
+                                    <Border CornerRadius="10"
                                             Padding="10"
                                             HorizontalAlignment="Center"
                                             x:Name="ShopBasketBtn">
@@ -177,6 +176,73 @@
                                                     <Style TargetType="{x:Type Border}">
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding CountOrder}" Value="0">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Border.Style>
+                                            </Border>
+                                        </Grid>
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="TextBlock.Foreground" Value="#99FFFFFF"/>
+                                                <Setter Property="Background" Value="#02000000"/>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="TextBlock.Foreground" Value="White"/>
+                                                    </Trigger>
+                                                    <DataTrigger Binding="{Binding IsPageOrder}" Value="false">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                    </Border>
+
+                                    <Border CornerRadius="10"
+                                            Padding="10"
+                                            HorizontalAlignment="Center"
+                                            x:Name="ProductBtn">
+                                        <Border.Style>
+                                            <Style TargetType="Border">
+                                                <Setter Property="TextBlock.Foreground" Value="#99FFFFFF"/>
+                                                <Setter Property="Background" Value="#02000000"/>
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter Property="TextBlock.Foreground" Value="White"/>
+                                                    </Trigger>
+                                                    <DataTrigger Binding="{Binding IsPageOrder}" Value="true">
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Border.Style>
+                                        <Border.InputBindings>
+                                            <MouseBinding Gesture="LeftClick"
+                                                          Command="{Binding ShowProductPage}"/>
+                                        </Border.InputBindings>
+                                        <Grid>
+                                            <StackPanel>
+                                                <fa:ImageAwesome Icon="Dropbox"
+                                                             Width="20"
+                                                             Foreground="#99FFFFFF"/>
+                                                <TextBlock Text="Мои товары"
+                                                       FontSize="14"/>
+                                            </StackPanel>
+                                            <Border Background="#FF822E2E"
+                                                    VerticalAlignment="Top"
+                                                    HorizontalAlignment="Center"
+                                                    Padding="3 0"
+                                                    Margin="10 -4 0 0"
+                                                    CornerRadius="5">
+                                                <TextBlock Text="{Binding CountProduct}"
+                                                           FontSize="8"/>
+                                                <Border.Style>
+                                                    <Style TargetType="{x:Type Border}">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding CountProduct}" Value="0">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>

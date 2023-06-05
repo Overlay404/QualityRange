@@ -4,12 +4,14 @@ using QualityRangeForSalesman.Commands.Base;
 using QualityRangeForSalesman.View.Pages;
 using QualityRangeForSalesman.View.Windows;
 using QualityRangeForSalesman.ViewModel.PagesVM;
+using QualityRangeForSalesman.ViewModel.WindowsVM;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using MessageBox = QualityRangeForSalesman.View.Windows.MessageBox;
 
 namespace QualityRangeForSalesman.ViewModel
 {
@@ -45,13 +47,14 @@ namespace QualityRangeForSalesman.ViewModel
 
         private int _countOrder;
         public int CountOrder { get => _countOrder; set => Set(ref _countOrder, value); }
+        
+        
+        private bool _isPageOrder;
+        public bool IsPageOrder { get => _isPageOrder; set => Set(ref _isPageOrder, value); }
         #endregion
 
 
         #region Commands
-        public ICommand ShutdownApplication { get; }
-        private bool CanShutdownApplicationExecute(object parameter) => true;
-        private void OnShutdownApplicationExecute(object parameter) => App.Current.Shutdown();
 
         public ICommand MinimazeWindow { get; }
         private bool CanMinimazeWindowExecute(object parameter) => true;
@@ -71,10 +74,7 @@ namespace QualityRangeForSalesman.ViewModel
 
         public ICommand EditClient { get; }
         private bool CanEditClientExecute(object parameter) => true;
-        private void OnEditClientExecute(object parameter)
-        {
-            MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
-        }
+        private void OnEditClientExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
 
         public ICommand SearchProduct { get; }
         private bool CanSearchProductExecute(object parameter) => true;
@@ -92,11 +92,20 @@ namespace QualityRangeForSalesman.ViewModel
             return true;
         }
 
-        public ICommand ShowOrderPage { get; }
-        private void OnShowOrderPageExecute(object parameter)
+        public ICommand ShutdownApplication { get; }
+        private bool CanShutdownApplicationExecute(object parameter)
         {
-
+            if (ProductsSalesmanVM.IsAddingNewProduct == true)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Вы в процессе добавления товара");
+                return false;
+            }
+            return true;
         }
+        private void OnShutdownApplicationExecute(object parameter) => App.Current.Shutdown();
+
+        public ICommand ShowOrderPage { get; }
         private bool CanShowOrderPageExecute(object parameter)
         {
             if (DataBase.ConnectionDataBase.salesman == null)
@@ -104,7 +113,49 @@ namespace QualityRangeForSalesman.ViewModel
                 new AuthRegWindow().Show();
                 return false;
             }
+
+            if (ProductsSalesmanVM.IsAddingNewProduct == true)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Вы в процессе добавления товара");
+                return false;
+            }
+
             return true;
+        }
+        private void OnShowOrderPageExecute(object parameter)
+        {
+            if(OrderSalesman.Instance == null)
+            {
+                new OrderSalesman();
+                new OrderSalesmanVM();
+            }
+            MainWindow.Instance.ProductListFrame.Navigate(OrderSalesman.Instance);
+            IsPageOrder = true;
+        }  
+        
+        public ICommand ShowProductPage { get; }
+        private bool CanShowProductPageExecute(object parameter)
+        {
+            if (DataBase.ConnectionDataBase.salesman == null)
+            {
+                new AuthRegWindow().Show();
+                return false;
+            }
+
+            if (ProductsSalesmanVM.IsAddingNewProduct == true)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Вы в процессе добавления товара");
+                return false;
+            }
+
+            return true;
+        }
+        private void OnShowProductPageExecute(object parameter)
+        {
+            MainWindow.Instance.ProductListFrame.Navigate(ProductsSalesman.Instance);
+            IsPageOrder = false;
         }
 
         public ICommand DragMoveWindow { get; }
@@ -122,7 +173,16 @@ namespace QualityRangeForSalesman.ViewModel
         }
 
         public ICommand LogOut { get; }
-        private bool CanLogOutExecute(object parameter) => true;
+        private bool CanLogOutExecute(object parameter)
+        {
+            if(ProductsSalesmanVM.IsAddingNewProduct == true)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Вы в процессе добавления товара");
+                return false;
+            }
+            return true;
+        }
         private void OnLogOutExecute(object parameter)
         {
             DataBase.ConnectionDataBase.db.SaveChanges();
@@ -146,12 +206,14 @@ namespace QualityRangeForSalesman.ViewModel
             GoPage = new LambdaCommand(OnGoPageExecute, CanGoPageExecute);
             GoWindow = new LambdaCommand(OnGoWindowExecute, CanGoWindowExecute);
             ShowOrderPage = new LambdaCommand(OnShowOrderPageExecute, CanShowOrderPageExecute);
+            ShowProductPage = new LambdaCommand(OnShowProductPageExecute, CanShowProductPageExecute);
             UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
             EditClient = new LambdaCommand(OnEditClientExecute, CanEditClientExecute);
             SearchProduct = new LambdaCommand(OnSearchProductExecute, CanSearchProductExecute);
         }
 
+        #region Methods
         public void InitCountProductInBasket()
         {
             if (ProductsSalesmanVM.Instance == null) return;
@@ -163,6 +225,7 @@ namespace QualityRangeForSalesman.ViewModel
                 SalesmanDC = DataBase.ConnectionDataBase.salesman;
                 ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>(ConnectionDataBase.db.Product.Local.Where(p => p.Salesman == ConnectionDataBase.salesman));
                 ProductsSalesmanVM.Instance.CountProducts = ProductsSalesmanVM.Instance.Products.Count();
+                CountOrder = ConnectionDataBase.db.ProductListOrder.Local.Where(o => o.Product.Salesman == ConnectionDataBase.salesman).GroupBy(pr => pr.Order).Count();
             }
             else
             {
@@ -172,8 +235,6 @@ namespace QualityRangeForSalesman.ViewModel
                 ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>();
                 ProductsSalesmanVM.Instance.CountProducts = 0;
             }
-
-            //CountOrder = вывод количества заказов
         }
 
         private void SearchProducts()
@@ -181,6 +242,7 @@ namespace QualityRangeForSalesman.ViewModel
             // переписать с учётом содержимого добавленных товаров
             var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
             CountProduct = listProductSearched.Count();
-        }
+        } 
+        #endregion
     }
 }

@@ -11,6 +11,8 @@ namespace DataBase.Model
 
         public int CountProductInBasket => ProductList.Where(pl => pl.Basket.ID_Client == ConnectionDataBase.client?.ID).FirstOrDefault()?.Count ?? 0;
 
+        public int PhotoProductCount { get { return PhotoProduct.Count; } set { PhotoProductCount = value; } }
+
         public Visibility IsAddedInProductList => CountProductInBasket == 0 ? Visibility.Collapsed : Visibility.Visible;
 
         public Visibility IsNotAddedInProductList => CountProductInBasket == 0 ? Visibility.Visible : Visibility.Collapsed;
