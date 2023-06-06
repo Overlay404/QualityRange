@@ -111,6 +111,7 @@
       <DependentUpon>DataBase.tt</DependentUpon>
     </Compile>
     <Compile Include="Partial\Client.Extension.cs" />
+    <Compile Include="Partial\Employee.Extension.cs" />
     <Compile Include="Partial\Product.Extension.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resourses\SupportiveClasses\ImageConverter.cs" />

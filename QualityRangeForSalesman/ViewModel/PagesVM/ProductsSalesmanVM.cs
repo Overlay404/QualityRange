@@ -67,7 +67,8 @@ namespace QualityRangeForSalesman.ViewModel.PagesVM
                 Salesman = ConnectionDataBase.salesman,
                 Discount = 0,
                 Cost = 0,
-                Count = 0
+                Count = 0,
+                ID_Status = 2
             };
 
             Products.Add(newProduct);

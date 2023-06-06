@@ -131,6 +131,7 @@ namespace QualityRangeForSalesman.ViewModel
                 new OrderSalesmanVM();
             }
             MainWindow.Instance.ProductListFrame.Navigate(OrderSalesman.Instance);
+            ProductsSalesman.Instance.ListProductGridView.SelectedItem = null;
             IsPageOrder = true;
         }  
         
@@ -155,6 +156,7 @@ namespace QualityRangeForSalesman.ViewModel
         private void OnShowProductPageExecute(object parameter)
         {
             MainWindow.Instance.ProductListFrame.Navigate(ProductsSalesman.Instance);
+            OrderSalesman.Instance.ListProductGridView.SelectedItem = null;
             IsPageOrder = false;
         }
 
@@ -234,6 +236,7 @@ namespace QualityRangeForSalesman.ViewModel
                 UserInfoPanel = Visibility.Collapsed;
                 ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>();
                 ProductsSalesmanVM.Instance.CountProducts = 0;
+                CountOrder = 0;
             }
         }
 
@@ -242,7 +245,7 @@ namespace QualityRangeForSalesman.ViewModel
             // переписать с учётом содержимого добавленных товаров
             var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
             CountProduct = listProductSearched.Count();
-        } 
+        }
         #endregion
     }
 }

@@ -60,7 +60,7 @@
                 <DataTemplate>
                     <Border Background="#1D1E27"
                             CornerRadius="15"
-                            Padding="5"
+                            Padding="15"
                             Margin="5 5"
                             TextBlock.Foreground="#99FFFFFF">
                         <Grid Grid.Column="0">
@@ -156,53 +156,70 @@
         </ListView>
 
         <Grid Grid.Column="1"
-              Grid.Row="1"
-              Margin="10"
-              DataContext="{Binding SelectedItem, ElementName=ListProductGridView}">
-            <ItemsControl>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <StackPanel>
-                                <Grid>
-                                    <Image Source="{Binding SourceFirstImage}"
+              Grid.RowSpan="2">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Товары в заказе:"
+                       HorizontalAlignment="Center"
+                       Margin="20"
+                       FontSize="23"
+                       FontWeight="Bold"/>
+            <ScrollViewer Grid.Row="1">
+                <ItemsControl ItemsSource="{Binding SelectedItem, ElementName=ListProductGridView}"
+                              HorizontalAlignment="Center">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#1D1E27"
+                                    CornerRadius="15"
+                                    Padding="15"
+                                    Margin="5 5">
+                                <StackPanel>
+                                    <StackPanel HorizontalAlignment="Center">
+                                        <Grid>
+                                            <Image Source="{Binding Product.SourceFirstImage}"
                                            Height="160" Width="160"
                                            Stretch="Fill">
-                                        <Image.Clip>
-                                            <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0,0,160,160"/>
-                                        </Image.Clip>
-                                    </Image>
-                                </Grid>
-                                <StackPanel Orientation="Horizontal"
-                                    Margin="0 4 0 0">
-                                    <TextBlock Text="{Binding CostWithDiscount}"
-                                       FontSize="14"/>
-                                    <TextBlock Text="{Binding Cost}"
-                                       FontSize="10"
-                                       Margin="5 0 0 0"
-                                       VerticalAlignment="Top"
-                                       TextDecorations="Strikethrough">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Discount}" Value="0">
-                                                        <Setter Property="Visibility" Value="Collapsed"/>
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </StackPanel>
-                                <TextBlock Text="{Binding Name}"
+                                                <Image.Clip>
+                                                    <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0,0,160,160"/>
+                                                </Image.Clip>
+                                            </Image>
+                                        </Grid>
+                                        <TextBlock Text="{Binding Product.ID, StringFormat='ID: {0}'}"
+                                                   FontSize="14"
+                                                    HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Product.Name}"
                                        Margin="0 5 0 0"
-                                       TextWrapping="Wrap"
-                                       Width="160"
-                                       Height="63"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                                        HorizontalAlignment="Center"
+                                       TextWrapping="Wrap"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0 4 0 0"
+                                                     HorizontalAlignment="Center">
+                                            <TextBlock Text="{Binding Product.CostWithDiscount}"
+                                                   FontSize="14"/>
+                                            <TextBlock Text="{Binding Product.Cost}"
+                                                   FontSize="10"
+                                                   Margin="5 0 0 0"
+                                                   VerticalAlignment="Top"
+                                                   TextDecorations="Strikethrough">
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding Product.Discount}" Value="0">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
             <Grid.Style>
                 <Style TargetType="Grid">
                     <Style.Triggers>

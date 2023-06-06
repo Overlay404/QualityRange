@@ -1,8 +1,8 @@
 ﻿using DataBase;
 using DataBase.Model;
-using QualityRangeForSalesman.Commands.Base;
-using QualityRangeForSalesman.View.Pages;
-using QualityRangeForSalesman.View.Windows;
+using QualityRangeForEmployee.Commands.Base;
+using QualityRangeForEmployee.View.Pages;
+using QualityRangeForEmployee.View.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Input;
 using System.Windows.Threading;
 
-namespace QualityRangeForSalesman.ViewModel.WindowsVM
+namespace QualityRangeForEmployee.ViewModel.WindowsVM
 {
     internal class AuthRegWindowVM : Base.ViewModel
     {
@@ -63,6 +63,8 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
             var loginIntroduced = RegistrationPage.Instance.LoginTB.Text;
             var passwordIntroduced = RegistrationPage.Instance.PasswordTB.Text;
             var nameIntroduced = RegistrationPage.Instance.NameTB.Text;
+            var surnameIntroduced = RegistrationPage.Instance.SurnameTB.Text;
+            var patronomicIntroduced = RegistrationPage.Instance.PatronymicTB.Text;
 
 
             if (String.IsNullOrWhiteSpace(loginIntroduced) && String.IsNullOrWhiteSpace(passwordIntroduced) && String.IsNullOrWhiteSpace(nameIntroduced))
@@ -79,7 +81,6 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
                 return;
             }
 
-
             if (ConnectionDataBase.db.User.Local.Select(u => u.Login).Contains(loginIntroduced) == true)
             {
                 AddMessageInTextBlock("Такой логин уже используется");
@@ -95,9 +96,11 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
 
             DataBase.ConnectionDataBase.db.User.Local.Add(user);
 
-            DataBase.ConnectionDataBase.db.Salesman.Local.Add(new Salesman()
+            DataBase.ConnectionDataBase.db.Employee.Local.Add(new Employee()
             {
-                NameCompany = nameIntroduced,
+                Name = nameIntroduced,
+                Surname = surnameIntroduced,
+                Patronymic = patronomicIntroduced,
                 User = user
             });
 
@@ -122,17 +125,17 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
 
         private static bool AutorizateUser(string loginIntroduced, string passwordIntroduced)
         {
-            DataBase.ConnectionDataBase.salesman = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login == loginIntroduced && u.Password == passwordIntroduced && u.Removed == false)?.Salesman;
+            DataBase.ConnectionDataBase.employee = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login == loginIntroduced && u.Password == passwordIntroduced && u.Removed == false)?.Employee;
 
-            if (DataBase.ConnectionDataBase.salesman == null)
+            if (DataBase.ConnectionDataBase.employee == null)
             {
                 AddMessageInTextBlock("Такого пользователя не существует");
                 return false;
             }
 
-            if (DataBase.ConnectionDataBase.salesman.ProfilePhoto == null)
+            if (DataBase.ConnectionDataBase.employee.ProfilePhoto == null)
             {
-                DataBase.ConnectionDataBase.salesman.ProfilePhoto = DataBase.ConnectionDataBase.EmptyUserImage;
+                DataBase.ConnectionDataBase.employee.ProfilePhoto = DataBase.ConnectionDataBase.EmptyUserImage;
             }
             return true;
         }

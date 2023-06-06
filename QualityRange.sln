@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBase", "DataBase\DataBa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualityRangeForSalesman", "QualityRangeForSalesman\QualityRangeForSalesman.csproj", "{C4C0A7BB-DBC0-47C4-A071-2B39F2796B29}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QualityRangeForEmployee", "QualityRangeForEmployee\QualityRangeForEmployee.csproj", "{CE15A593-C176-4B6D-9E5A-A46A8131EAFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C4C0A7BB-DBC0-47C4-A071-2B39F2796B29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4C0A7BB-DBC0-47C4-A071-2B39F2796B29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4C0A7BB-DBC0-47C4-A071-2B39F2796B29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE15A593-C176-4B6D-9E5A-A46A8131EAFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE15A593-C176-4B6D-9E5A-A46A8131EAFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE15A593-C176-4B6D-9E5A-A46A8131EAFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE15A593-C176-4B6D-9E5A-A46A8131EAFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

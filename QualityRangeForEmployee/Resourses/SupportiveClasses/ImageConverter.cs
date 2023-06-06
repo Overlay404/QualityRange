@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.Net;
+using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
-namespace DataBase.SupportiveClasses
+namespace QualityRangeForEmployee.SupportiveClasses
 {
     internal class ImageConverter
     {
@@ -26,8 +28,9 @@ namespace DataBase.SupportiveClasses
                 WebRequest.Create(uriImage).GetResponse().GetResponseStream().CopyTo(ms);
                 return ms.ToArray();
             }
-            catch
+            catch (Exception ex)
             {
+                MessageBox.Show($"Ошибка :{ex.Message} ");
                 return null;
             }
         }
@@ -69,6 +72,21 @@ namespace DataBase.SupportiveClasses
             biImg.EndInit();
             ImageSource image = biImg as ImageSource;
             return image;
+        }
+
+        public static byte[] OpenFileDialogSave()
+        {
+            OpenFileDialog openFile = new OpenFileDialog()
+            {
+                Filter = "Image files|*.jpg;*.jpeg;*.png"
+            };
+
+            if (openFile.ShowDialog().GetValueOrDefault())
+            {
+                BitmapFrame.Create(new MemoryStream(File.ReadAllBytes(openFile.FileName)), BitmapCreateOptions.None, BitmapCacheOption.OnLoad);
+                return File.ReadAllBytes(openFile.FileName);
+            }
+            return null;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using DataBase.Model;
+﻿using DataBase;
+using DataBase.Model;
 using QualityRangeForClient.Commands.Base;
 using QualityRangeForClient.View.Pages;
 using QualityRangeForClient.View.Windows;
@@ -79,6 +80,13 @@ namespace QualityRangeForClient.ViewModel.WindowsVM
             if (IsValid == false)
             {
                 AddMessageInTextBlock(messages.Aggregate((x, y) => x + "\n" + y));
+                return;
+            }
+
+
+            if (ConnectionDataBase.db.User.Local.Select(u => u.Login).Contains(loginIntroduced) == true)
+            {
+                AddMessageInTextBlock("Такой логин уже используется");
                 return;
             }
 

@@ -28,7 +28,6 @@ namespace DataBase.Model
         public virtual DbSet<Basket> Basket { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Client> Client { get; set; }
-        public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<PhotoProduct> PhotoProduct { get; set; }
         public virtual DbSet<PointOfIssue> PointOfIssue { get; set; }
@@ -38,5 +37,6 @@ namespace DataBase.Model
         public virtual DbSet<Status> Status { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Salesman> Salesman { get; set; }
+        public virtual DbSet<Employee> Employee { get; set; }
     }
 }

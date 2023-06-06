@@ -20,7 +20,7 @@ namespace DataBase.Model
         public Nullable<bool> Removed { get; set; }
     
         public virtual Client Client { get; set; }
-        public virtual Employee Employee { get; set; }
         public virtual Salesman Salesman { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

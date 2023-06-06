@@ -34,7 +34,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Surname" Type="nvarchar" MaxLength="150" />
           <Property Name="Name" Type="nvarchar" MaxLength="150" />
           <Property Name="Patronymic" Type="nvarchar" MaxLength="150" />
@@ -399,17 +399,6 @@
           <NavigationProperty Name="User" Relationship="Self.FK_Client_User1" FromRole="Client" ToRole="User" />
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Client" FromRole="Client" ToRole="Order" />
         </EntityType>
-        <EntityType Name="Employee">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="Patronymic" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
-          <Property Name="ProfilePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <NavigationProperty Name="User" Relationship="Self.FK_Employee_User1" FromRole="Employee" ToRole="User" />
-        </EntityType>
         <EntityType Name="Order">
           <Key>
             <PropertyRef Name="ID" />
@@ -501,8 +490,8 @@
           <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Removed" Type="Boolean" />
           <NavigationProperty Name="Client" Relationship="Self.FK_Client_User1" FromRole="User" ToRole="Client" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_User1" FromRole="User" ToRole="Employee" />
           <NavigationProperty Name="Salesman" Relationship="MarketShopModel.FK_Salesman_User1" FromRole="User" ToRole="Salesman" />
+          <NavigationProperty Name="Employee" Relationship="MarketShopModel.FK_Employee_User1" FromRole="User" ToRole="Employee" />
         </EntityType>
         <Association Name="FK_Basket_Client">
           <End Role="Client" Type="Self.Client" Multiplicity="1" />
@@ -561,18 +550,6 @@
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="ID_Client" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Employee_User1">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -652,7 +629,6 @@
           <EntitySet Name="Basket" EntityType="Self.Basket" />
           <EntitySet Name="Category" EntityType="Self.Category" />
           <EntitySet Name="Client" EntityType="Self.Client" />
-          <EntitySet Name="Employee" EntityType="Self.Employee" />
           <EntitySet Name="Order" EntityType="Self.Order" />
           <EntitySet Name="PhotoProduct" EntityType="Self.PhotoProduct" />
           <EntitySet Name="PointOfIssue" EntityType="Self.PointOfIssue" />
@@ -680,10 +656,6 @@
           <AssociationSet Name="FK_Order_Client" Association="Self.FK_Order_Client">
             <End Role="Client" EntitySet="Client" />
             <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_User1" Association="Self.FK_Employee_User1">
-            <End Role="User" EntitySet="User" />
-            <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
           <AssociationSet Name="FK_Order_Address" Association="Self.FK_Order_Address">
             <End Role="PointOfIssue" EntitySet="PointOfIssue" />
@@ -717,6 +689,11 @@
           <AssociationSet Name="FK_Salesman_User1" Association="MarketShopModel.FK_Salesman_User1">
             <End Role="User" EntitySet="User" />
             <End Role="Salesman" EntitySet="Salesman" />
+          </AssociationSet>
+          <EntitySet Name="Employee" EntityType="MarketShopModel.Employee" />
+          <AssociationSet Name="FK_Employee_User1" Association="MarketShopModel.FK_Employee_User1">
+            <End Role="User" EntitySet="User" />
+            <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Salesman">
@@ -755,6 +732,29 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Patronymic" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="ProfilePhoto" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <NavigationProperty Name="User" Relationship="MarketShopModel.FK_Employee_User1" FromRole="Employee" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_Employee_User1">
+          <End Type="MarketShopModel.User" Role="User" Multiplicity="1" />
+          <End Type="MarketShopModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -786,17 +786,6 @@
                 <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
                 <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
                 <ScalarProperty Name="NumberOfCreditCard" ColumnName="NumberOfCreditCard" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="MarketShopModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Surname" ColumnName="Surname" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
-                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -889,6 +878,17 @@
                 <ScalarProperty Name="DateOnMarketplace" ColumnName="DateOnMarketplace" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="NameCompany" ColumnName="NameCompany" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="MarketShopModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="ProfilePhoto" ColumnName="ProfilePhoto" />
+                <ScalarProperty Name="Patronymic" ColumnName="Patronymic" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

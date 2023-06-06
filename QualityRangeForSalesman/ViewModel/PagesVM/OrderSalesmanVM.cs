@@ -29,7 +29,7 @@ namespace QualityRangeForSalesman.ViewModel.PagesVM
         private bool CanShowInfoOrderExecute(object parameter) => true;
         private void OnShowInfoOrderExecute(object parameter)
         {
-            OrderSalesman.Instance.ListProductGridView.SelectedItem = parameter;
+            OrderSalesman.Instance.ListProductGridView.SelectedItem = (parameter as IEnumerable<ProductListOrder>);
         }
         #endregion
 
