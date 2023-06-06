@@ -45,14 +45,33 @@
 
         </StackPanel>
 
+        <ComboBox ItemsSource="{Binding TypeChartSelectedCB}"
+                  VerticalAlignment="Bottom"
+                  SelectedIndex="0"
+                  HorizontalAlignment="Right"
+                  Margin="30 0"
+                  Width="170"
+                  x:Name="TypeChartSelectedCB"/>
+
         <lvc:CartesianChart Series="{Binding ChartSeries}"
-                            LegendLocation="Right"
+                            LegendLocation="Bottom"
                             Margin="0 20"
                             TextBlock.Foreground="#99FFFFFF"
                             Grid.Row="1">
             <lvc:CartesianChart.DataTooltip>
                 <lvc:DefaultTooltip BulletSize="10" Background="#19FFFFFF"/>
             </lvc:CartesianChart.DataTooltip>
+            <lvc:CartesianChart.Resources>
+                <Style TargetType="lvc:DefaultTooltip">
+                    <Setter Property="Foreground" Value="#99FFFFFF"></Setter>
+                    <Setter Property="ShowTitle" Value="False"></Setter>
+                    <Setter Property="ShowSeries" Value="True"></Setter>
+                    <Setter Property="FontSize" Value="16"></Setter>
+                    <Setter Property="FontWeight" Value="Bold"></Setter>
+                    <Setter Property="CornerRadius" Value="15"></Setter>
+                    <Setter Property="BorderThickness" Value="0"></Setter>
+                </Style>
+            </lvc:CartesianChart.Resources>
         </lvc:CartesianChart>
         
     </Grid>
