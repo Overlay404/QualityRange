@@ -243,7 +243,17 @@
                                 <ColumnDefinition/>
                                 <ColumnDefinition Width="6*"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Margin="10">
+
+                            <TextBlock Grid.ColumnSpan="2"
+                                       Text="Войдите в аккаунт для получения доступа к функционалу приложения"
+                                       Foreground="#99FFFFFF"
+                                       HorizontalAlignment="Center"
+                                       VerticalAlignment="Center"
+                                       FontSize="30"
+                                       FontWeight="Bold"
+                                       Visibility="{Binding VisibilityBtn}"/>
+
+                            <StackPanel Margin="10" Visibility="{Binding VisibilityUserIcon}">
                                 <RadioButton Style="{StaticResource RadioBtn}"
                                              Margin="0 10"
                                              x:Name="RequestProductBtn"
@@ -317,7 +327,8 @@
                                    Grid.Column="1"
                                     NavigationUIVisibility="Hidden"
                                     DockPanel.Dock="Bottom"
-                                    HorizontalAlignment="Stretch"/>
+                                    HorizontalAlignment="Stretch"
+                                   Visibility="{Binding VisibilityUserIcon}"/>
                         </Grid>
                     </Grid>
                 </Border>
