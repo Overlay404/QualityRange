@@ -28,7 +28,7 @@ namespace QualityRangeForClient.ViewModel
         public Window AuthRegWin { get => _authRegWin; set => Set(ref _authRegWin, value); }
 
 
-        private int _countProduct = DataBase.ConnectionDataBase.db.Product.Local.Count();
+        private int _countProduct = GridAndBarsViewProductPanelVM.Instance.Products.Count;
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
 
 
@@ -129,17 +129,16 @@ namespace QualityRangeForClient.ViewModel
         {
             if (parameter as string == "Все категории")
             {
-                GridAndBarsViewProductPanelVM.Instance.Products = DataBase.ConnectionDataBase.db.Product.Local;
-                CountProduct = DataBase.ConnectionDataBase.db.Product.Local.Count();
+                GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.ID_Status == 1 && p.Count > 0));
+                CountProduct = GridAndBarsViewProductPanelVM.Instance.Products.Count();
                 return false;
             }
             return true;
         }
         private void OnCategoryPressExecute(object parameter)
         {
-            var products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Category.Name == parameter as string));
-            GridAndBarsViewProductPanelVM.Instance.Products = products;
-            CountProduct = products.Count();
+            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Category.Name == parameter as string && p.Count > 0 && p.ID_Status == 1));
+            CountProduct = GridAndBarsViewProductPanelVM.Instance.Products.Count();
         }
         #endregion
 
@@ -151,7 +150,7 @@ namespace QualityRangeForClient.ViewModel
             DataBase.ConnectionDataBase.db.SaveChanges();
             DataBase.ConnectionDataBase.client = null;
             InitCountProductInBasket();
-            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local);
+            GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.ID_Status == 1 && p.Count > 0));
             GridAndBarsViewProductPanelVM.Instance.InitProductList();
         }
 
@@ -199,7 +198,7 @@ namespace QualityRangeForClient.ViewModel
 
         private void SearchProducts()
         {
-            var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
+            var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()) && p.Count > 0 && p.ID_Status == 1);
             CountProduct = listProductSearched.Count();
             GridAndBarsViewProductPanelVM.Instance.Products = new ObservableCollection<Product>(listProductSearched);
             GridAndBarsViewProductPanelVM.Instance.InitProductList();

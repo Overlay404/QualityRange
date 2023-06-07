@@ -18,16 +18,16 @@ namespace QualityRangeForEmployee.ViewModel.WindowsVM
         private Window _authRegWin = new AuthRegWindow();
         public Window AuthRegWin { get => _authRegWin; set => Set(ref _authRegWin, value); }
 
-        private Page _requestProductPage;
+        private Page _requestProductPage = new RequestProductPage();
         public Page RequestProductPage { get => _requestProductPage; set => Set(ref _requestProductPage, value); }
 
-        private Page _userPage;
+        private Page _userPage = new UserPage();
         public Page UserPage { get => _userPage; set => Set(ref _userPage, value); }
 
         private Page _statisticPage = new StatisticPage();
         public Page StatisticPage { get => _statisticPage; set => Set(ref _statisticPage, value); }
 
-        private Page _pointOfIssuePage;
+        private Page _pointOfIssuePage = new PointOfIssuePage();
         public Page PointOfIssuePage { get => _pointOfIssuePage; set => Set(ref _pointOfIssuePage, value); }
 
         private Employee _salesmantDC;
@@ -60,10 +60,6 @@ namespace QualityRangeForEmployee.ViewModel.WindowsVM
         public ICommand UserInfo { get; }
         private bool CanUserInfoExecute(object parameter) => true;
         private void OnUserInfoExecute(object parameter) => UserInfoPanel = UserInfoPanel == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-
-        public ICommand SearchProduct { get; }
-        private bool CanSearchProductExecute(object parameter) => true;
-        private void OnSearchProductExecute(object parameter) => SearchProducts();
 
         public ICommand MaximizeWindow { get; }
         private bool CanMaximizeWindowExecute(object parameter) => true;
@@ -120,7 +116,6 @@ namespace QualityRangeForEmployee.ViewModel.WindowsVM
             UserInfo = new LambdaCommand(OnUserInfoExecute, CanUserInfoExecute);
             LogOut = new LambdaCommand(OnLogOutExecute, CanLogOutExecute);
             EditClient = new LambdaCommand(OnEditClientExecute, CanEditClientExecute);
-            SearchProduct = new LambdaCommand(OnSearchProductExecute, CanSearchProductExecute);
         }
 
         #region Methods
@@ -142,11 +137,7 @@ namespace QualityRangeForEmployee.ViewModel.WindowsVM
             }
         }
 
-        private void SearchProducts()
-        {
-            // переписать с учётом содержимого добавленных товаров
-            var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
-        }
+        
         #endregion
     }
 }

@@ -13,5 +13,7 @@ namespace DataBase.Model
         public string NumberCard => FormatingNumberCard.Equals("**** **** **** ") ? "Нет карты" : FormatingNumberCard;
 
         public string Fullname => $"{Surname} {Name} {Patronymic}";
+
+        public string StatusFormat => User.Removed == true ? "Заблокирован" : "Не заблокирован";
     }
 }

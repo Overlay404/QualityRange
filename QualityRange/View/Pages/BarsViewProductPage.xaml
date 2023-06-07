@@ -163,6 +163,7 @@
         </ListView.ItemTemplate>
         <ListView.ItemContainerStyle>
             <Style TargetType="ListViewItem">
+                <Setter Property="Focusable" Value="False"/>
                 <Setter Property="SnapsToDevicePixels" Value="true"/>
                 <Setter Property="OverridesDefaultStyle" Value="true"/>
                 <Setter Property="Template">

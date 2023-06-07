@@ -1,7 +1,5 @@
-﻿using QualityRangeForClient.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,18 +13,20 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace QualityRangeForClient.View.Pages
+namespace QualityRangeForEmployee.View.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для GridViewProductPanel.xaml
+    /// Логика взаимодействия для UserPage.xaml
     /// </summary>
-    public partial class GridViewProductPanel : Page
+    public partial class UserPage : Page
     {
-        public static GridViewProductPanel Instance { get; private set; }
-        public GridViewProductPanel()
+        public static UserPage Instance { get; private set; }
+        public UserPage()
         {
             InitializeComponent();
             Instance = this;
+
+            MainFrame.Navigate(new ClientsListViewPage());
         }
     }
 }

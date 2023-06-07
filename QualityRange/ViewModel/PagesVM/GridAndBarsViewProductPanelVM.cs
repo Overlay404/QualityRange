@@ -16,7 +16,7 @@ namespace QualityRangeForClient.ViewModel
         ProductList ProdListItem;
 
         #region Property
-        private ObservableCollection<Product> _products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local);
+        private ObservableCollection<Product> _products = new ObservableCollection<Product>(DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.ID_Status == 1 && p.Count > 0));
         public ObservableCollection<Product> Products { get => _products; set => Set(ref _products, value); }
         #endregion
 
@@ -32,8 +32,9 @@ namespace QualityRangeForClient.ViewModel
             return true;
         }
         private void OnAddBasketProductExecute(object parameter)
-        {
+        {   
             var basket = DataBase.ConnectionDataBase.db.Basket.Local.FirstOrDefault(b => b.Client == DataBase.ConnectionDataBase.client);
+
             if (basket == null)
             {
                 basket = new Basket { Client = DataBase.ConnectionDataBase.db.Client.Local.FirstOrDefault(c => c == DataBase.ConnectionDataBase.client) };
@@ -89,7 +90,6 @@ namespace QualityRangeForClient.ViewModel
             MainWindowVM.Instance.InitCountProductInBasket();
             InitProductList();
         }
-
 
         public ICommand AdoutProductWidowShow { get; }
         private bool CanAdoutProductWidowShowExecute(object parameter) => true;
