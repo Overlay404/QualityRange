@@ -71,6 +71,9 @@ namespace QualityRangeForSalesman.ViewModel.PagesVM
                 ID_Status = 2
             };
 
+            MainWindow.Instance.SearchText.Text = "";
+            MainWindowVM.Instance.SearchProducts();
+
             Products.Add(newProduct);
             ConnectionDataBase.db.Product.Local.Add(newProduct);
             ProductsSalesman.Instance.ListProductGridView.SelectedItem = newProduct;

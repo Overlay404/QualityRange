@@ -1,4 +1,5 @@
-﻿using DataBase.Model;
+﻿using DataBase;
+using DataBase.Model;
 using QualityRangeForClient.Commands.Base;
 using QualityRangeForClient.View.Pages;
 using QualityRangeForClient.View.Windows;
@@ -54,9 +55,13 @@ namespace QualityRangeForClient.ViewModel.PagesVM
                     Product = item,
                     Count = item.CountProductInBasket
                 });
+
+                item.Count -= item.CountProductInBasket;
             }
             new MessageBox().Show();
-            MessageBoxVM.SetMessage($"Ваш заказ офрмлен ID={Order.ID}");
+            MessageBoxVM.SetMessage($"Ваш заказ оформлен");
+
+
 
             DataBase.ConnectionDataBase.db.SaveChanges();
 

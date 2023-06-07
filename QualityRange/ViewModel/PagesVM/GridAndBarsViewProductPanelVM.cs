@@ -11,7 +11,7 @@ namespace QualityRangeForClient.ViewModel
 {
     public class GridAndBarsViewProductPanelVM : ViewModel.Base.ViewModel
     {
-        public static GridAndBarsViewProductPanelVM Instance { get; set; }
+        public static GridAndBarsViewProductPanelVM Instance { get; } = new GridAndBarsViewProductPanelVM();
 
         ProductList ProdListItem;
 
@@ -85,6 +85,11 @@ namespace QualityRangeForClient.ViewModel
         private void OnAddProductInListProductExecute(object parameter)
         {
             var prodListItem = DataBase.ConnectionDataBase.db.ProductList.Local.FirstOrDefault(prodlist => prodlist.Basket.ID_Client == DataBase.ConnectionDataBase.client.ID && prodlist.Product.ID == (int)parameter);
+            
+            if(prodListItem.Count + 1 >= prodListItem.Product.Count)
+            {
+                return;
+            }
             prodListItem.Count++;
 
             MainWindowVM.Instance.InitCountProductInBasket();
@@ -105,9 +110,6 @@ namespace QualityRangeForClient.ViewModel
 
         public GridAndBarsViewProductPanelVM()
         {
-            if (Instance == null)
-                Instance = this;
-
             InitProductList();
 
             AddBasketProduct = new LambdaCommand(OnAddBasketProductExecute, CanAddBasketProductExecute);
@@ -124,8 +126,8 @@ namespace QualityRangeForClient.ViewModel
             {
                 return;
             }
-            classBars.ListProductBarsView.Items.Refresh();
             classGrid.ListProductGridView.Items.Refresh();
+            classBars.ListProductBarsView.Items.Refresh();
         }
     }
 }

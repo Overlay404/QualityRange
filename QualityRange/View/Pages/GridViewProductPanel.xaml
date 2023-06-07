@@ -4,13 +4,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:fa="http://schemas.fontawesome.io/icons/"
-      xmlns:vm="clr-namespace:QualityRangeForClient.ViewModel"
+      xmlns:vm="clr-namespace:QualityRangeForClient.ViewModel" 
+      d:DataContext="{d:DesignInstance Type=vm:GridAndBarsViewProductPanelVM}"
       mc:Ignorable="d"
       Title="GridViewProductPanel">
-
-    <Page.DataContext>
-        <vm:GridAndBarsViewProductPanelVM/>
-    </Page.DataContext>
 
     <ListView ItemsSource="{Binding Products, UpdateSourceTrigger=PropertyChanged}"
               d:ItemsSource="{d:SampleData ItemCount=10}"
@@ -105,7 +102,7 @@
                                                      HorizontalAlignment="Left"
                                                      Foreground="#99FFFFFF"/>
                                 </Border>
-                                <TextBlock Text="{Binding CountProductInBasket}"
+                                <TextBlock Text="{Binding CountProductInBasket, UpdateSourceTrigger=PropertyChanged}"
                                            FontSize="20"
                                            Margin="10 0"
                                            HorizontalAlignment="Center"

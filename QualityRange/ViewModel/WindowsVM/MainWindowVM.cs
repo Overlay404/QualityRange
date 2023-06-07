@@ -16,13 +16,11 @@ namespace QualityRangeForClient.ViewModel
         public static MainWindowVM Instance { get; private set; }
 
         #region Property
-        private Page _barsViewPage = new BarsViewProductPage() { DataContext = GridAndBarsViewProductPanelVM.Instance };
-        public Page BarsViewPage { get => _barsViewPage; set => Set(ref _barsViewPage, value); }
-
-
         private Page _gridViewPage = new GridViewProductPanel() { DataContext = GridAndBarsViewProductPanelVM.Instance };
         public Page GridViewPage { get => _gridViewPage; set => Set(ref _gridViewPage, value); }
 
+        private Page _barsViewPage = new BarsViewProductPage() { DataContext = GridAndBarsViewProductPanelVM.Instance };
+        public Page BarsViewPage { get => _barsViewPage; set => Set(ref _barsViewPage, value); }
 
         private Window _authRegWin = new AuthRegWindow();
         public Window AuthRegWin { get => _authRegWin; set => Set(ref _authRegWin, value); }

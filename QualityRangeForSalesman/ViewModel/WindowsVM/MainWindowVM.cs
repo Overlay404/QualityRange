@@ -77,7 +77,17 @@ namespace QualityRangeForSalesman.ViewModel
         private void OnEditClientExecute(object parameter) => MainWindow.Instance.GlobalFrame.Navigate(new EditDataUser());
 
         public ICommand SearchProduct { get; }
-        private bool CanSearchProductExecute(object parameter) => true;
+        private bool CanSearchProductExecute(object parameter)
+        {
+            if (ProductsSalesmanVM.IsAddingNewProduct == true)
+            {
+                new MessageBox().Show();
+                MessageBoxVM.SetMessage("Вы в процессе добавления товара");
+                return false;
+            }
+
+            return true;
+        }
         private void OnSearchProductExecute(object parameter) => SearchProducts();
 
         public ICommand MaximizeWindow { get; }
@@ -240,11 +250,13 @@ namespace QualityRangeForSalesman.ViewModel
             }
         }
 
-        private void SearchProducts()
+        public void SearchProducts()
         {
-            // переписать с учётом содержимого добавленных товаров
-            var listProductSearched = DataBase.ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower()));
-            CountProduct = listProductSearched.Count();
+            if(IsPageOrder == false)
+            {
+                ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>(ConnectionDataBase.db.Product.Local.Where(p => p.Name.ToLower().StartsWith(MainWindow.Instance.SearchText.Text.ToLower())));
+                ProductsSalesman.Instance.ListProductGridView.Items.Refresh();
+            }
         }
         #endregion
     }
