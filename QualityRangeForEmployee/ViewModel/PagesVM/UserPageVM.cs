@@ -53,6 +53,10 @@ namespace QualityRangeForEmployee.ViewModel.PagesVM
             else
             {
                 (parameter as Salesman).User.Removed = true;
+                foreach (var item in (parameter as Salesman).Product)
+                {
+                    item.ID_Status = 3;
+                }
             }
 
             RefreshItems();
@@ -70,6 +74,10 @@ namespace QualityRangeForEmployee.ViewModel.PagesVM
             else
             {
                 (parameter as Salesman).User.Removed = false;
+                foreach (var item in (parameter as Salesman).Product)
+                {
+                    item.ID_Status = 2;
+                }
             }
 
             RefreshItems();

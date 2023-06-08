@@ -128,11 +128,17 @@ namespace QualityRangeForClient.ViewModel.WindowsVM
 
         private static bool AutorizateClient(string loginIntroduced, string passwordIntroduced)
         {
-            DataBase.ConnectionDataBase.client = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim()) && u.Removed == false).Client;
+            DataBase.ConnectionDataBase.client = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login.Equals(loginIntroduced.Trim()) && u.Password.Equals(passwordIntroduced.Trim())).Client;
 
             if (DataBase.ConnectionDataBase.client == null)
             {
                 AddMessageInTextBlock("Такого пользователя не существует");
+                return false;
+            }
+
+            if (DataBase.ConnectionDataBase.client.User.Removed == true)
+            {
+                AddMessageInTextBlock("Аккаунт заблокирован");
                 return false;
             }
 

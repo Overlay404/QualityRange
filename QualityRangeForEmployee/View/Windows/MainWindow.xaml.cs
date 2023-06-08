@@ -1,4 +1,5 @@
-﻿using QualityRangeForEmployee.ViewModel.WindowsVM;
+﻿using DataBase;
+using QualityRangeForEmployee.ViewModel.WindowsVM;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,11 @@ namespace QualityRangeForEmployee.View.Windows
         {
             InitializeComponent();
             Instance = this;
+
+            Closing += (sender, e) =>
+            {
+                ConnectionDataBase.db.SaveChanges();
+            };
         }
 
         #region ResizeWindows

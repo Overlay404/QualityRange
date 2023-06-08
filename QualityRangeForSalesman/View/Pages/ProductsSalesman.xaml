@@ -102,9 +102,9 @@
                         <StackPanel>
                             <StackPanel>
                                 <Grid>
-                                    <Image Source="{Binding SourceFirstImage}"
-                                   Height="160" Width="160"
-                                   Stretch="Fill">
+                                    <Image Height="160" Width="160"
+                                           Source="{Binding SourceFirstImage}"
+                                           Stretch="Fill">
                                         <Image.Clip>
                                             <RectangleGeometry RadiusX="5" RadiusY="5" Rect="0,0,160,160"/>
                                         </Image.Clip>

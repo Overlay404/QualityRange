@@ -25,7 +25,7 @@ namespace QualityRangeForSalesman.ViewModel
         public Window AuthRegWin { get => _authRegWin; set => Set(ref _authRegWin, value); }
 
 
-        private int _countProduct = DataBase.ConnectionDataBase.db.Product.Local.Count();
+        private int _countProduct;
         public int CountProduct { get => _countProduct; set => Set(ref _countProduct, value); }
 
 
@@ -238,6 +238,7 @@ namespace QualityRangeForSalesman.ViewModel
                 ProductsSalesmanVM.Instance.Products = new ObservableCollection<Product>(ConnectionDataBase.db.Product.Local.Where(p => p.Salesman == ConnectionDataBase.salesman));
                 ProductsSalesmanVM.Instance.CountProducts = ProductsSalesmanVM.Instance.Products.Count();
                 CountOrder = ConnectionDataBase.db.ProductListOrder.Local.Where(o => o.Product.Salesman == ConnectionDataBase.salesman).GroupBy(pr => pr.Order).Count();
+                CountProduct = ConnectionDataBase.db.Product.Local.Where(p => p.Salesman == ConnectionDataBase.salesman).Count();
             }
             else
             {

@@ -98,6 +98,7 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
             DataBase.ConnectionDataBase.db.Salesman.Local.Add(new Salesman()
             {
                 NameCompany = nameIntroduced,
+                DateOnMarketplace = DateTime.Today,
                 User = user
             });
 
@@ -122,11 +123,17 @@ namespace QualityRangeForSalesman.ViewModel.WindowsVM
 
         private static bool AutorizateUser(string loginIntroduced, string passwordIntroduced)
         {
-            DataBase.ConnectionDataBase.salesman = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login == loginIntroduced && u.Password == passwordIntroduced && u.Removed == false)?.Salesman;
+            DataBase.ConnectionDataBase.salesman = DataBase.ConnectionDataBase.db.User.FirstOrDefault(u => u.Login == loginIntroduced && u.Password == passwordIntroduced)?.Salesman;
 
             if (DataBase.ConnectionDataBase.salesman == null)
             {
                 AddMessageInTextBlock("Такого пользователя не существует");
+                return false;
+            }
+
+            if (DataBase.ConnectionDataBase.salesman.User.Removed == true)
+            {
+                AddMessageInTextBlock("Аккаунт заблокирован");
                 return false;
             }
 
